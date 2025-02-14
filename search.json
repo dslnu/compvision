@@ -1,0 +1,576 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Computer vision course"
+  },
+  {
+    "objectID": "lec1.html#euclid",
+    "href": "lec1.html#euclid",
+    "title": "Computer vision: intro",
+    "section": "Euclid",
+    "text": "Euclid\nEuclid (ca. 300 BCE): natural perspective: ray OP joining the center of projection O to the point P."
+  },
+  {
+    "objectID": "lec1.html#aristotle",
+    "href": "lec1.html#aristotle",
+    "title": "Computer vision: intro",
+    "section": "Aristotle",
+    "text": "Aristotle\nThought that eyes are emitting vision (emission theory)."
+  },
+  {
+    "objectID": "lec1.html#medieval",
+    "href": "lec1.html#medieval",
+    "title": "Computer vision: intro",
+    "section": "Medieval",
+    "text": "Medieval\nḤasan Ibn al-Haytham (Alhazen) - father of modern optics"
+  },
+  {
+    "objectID": "lec1.html#renaissance",
+    "href": "lec1.html#renaissance",
+    "title": "Computer vision: intro",
+    "section": "Renaissance",
+    "text": "Renaissance\nLeon Battista Alberti\n\n\n\nA truly universal genius (Jacob Burckhardt, The Civilization of the Renaissance in Italy)"
+  },
+  {
+    "objectID": "lec1.html#descartes",
+    "href": "lec1.html#descartes",
+    "title": "Computer vision: intro",
+    "section": "Descartes",
+    "text": "Descartes\nCamera eye"
+  },
+  {
+    "objectID": "lec1.html#earlier-technologies",
+    "href": "lec1.html#earlier-technologies",
+    "title": "Computer vision: intro",
+    "section": "Earlier technologies",
+    "text": "Earlier technologies\n\n\n\ncamera obscura\nthe stereoscope\nfilm photography"
+  },
+  {
+    "objectID": "lec1.html#tank-detector",
+    "href": "lec1.html#tank-detector",
+    "title": "Computer vision: intro",
+    "section": "Tank Detector",
+    "text": "Tank Detector\n\n\n\nRecognition system design by statistical analysis (https://dl.acm.org/doi/pdf/10.1145/800257.808903)"
+  },
+  {
+    "objectID": "lec1.html#facial-recognition",
+    "href": "lec1.html#facial-recognition",
+    "title": "Computer vision: intro",
+    "section": "Facial recognition",
+    "text": "Facial recognition\nWoody Bledsoe, Charles Bisson and Helen Chan: facial recognition for military (1964)"
+  },
+  {
+    "objectID": "lec1.html#summer-vision-project",
+    "href": "lec1.html#summer-vision-project",
+    "title": "Computer vision: intro",
+    "section": "Summer Vision project",
+    "text": "Summer Vision project\n\n\n\n\n\nSeymour Papert: https://dspace.mit.edu/bitstream/handle/1721.1/6125/AIM-100.pdf"
+  },
+  {
+    "objectID": "lec1.html#summer-vision-project-1",
+    "href": "lec1.html#summer-vision-project-1",
+    "title": "Computer vision: intro",
+    "section": "Summer Vision project",
+    "text": "Summer Vision project\nWhat was the plan? Divide and conquer\nSplit teams doing different tasks:\n\n\nwriting a program to detect edges, corners, and other pixel-level information\nforming continous shapes out of these low-level features\narranging the shapes in three-dimensional space\netc."
+  },
+  {
+    "objectID": "lec1.html#perceptron",
+    "href": "lec1.html#perceptron",
+    "title": "Computer vision: intro",
+    "section": "Perceptron",
+    "text": "Perceptron\nFrank Rosenblatt"
+  },
+  {
+    "objectID": "lec1.html#generalized-cylinders",
+    "href": "lec1.html#generalized-cylinders",
+    "title": "Computer vision: intro",
+    "section": "Generalized cylinders",
+    "text": "Generalized cylinders\nT.O. Binford (1970)\n\n\n\nApplied in Rodney Brooks’ ACRONYM (1981) - CIA aircraft detection"
+  },
+  {
+    "objectID": "lec1.html#deformable-templates",
+    "href": "lec1.html#deformable-templates",
+    "title": "Computer vision: intro",
+    "section": "Deformable templates",
+    "text": "Deformable templates\nMartin Fischler and Robert Elschlager (1972)"
+  },
+  {
+    "objectID": "lec1.html#mobots",
+    "href": "lec1.html#mobots",
+    "title": "Computer vision: intro",
+    "section": "Mobots",
+    "text": "Mobots\nRodney Brooks (1987): perception as action"
+  },
+  {
+    "objectID": "lec1.html#neocognitron",
+    "href": "lec1.html#neocognitron",
+    "title": "Computer vision: intro",
+    "section": "Neocognitron",
+    "text": "Neocognitron\n\n\n\nNeocognitron: A Self-organizing Neural Network Model for a Mechanism of Pattern Recognition Unaffected by Shift in Position (https://www.rctn.org/bruno/public/papers/Fukushima1980.pdf)"
+  },
+  {
+    "objectID": "lec1.html#lecun-cnn-paper",
+    "href": "lec1.html#lecun-cnn-paper",
+    "title": "Computer vision: intro",
+    "section": "LeCun CNN paper",
+    "text": "LeCun CNN paper\n\n\n\n\n\n\n\n\nHandwritten Digit Recognition with a Back-Propagation Network (https://proceedings.neurips.cc/paper/1989/file/53c3bce66e43be4f209556518c2fcb54-Paper.pdf)"
+  },
+  {
+    "objectID": "lec1.html#what-is-vision",
+    "href": "lec1.html#what-is-vision",
+    "title": "Computer vision: intro",
+    "section": "What is vision?",
+    "text": "What is vision?\nVision is a perceptual channel that accepts a stimulus and reports some representation of the world."
+  },
+  {
+    "objectID": "lec1.html#problem",
+    "href": "lec1.html#problem",
+    "title": "Computer vision: intro",
+    "section": "Problem",
+    "text": "Problem\nAzriel Rosenfeld, Picture Processing by Computer (1969)\n\nIf we want to give our computers eyes, we must first give them an education in the facts of life."
+  },
+  {
+    "objectID": "lec1.html#sensing-types",
+    "href": "lec1.html#sensing-types",
+    "title": "Computer vision: intro",
+    "section": "Sensing types",
+    "text": "Sensing types\n\n\nPassive\nNot sending out light to see.\n\nActive\nSending out a signal and sensing a reflection"
+  },
+  {
+    "objectID": "lec1.html#active-sensing-examples",
+    "href": "lec1.html#active-sensing-examples",
+    "title": "Computer vision: intro",
+    "section": "Active sensing examples",
+    "text": "Active sensing examples\n\nbats (ultrasound),\ndolphins (sound)\nabyssal fishes (light)\nsome robots (light, sound, radar)"
+  },
+  {
+    "objectID": "lec1.html#features",
+    "href": "lec1.html#features",
+    "title": "Computer vision: intro",
+    "section": "Features",
+    "text": "Features\nA feature is a number obtained by applying simple computations to an image. Very useful information can be obtained directly from features.\nFeature extraction: simple, direct computations applied to sensor responses."
+  },
+  {
+    "objectID": "lec1.html#model-based-approach",
+    "href": "lec1.html#model-based-approach",
+    "title": "Computer vision: intro",
+    "section": "Model-based approach",
+    "text": "Model-based approach\nTwo kinds of models:\n\nobject model: precise and geometric\nrendering model: describes the physical, geometric, and statistical processes that produce the stimulus"
+  },
+  {
+    "objectID": "lec1.html#core-problems",
+    "href": "lec1.html#core-problems",
+    "title": "Computer vision: intro",
+    "section": "Core problems",
+    "text": "Core problems\nThe two core problems of computer vision are\n\nreconstruction\nrecognition"
+  },
+  {
+    "objectID": "lec1.html#reconstruction",
+    "href": "lec1.html#reconstruction",
+    "title": "Computer vision: intro",
+    "section": "Reconstruction",
+    "text": "Reconstruction\nAn agent builds a model of the world from an image(s)"
+  },
+  {
+    "objectID": "lec1.html#recognition",
+    "href": "lec1.html#recognition",
+    "title": "Computer vision: intro",
+    "section": "Recognition",
+    "text": "Recognition\nAgent draws distinctions among the objects it encounters based on visual and other information"
+  },
+  {
+    "objectID": "lec1.html#goals",
+    "href": "lec1.html#goals",
+    "title": "Computer vision: intro",
+    "section": "Goals",
+    "text": "Goals\nThe goal of vision is to extract information needed for tasks such as:\n\nmanipulation\nnavigation\nobject recognition"
+  },
+  {
+    "objectID": "lec1.html#computer-vision-vs-graphics",
+    "href": "lec1.html#computer-vision-vs-graphics",
+    "title": "Computer vision: intro",
+    "section": "Computer Vision vs Graphics",
+    "text": "Computer Vision vs Graphics\n\n\nVision\nEmphasis on analyzing images \n\nGraphics\nEmphasis on creating images"
+  },
+  {
+    "objectID": "lec1.html#challenge",
+    "href": "lec1.html#challenge",
+    "title": "Computer vision: intro",
+    "section": "Challenge",
+    "text": "Challenge\nGeometry distortion"
+  },
+  {
+    "objectID": "lec1.html#challenge-1",
+    "href": "lec1.html#challenge-1",
+    "title": "Computer vision: intro",
+    "section": "Challenge",
+    "text": "Challenge\nIllumination effects"
+  },
+  {
+    "objectID": "lec1.html#challenge-2",
+    "href": "lec1.html#challenge-2",
+    "title": "Computer vision: intro",
+    "section": "Challenge",
+    "text": "Challenge\nAppearance variation"
+  },
+  {
+    "objectID": "lec1.html#aside-on-cameras",
+    "href": "lec1.html#aside-on-cameras",
+    "title": "Computer vision: intro",
+    "section": "Aside on cameras",
+    "text": "Aside on cameras\nPinhole camera"
+  },
+  {
+    "objectID": "lec1.html#aside-on-cameras-1",
+    "href": "lec1.html#aside-on-cameras-1",
+    "title": "Computer vision: intro",
+    "section": "Aside on cameras",
+    "text": "Aside on cameras\nLens camera"
+  },
+  {
+    "objectID": "lec1.html#aside-on-cameras-2",
+    "href": "lec1.html#aside-on-cameras-2",
+    "title": "Computer vision: intro",
+    "section": "Aside on cameras",
+    "text": "Aside on cameras\nPhone camera"
+  },
+  {
+    "objectID": "lec1.html#image-properties",
+    "href": "lec1.html#image-properties",
+    "title": "Computer vision: intro",
+    "section": "Image properties",
+    "text": "Image properties\nFour general properties of images and video\n\nedges\ntexture\noptical flow\nsegmentation into regions"
+  },
+  {
+    "objectID": "lec1.html#edges",
+    "href": "lec1.html#edges",
+    "title": "Computer vision: intro",
+    "section": "Edges",
+    "text": "Edges\n\n\ndepth discontinuities\nsurface orientation discontinuities\nreflectance discontinuities\nillumination discontinuities (shadows)"
+  },
+  {
+    "objectID": "lec1.html#texture",
+    "href": "lec1.html#texture",
+    "title": "Computer vision: intro",
+    "section": "Texture",
+    "text": "Texture"
+  },
+  {
+    "objectID": "lec1.html#optical-flow",
+    "href": "lec1.html#optical-flow",
+    "title": "Computer vision: intro",
+    "section": "Optical flow",
+    "text": "Optical flow"
+  },
+  {
+    "objectID": "lec1.html#segmentation",
+    "href": "lec1.html#segmentation",
+    "title": "Computer vision: intro",
+    "section": "Segmentation",
+    "text": "Segmentation"
+  },
+  {
+    "objectID": "lec1.html#applications",
+    "href": "lec1.html#applications",
+    "title": "Computer vision: intro",
+    "section": "Applications",
+    "text": "Applications\n\n\nunderstanding human actions\ncaptioning\ngeometry reconstruction\nimage transformation\nmovement control"
+  },
+  {
+    "objectID": "lec1.html#augmented-reality",
+    "href": "lec1.html#augmented-reality",
+    "title": "Computer vision: intro",
+    "section": "Augmented Reality",
+    "text": "Augmented Reality"
+  },
+  {
+    "objectID": "lec1.html#augmented-reality-1",
+    "href": "lec1.html#augmented-reality-1",
+    "title": "Computer vision: intro",
+    "section": "Augmented Reality",
+    "text": "Augmented Reality"
+  },
+  {
+    "objectID": "lec1.html#augmented-reality-2",
+    "href": "lec1.html#augmented-reality-2",
+    "title": "Computer vision: intro",
+    "section": "Augmented Reality",
+    "text": "Augmented Reality"
+  },
+  {
+    "objectID": "lec1.html#autonomous-driving",
+    "href": "lec1.html#autonomous-driving",
+    "title": "Computer vision: intro",
+    "section": "Autonomous driving",
+    "text": "Autonomous driving\n\n\nobject detection and lane recognition\nadaptive cruise control\nreal-time environmental perception and decision-making"
+  },
+  {
+    "objectID": "lec1.html#opencv",
+    "href": "lec1.html#opencv",
+    "title": "Computer vision: intro",
+    "section": "OpenCV",
+    "text": "OpenCV\n\nwhen?: at Intel in 1999.\ngoal: democratize computer vision"
+  },
+  {
+    "objectID": "lec1.html#architecture",
+    "href": "lec1.html#architecture",
+    "title": "Computer vision: intro",
+    "section": "Architecture",
+    "text": "Architecture"
+  },
+  {
+    "objectID": "lec1.html#opencv-modules",
+    "href": "lec1.html#opencv-modules",
+    "title": "Computer vision: intro",
+    "section": "OpenCV modules",
+    "text": "OpenCV modules"
+  },
+  {
+    "objectID": "lec1.html#features-1",
+    "href": "lec1.html#features-1",
+    "title": "Computer vision: intro",
+    "section": "Features",
+    "text": "Features\nThe library has more than 2500 optimized algorithms for:\n\nface recognition\nobject identification\nhuman action classification\nobject tracking\n3D model extraction\naugmented reality"
+  },
+  {
+    "objectID": "lec1.html#where-is-opencv-5",
+    "href": "lec1.html#where-is-opencv-5",
+    "title": "Computer vision: intro",
+    "section": "Where is OpenCV 5?",
+    "text": "Where is OpenCV 5?\n\nWill the future be open? Or will our algorithms be lost in time, like tears in rain?\n\n\nhttps://opencv.org/blog/where-is-opencv-5"
+  },
+  {
+    "objectID": "lec1.html#yolo",
+    "href": "lec1.html#yolo",
+    "title": "Computer vision: intro",
+    "section": "YOLO",
+    "text": "YOLO\nA single convolutional network simultaneously predicts multiple bounding boxes and class probabilities for those boxes \n\n\n\nYou Only Look Once: Unified, Real-Time Object Detection (https://arxiv.org/pdf/1506.02640)"
+  },
+  {
+    "objectID": "lec1.html#yolo-model",
+    "href": "lec1.html#yolo-model",
+    "title": "Computer vision: intro",
+    "section": "YOLO model",
+    "text": "YOLO model\nDetection as a regression problem"
+  },
+  {
+    "objectID": "lec1.html#yolo-architecture",
+    "href": "lec1.html#yolo-architecture",
+    "title": "Computer vision: intro",
+    "section": "YOLO architecture",
+    "text": "YOLO architecture"
+  },
+  {
+    "objectID": "lec1.html#detrs",
+    "href": "lec1.html#detrs",
+    "title": "Computer vision: intro",
+    "section": "DETRs",
+    "text": "DETRs\nEnd-to-end Transformer-based detectors (DETRs)\n\n\n\nEnd-to-End Object Detection with Transformers (https://arxiv.org/pdf/2005.12872)"
+  },
+  {
+    "objectID": "lec1.html#rt-detr",
+    "href": "lec1.html#rt-detr",
+    "title": "Computer vision: intro",
+    "section": "RT-DETR",
+    "text": "RT-DETR"
+  },
+  {
+    "objectID": "lec1.html#segment-anything",
+    "href": "lec1.html#segment-anything",
+    "title": "Computer vision: intro",
+    "section": "Segment Anything",
+    "text": "Segment Anything\nFoundation model for image segmentation  \n\n\nSegment Anything (https://arxiv.org/pdf/2304.02643)"
+  },
+  {
+    "objectID": "lec1.html#segment-anything-1",
+    "href": "lec1.html#segment-anything-1",
+    "title": "Computer vision: intro",
+    "section": "Segment Anything",
+    "text": "Segment Anything"
+  },
+  {
+    "objectID": "lec1.html#natural-language-supervision",
+    "href": "lec1.html#natural-language-supervision",
+    "title": "Computer vision: intro",
+    "section": "Natural Language Supervision",
+    "text": "Natural Language Supervision\n\n\n\nLearning Transferable Visual Models From Natural Language Supervision (https://arxiv.org/pdf/2103.00020)"
+  },
+  {
+    "objectID": "lec1.html#basic-image-operations",
+    "href": "lec1.html#basic-image-operations",
+    "title": "Computer vision: intro",
+    "section": "Basic image operations",
+    "text": "Basic image operations\nReading\n\nPython codeExample\n\n\n\nretval = cv2.imread( filename[, flags] )\n\n\n\n\nimport cv2\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nimg=cv2.imread(\"img/yolo_detection_system.png\", cv2.IMREAD_GRAYSCALE)\n\n#Displaying image using plt.imshow() method\nplt.imshow(img)\n\n\n\n\n\n\n\nFigure 1: Image reading example\n\n\n\n\n\n\n\n\nWriting\n\nPython codeExample\n\n\n\ncv2.imwrite( filename, img[, params] )\n\n\n\n\ncv2.imwrite(\"new_file.jpg\", img)\n\nTrue\n\n\n\n\n\nDimensions\n\n\nprint(\"Image size (H, W, C) is:\", img.shape)\n\nImage size (H, W, C) is: (466, 2140)"
+  },
+  {
+    "objectID": "lec1.html#image-cropping",
+    "href": "lec1.html#image-cropping",
+    "title": "Computer vision: intro",
+    "section": "Image cropping",
+    "text": "Image cropping\n\ncropped = img[100:300, 500:800]\nplt.imshow(cropped)"
+  },
+  {
+    "objectID": "lec1.html#image-resizing-rotation",
+    "href": "lec1.html#image-resizing-rotation",
+    "title": "Computer vision: intro",
+    "section": "Image resizing / rotation",
+    "text": "Image resizing / rotation\nResizing\n\nPython codeExample\n\n\n\ndst = resize( src, dsize[, dst[, fx[, fy[, interpolation]]]] )\n\n\n\n\nresized = cv2.resize(img, None, fx=0.1, fy=0.1)\nplt.imshow(resized)\n\n\n\n\n\n\n\n\n\n\n\nRotation\n\nPython codeExample\n\n\n\ndst = cv.flip( src, flipCode )\n\n\n\n\nrotated = cv2.flip(img, 0)\nplt.imshow(rotated)\n\n\n\n\n\n\n\n\n\nrotated = cv2.flip(img, 1)\nplt.imshow(rotated)\n\n\n\n\n\n\n\n\n\nrotated = cv2.flip(img, -1)\nplt.imshow(rotated)"
+  },
+  {
+    "objectID": "lec1.html#image-annotation",
+    "href": "lec1.html#image-annotation",
+    "title": "Computer vision: intro",
+    "section": "Image annotation",
+    "text": "Image annotation\n\nPython codeExample\n\n\n\nimg = cv2.line(img, pt1, pt2, color[, thickness[, lineType[, shift]]])\nimg = cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]])\nimg = cv2.rectangle(img, pt1, pt2, color[, thickness[, lineType[, shift]]])\n\n\n\n\nannotated = cv2.line(img, (200, 100), (800, 100), (0, 255, 255), thickness=50, lineType=cv2.LINE_AA);\n\nplt.imshow(annotated)\n\n\n\n\n\n\n\n\n\nannotated2 = cv2.circle(annotated, (200,200), 100, (0, 0, 255), thickness=20, lineType=cv2.LINE_AA);\nplt.imshow(annotated2)"
+  },
+  {
+    "objectID": "lec1.html#adding-text",
+    "href": "lec1.html#adding-text",
+    "title": "Computer vision: intro",
+    "section": "Adding text",
+    "text": "Adding text\n\nPython codeExample\n\n\n\nimg = cv2.putText(img, text, org, fontFace, fontScale, color[, thickness[, lineType[, bottomLeftOrigin]]])\n\n\n\n\nimageText = img.copy()\ntext = \"Random text\"\nfontScale = 5.3\nfontFace = cv2.FONT_HERSHEY_PLAIN\nfontColor = (0, 255, 0)\nfontThickness = 5\n\ncv2.putText(imageText, text, (100, 300), fontFace, fontScale, fontColor, fontThickness, cv2.LINE_AA);\n\n# Display the image\nplt.imshow(imageText)"
+  },
+  {
+    "objectID": "lec1.html#image-thresholding",
+    "href": "lec1.html#image-thresholding",
+    "title": "Computer vision: intro",
+    "section": "Image Thresholding",
+    "text": "Image Thresholding\n\nPython codeExample\n\n\n\nretval, dst = cv2.threshold( src, thresh, maxval, type[, dst] )\n\n\n\n\nretval, img_thresh = cv2.threshold(img, 100, 255, cv2.THRESH_BINARY)\n\n# Show the images\nplt.figure(figsize=[18, 5])\n\nplt.subplot(121);plt.imshow(img, cmap=\"gray\");  plt.title(\"Original\")\nplt.subplot(122);plt.imshow(img_thresh, cmap=\"gray\");plt.title(\"Thresholded\")\n\nprint(img_thresh.shape)\n\n(466, 2140)"
+  },
+  {
+    "objectID": "lec1.html#haar-cascade-classifiers",
+    "href": "lec1.html#haar-cascade-classifiers",
+    "title": "Computer vision: intro",
+    "section": "Haar cascade classifiers",
+    "text": "Haar cascade classifiers\nA Haar feature is essentially calculations that are performed on adjacent rectangular regions at a specific location in a detection window."
+  },
+  {
+    "objectID": "lec1.html#code-example",
+    "href": "lec1.html#code-example",
+    "title": "Computer vision: intro",
+    "section": "Code example",
+    "text": "Code example\n\nPreparationExecution\n\n\n\n# Load the Haar Cascade Classifier\nface_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')\n\n# Read the image\nimg = cv2.imread('diverse_faces.jpg')\nplt.imshow(img)\n\n\n\n\n\n\n\n\n\n\n\ngray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\n\n# Detect faces\nfaces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)\n\n# Draw rectangles around faces\nfor (x, y, w, h) in faces:\n    cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)\nplt.imshow(img)"
+  },
+  {
+    "objectID": "lec1.html#pose-estimation",
+    "href": "lec1.html#pose-estimation",
+    "title": "Computer vision: intro",
+    "section": "Pose estimation",
+    "text": "Pose estimation"
+  },
+  {
+    "objectID": "lec1.html#pose-estimation-1",
+    "href": "lec1.html#pose-estimation-1",
+    "title": "Computer vision: intro",
+    "section": "Pose estimation",
+    "text": "Pose estimation\n\nimport os\nfrom IPython.display import YouTubeVideo, display, Image\n\nprotoFile   = \"pose_deploy_linevec_faster_4_stages.prototxt\"\nweightsFile = os.path.join(\"model\", \"pose_iter_160000.caffemodel\")\nnet = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)\nim = cv2.imread(\"jump.png\") #\"Tiger_Woods_crop.png\")\nim = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)\n\ninWidth  = im.shape[1]\ninHeight = im.shape[0]\n\nnPoints = 15\nPOSE_PAIRS = [\n    [0, 1],\n    [1, 2],\n    [2, 3],\n    [3, 4],\n    [1, 5],\n    [5, 6],\n    [6, 7],\n    [1, 14],\n    [14, 8],\n    [8, 9],\n    [9, 10],\n    [14, 11],\n    [11, 12],\n    [12, 13],\n]\n\nnetInputSize = (368, 368)\ninpBlob = cv2.dnn.blobFromImage(im, 1.0 / 255, netInputSize, (0, 0, 0), swapRB=True, crop=False)\nnet.setInput(inpBlob)\n\n# Forward Pass\noutput = net.forward()\n\n# Display probability maps\nplt.figure(figsize=(20, 5))\nfor i in range(nPoints):\n    probMap = output[0, i, :, :]\n    displayMap = cv2.resize(probMap, (inWidth, inHeight), cv2.INTER_LINEAR)\n\n    plt.subplot(2, 8, i + 1)\n    plt.axis(\"off\")\n    plt.imshow(displayMap, cmap=\"jet\")"
+  },
+  {
+    "objectID": "lec1.html#pose-estimation-2",
+    "href": "lec1.html#pose-estimation-2",
+    "title": "Computer vision: intro",
+    "section": "Pose estimation",
+    "text": "Pose estimation\n\n# X and Y Scale\nscaleX = inWidth  / output.shape[3]\nscaleY = inHeight / output.shape[2]\n\n# Empty list to store the detected keypoints\npoints = []\n\n# Treshold\nthreshold = 0.1\n\nfor i in range(nPoints):\n    # Obtain probability map\n    probMap = output[0, i, :, :]\n\n    # Find global maxima of the probMap.\n    minVal, prob, minLoc, point = cv2.minMaxLoc(probMap)\n\n    # Scale the point to fit on the original image\n    x = scaleX * point[0]\n    y = scaleY * point[1]\n\n    if prob &gt; threshold:\n        # Add the point to the list if the probability is greater than the threshold\n        points.append((int(x), int(y)))\n    else:\n        points.append(None)\n\nimPoints = im.copy()\nimSkeleton = im.copy()\n\n# Draw points\nfor i, p in enumerate(points):\n    cv2.circle(imPoints, p, 8, (255, 255, 0), thickness=-1, lineType=cv2.FILLED)\n    cv2.putText(imPoints, \"{}\".format(i), p, cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, lineType=cv2.LINE_AA)\n\n# Draw skeleton\nfor pair in POSE_PAIRS:\n    partA = pair[0]\n    partB = pair[1]\n\n    if points[partA] and points[partB]:\n        cv2.line(imSkeleton, points[partA], points[partB], (255, 255, 0), 2)\n        cv2.circle(imSkeleton, points[partA], 8, (255, 0, 0), thickness=-1, lineType=cv2.FILLED)\n\nplt.figure() #figsize=(50, 50))\n\nplt.subplot(121)\nplt.axis(\"off\")\nplt.imshow(imPoints)\n\nplt.subplot(122)\nplt.axis(\"off\")\nplt.imshow(imSkeleton)"
+  },
+  {
+    "objectID": "lec1.html#east",
+    "href": "lec1.html#east",
+    "title": "Computer vision: intro",
+    "section": "EAST",
+    "text": "EAST\n\n\n\nEAST: An Efficient and Accurate Scene Text Detector"
+  },
+  {
+    "objectID": "lec1.html#east-1",
+    "href": "lec1.html#east-1",
+    "title": "Computer vision: intro",
+    "section": "EAST",
+    "text": "EAST"
+  },
+  {
+    "objectID": "lec1.html#east-2",
+    "href": "lec1.html#east-2",
+    "title": "Computer vision: intro",
+    "section": "EAST",
+    "text": "EAST\n\n# load the input image and grab the image dimensions\nimage = cv2.imread(\"img/chocolate.png\")\norig = image.copy()\n(H, W) = image.shape[:2]\n\nwidth = 320\nheight = 320\n# set the new width and height and then determine the ratio in change\n# for both the width and height\n(newW, newH) = (width, height)\nrW = W / float(newW)\nrH = H / float(newH)\n\n# resize the image and grab the new image dimensions\nimage = cv2.resize(image, (newW, newH))\n(H, W) = image.shape[:2]"
+  },
+  {
+    "objectID": "lec1.html#east-3",
+    "href": "lec1.html#east-3",
+    "title": "Computer vision: intro",
+    "section": "EAST",
+    "text": "EAST\n\n# define the two output layer names for the EAST detector model that\n# we are interested -- the first is the output probabilities and the\n# second can be used to derive the bounding box coordinates of text\nlayerNames = [\n    \"feature_fusion/Conv_7/Sigmoid\",\n    \"feature_fusion/concat_3\"]\n\n# load the pre-trained EAST text detector\nprint(\"[INFO] loading EAST text detector...\")\nnet = cv2.dnn.readNet(\"frozen_east_text_detection.pb\")\n\n# construct a blob from the image and then perform a forward pass of\n# the model to obtain the two output layer sets\nblob = cv2.dnn.blobFromImage(image, 1.0, (W, H),\n                             (123.68, 116.78, 103.94), swapRB=True, crop=False)\n\n[INFO] loading EAST text detector..."
+  },
+  {
+    "objectID": "lec1.html#east-4",
+    "href": "lec1.html#east-4",
+    "title": "Computer vision: intro",
+    "section": "EAST",
+    "text": "EAST\n\nimport time\nfrom imutils.object_detection import non_max_suppression\n\n\nconfidence = 0.5\n\nstart = time.time()\nnet.setInput(blob)\n(scores, geometry) = net.forward(layerNames)\nend = time.time()\n\n# show timing information on text prediction\nprint(\"[INFO] text detection took {:.6f} seconds\".format(end - start))\n\n# grab the number of rows and columns from the scores volume, then\n# initialize our set of bounding box rectangles and corresponding\n# confidence scores\n(numRows, numCols) = scores.shape[2:4]\nrects = []\nconfidences = []\n\n[INFO] text detection took 0.099429 seconds"
+  },
+  {
+    "objectID": "lec1.html#east-5",
+    "href": "lec1.html#east-5",
+    "title": "Computer vision: intro",
+    "section": "EAST",
+    "text": "EAST\n\n# loop over the number of rows\nfor y in range(0, numRows):\n    # extract the scores (probabilities), followed by the geometrical\n    # data used to derive potential bounding box coordinates that\n    # surround text\n    scoresData = scores[0, 0, y]\n    xData0 = geometry[0, 0, y]\n    xData1 = geometry[0, 1, y]\n    xData2 = geometry[0, 2, y]\n    xData3 = geometry[0, 3, y]\n    anglesData = geometry[0, 4, y]\n\n    # loop over the number of columns\n    for x in range(0, numCols):\n        # if our score does not have sufficient probability, ignore it\n        if scoresData[x] &lt; confidence:\n            continue\n\n        # compute the offset factor as our resulting feature maps will\n        # be 4x smaller than the input image\n        (offsetX, offsetY) = (x * 4.0, y * 4.0)\n\n        # extract the rotation angle for the prediction and then\n        # compute the sin and cosine\n        angle = anglesData[x]\n        cos = np.cos(angle)\n        sin = np.sin(angle)\n\n        # use the geometry volume to derive the width and height of\n        # the bounding box\n        h = xData0[x] + xData2[x]\n        w = xData1[x] + xData3[x]\n\n        # compute both the starting and ending (x, y)-coordinates for\n        # the text prediction bounding box\n        endX = int(offsetX + (cos * xData1[x]) + (sin * xData2[x]))\n        endY = int(offsetY - (sin * xData1[x]) + (cos * xData2[x]))\n        startX = int(endX - w)\n        startY = int(endY - h)\n\n        # add the bounding box coordinates and probability score to\n        # our respective lists\n        rects.append((startX, startY, endX, endY))\n        confidences.append(scoresData[x])"
+  },
+  {
+    "objectID": "lec1.html#east-6",
+    "href": "lec1.html#east-6",
+    "title": "Computer vision: intro",
+    "section": "EAST",
+    "text": "EAST\n\n\n# apply non-maxima suppression to suppress weak, overlapping bounding\n# boxes\nboxes = non_max_suppression(np.array(rects), probs=confidences)\n\n# loop over the bounding boxes\nfor (startX, startY, endX, endY) in boxes:\n    # scale the bounding box coordinates based on the respective\n    # ratios\n    startX = int(startX * rW)\n    startY = int(startY * rH)\n    endX = int(endX * rW)\n    endY = int(endY * rH)\n\n    # draw the bounding box on the image\n    cv2.rectangle(orig, (startX, startY), (endX, endY), (0, 255, 0), 2)\n\n# show the output image\nplt.imshow(orig)"
+  },
+  {
+    "objectID": "lec1.html#image-segmentation",
+    "href": "lec1.html#image-segmentation",
+    "title": "Computer vision: intro",
+    "section": "Image segmentation",
+    "text": "Image segmentation\n\n\nPreparationGrayscaleOtsuNoise removal\n\n\n\nimport cv2\nimport numpy as np\nfrom IPython.display import Image, display\nfrom matplotlib import pyplot as plt\n\n# Plot the image\ndef imshow(img, ax=None):\n    if ax is None:\n        plt.imshow(img)\n    else:\n        ax.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))\n        ax.axis('off')\n\n#Image loading\nimg = cv2.imread(\"img/coins.png\")\n# Show image\nimshow(img)\n\n\n\n\n\n\n\n\n\n\n\n#image grayscale conversion\ngray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\nimshow(gray)\n\n\n\n\n\n\n\n\n\n\n\n#Threshold Processing\nret, bin_img = cv2.threshold(gray,\n                            0, 255, \n                            cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)\nimshow(bin_img)\n\n\n\n\n\n\n\n\n\n\n\nkernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))\nbin_img = cv2.morphologyEx(bin_img, \n                        cv2.MORPH_OPEN,\n                        kernel,\n                        iterations=2)\nimshow(bin_img)"
+  },
+  {
+    "objectID": "lec1.html#image-segmentation-1",
+    "href": "lec1.html#image-segmentation-1",
+    "title": "Computer vision: intro",
+    "section": "Image segmentation",
+    "text": "Image segmentation\n\nBg/fg/unknownMarkersFinal\n\n\n\n# Create subplots with 1 row and 2 columns\nfig, axes = plt.subplots(nrows=2, ncols=2, figsize=(8, 8))\n# sure background area\nsure_bg = cv2.dilate(bin_img, kernel, iterations=3)\nimshow(sure_bg, axes[0,0])\naxes[0, 0].set_title('Sure Background')\n\n# Distance transform\ndist = cv2.distanceTransform(bin_img, cv2.DIST_L2, 5)\nimshow(dist, axes[0,1])\naxes[0, 1].set_title('Distance Transform')\n\n#foreground area\nret, sure_fg = cv2.threshold(dist, 0.5 * dist.max(), 255, cv2.THRESH_BINARY)\nsure_fg = sure_fg.astype(np.uint8) \nimshow(sure_fg, axes[1,0])\naxes[1, 0].set_title('Sure Foreground')\n\n# unknown area\nunknown = cv2.subtract(sure_bg, sure_fg)\nimshow(unknown, axes[1,1])\naxes[1, 1].set_title('Unknown')\n\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n# Marker labelling\n# sure foreground \nret, markers = cv2.connectedComponents(sure_fg)\n\n# Add one to all labels so that background is not 0, but 1\nmarkers += 1\n# mark the region of unknown with zero\nmarkers[unknown == 255] = 0\n\nfig, ax = plt.subplots(figsize=(6, 6))\nax.imshow(markers, cmap=\"tab20b\")\nax.axis('off')\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n# watershed Algorithm\nmarkers = cv2.watershed(img, markers)\n\nfig, ax = plt.subplots(figsize=(5, 5))\nax.imshow(markers, cmap=\"tab20b\")\nax.axis('off')\nplt.show()\n\n\nlabels = np.unique(markers)\n\ncoins = []\nfor label in labels[2:]: \n\n# Create a binary image in which only the area of the label is in the foreground \n#and the rest of the image is in the background \n    target = np.where(markers == label, 255, 0).astype(np.uint8)\n\n# Perform contour extraction on the created binary image\n    contours, hierarchy = cv2.findContours(\n        target, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE\n    )\n    coins.append(contours[0])\n\n# Draw the outline\nimg = cv2.drawContours(img, coins, -1, color=(0, 23, 223), thickness=2)\nimshow(img)"
+  },
+  {
+    "objectID": "lec1.html#overlays",
+    "href": "lec1.html#overlays",
+    "title": "Computer vision: intro",
+    "section": "Overlays",
+    "text": "Overlays\n\n\n\nPython codeOutputOutput 2\n\n\n\nimport cv2\nimport numpy as np\n\n# Load the Haar Cascade XML file for face detection\nface_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')\neye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')\n\n# Load the accessory image\naccessory_image = cv2.imread('img/ar_overlay.png', cv2.IMREAD_UNCHANGED)\n\n# Initialize the video capture\nvideo_capture = cv2.VideoCapture(0)\n\nwhile True:\n    # Read the video frame\n    ret, frame = video_capture.read()\n\n    # Convert the frame to grayscale\n    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)\n\n    # Perform face detection\n    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))\n\n    # Iterate over detected faces\n    for (x, y, w, h) in faces:\n        # Resize the accessory image to fit the face\n        resized_accessory = cv2.resize(accessory_image, (w, h))\n        \n        # Calculate the region of interest (ROI) for the accessory\n        roi = frame[y:y+h, x:x+w]\n\n        # Create a mask for the accessory\n        accessory_mask = resized_accessory[:, :, 3] / 255.0\n        bg_mask = 1.0 - accessory_mask\n\n        # Blend the accessory and the frame\n        accessory_pixels = resized_accessory[:, :, 0:3]\n        bg_pixels = roi[:, :, 0:3]\n\n        blended_pixels = (accessory_pixels * accessory_mask[:, :, np.newaxis]) + (bg_pixels * bg_mask[:, :, np.newaxis])\n\n        # Replace the ROI with the blended image\n        frame[y:y+h, x:x+w] = blended_pixels\n\n    # Display the resulting frame\n    cv2.imshow('Face Detection with Accessories', frame)\n\n    # Break the loop if 'q' is pressed\n    if cv2.waitKey(1) & 0xFF == ord('q'):\n        break\n\n# Release the video capture\nvideo_capture.release()\n\n# Close all OpenCV windows\ncv2.destroyAllWindows()"
+  },
+  {
+    "objectID": "lec1.html#yolo-object-recognition",
+    "href": "lec1.html#yolo-object-recognition",
+    "title": "Computer vision: intro",
+    "section": "YOLO object recognition",
+    "text": "YOLO object recognition\n\n\nInitializationDetectionResult\n\n\n\nimport matplotlib.pyplot as plt\n\nimport datetime\nfrom ultralytics import YOLO\nimport cv2\nfrom imutils.video import VideoStream\n\n# define some constants\nCONFIDENCE_THRESHOLD = 0.8\nGREEN = (0, 255, 0)\n\n# load the pre-trained YOLOv8n model\nmodel = YOLO(\"yolov8n.pt\")\n\n\n\n\nframe = cv2.imread('./img/yolo_test.png')\ndetections = model(frame)[0]\nfor box in detections.boxes:\n    #extract the label name\n    label=model.names.get(box.cls.item())\n        \n    # extract the confidence (i.e., probability) associated with the detection\n    data=box.data.tolist()[0]\n    confidence = data[4]\n\n    # filter out weak detections by ensuring the\n    # confidence is greater than the minimum confidence\n    if float(confidence) &lt; CONFIDENCE_THRESHOLD:\n        continue\n\n    # if the confidence is greater than the minimum confidence,\n    # draw the bounding box on the frame\n    xmin, ymin, xmax, ymax = int(data[0]), int(data[1]), int(data[2]), int(data[3])\n    cv2.rectangle(frame, (xmin, ymin) , (xmax, ymax), GREEN, 2)\n\n    #draw confidence and label\n    y = ymin - 15 if ymin - 15 &gt; 15 else ymin + 15\n    cv2.putText(frame, \"{} {:.1f}%\".format(label,float(confidence*100)), (xmin, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, GREEN, 2)\n\n\n0: 576x640 4 persons, 12 cars, 41.2ms\nSpeed: 2.0ms preprocess, 41.2ms inference, 1.0ms postprocess per image at shape (1, 3, 576, 640)\n\n\n\n\n\nplt.imshow(frame)"
+  },
+  {
+    "objectID": "lec1.html#thank-you",
+    "href": "lec1.html#thank-you",
+    "title": "Computer vision: intro",
+    "section": "Thank you",
+    "text": "Thank you"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Computer vision course",
+    "section": "",
+    "text": "Slides"
+  },
+  {
+    "objectID": "index.html#lectures",
+    "href": "index.html#lectures",
+    "title": "Computer vision course",
+    "section": "",
+    "text": "Slides"
+  }
+]
