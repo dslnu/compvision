@@ -1,0 +1,13 @@
+---
+title: "Lab 1"
+---
+
+1. Please enroll at [OpenCV intro course](https://opencv.org/university/free-opencv-course/).
+
+2. Complete the following items in the course:
+
+   2.1. `Getting Started with Images`.
+
+   2.2. `Basic Image Manipulation`.
+
+3. Practice cropping/resizing on a couple of images downloaded from the net.
