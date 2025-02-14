@@ -7,6 +7,13 @@
     "text": "Computer vision course"
   },
   {
+    "objectID": "lab1.html",
+    "href": "lab1.html",
+    "title": "Lab 1",
+    "section": "",
+    "text": "Please enroll at OpenCV intro course.\nComplete the following items in the course:\n2.1. Getting Started with Images.\n2.2. Basic Image Manipulation.\nPractice cropping/resizing on a couple of images downloaded from the net."
+  },
+  {
     "objectID": "lec1.html#euclid",
     "href": "lec1.html#euclid",
     "title": "Computer vision: intro",
@@ -564,13 +571,13 @@
     "href": "index.html",
     "title": "Computer vision course",
     "section": "",
-    "text": "Slides"
+    "text": "Slides\n\n\n\nLab1"
   },
   {
     "objectID": "index.html#lectures",
     "href": "index.html#lectures",
     "title": "Computer vision course",
     "section": "",
-    "text": "Slides"
+    "text": "Slides\n\n\n\nLab1"
   }
 ]
