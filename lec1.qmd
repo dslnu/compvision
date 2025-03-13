@@ -15,6 +15,10 @@ format:
   revealjs:
     slide-number: true
     theme: default
+    multiplex:
+      url: 'https://mplex.vitv.ly'
+      id: 'c40463e3600cc67e5d2121505322e229edebf4a5667d7b6ff62412c142bdbe7b'
+      secret: 'ef417e8ad09a02004bea46823ac890a6'
 ---
 
 # History

@@ -7,5 +7,9 @@ title: "Computer vision course"
 ### Lec 1: intro
 [Slides](./lec1.qmd)
 
+### Lec 2: basic concepts
+[Slides](./lec2.qmd)
+
+
 ### Lab1
 [Lab1](./lab1.qmd)
