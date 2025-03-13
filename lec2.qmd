@@ -85,9 +85,7 @@ Introduced by Larry G. Roberts in 1963.
 - these objects will be resting on a white horizontal ground plane
 - we can build these objects by cutting, folding, and gluing together some pieces of colored paper 
 
-![A world of simple objects. Print, cut, and build your own blocks
-world!](img/simplesystem/simpleObjects.png){#fig-simpleObjects
-width="80%"}
+![A world of simple objects. Print, cut, and build your own blocks world!](img/simplesystem/simpleObjects.png){#fig-simpleObjects width="80%"}
 :::
 
 # A Simple Image Formation Model
@@ -124,6 +122,10 @@ width="100%"}
 described by parallel projection.
 :::
 
+
+## A Simple Image Formation Model
+![](img/simplesystem/projection_rays.png)
+
 ## A Simple Image Formation Model {.smaller}
 
 - how a point in world coordinates $(X,Y,Z)$ projects into the image plane
@@ -134,12 +136,16 @@ system and the image center is perpendicular to the image plane
 - the angle $\theta$ is the angle between this line and the $Z$-axis
 - the image is parameterized by coordinates $(x,y)$.
 
+
 ## A Simple Image Formation Model
 ![](img/simplesystem/projection2.png){#fig-projection width="100%"}
 
 ::: aside
 The $Z$-axis is identical to the $Y$-axis up to a sign change and a scaling.
 :::
+
+## A Simple Image Formation Model
+![](img/simplesystem/camera_plane.png)
 
 ## A Simple Image Formation Model
 :::{.callout-important icon=false}
@@ -151,6 +157,9 @@ coordinates to image coordinates via a constant factor $\alpha$
 - for now we assume that pixels are square and we will see a more general form in
 ) and that this constant is $\alpha=1$. 
 :::
+
+## A Simple Image Formation Model
+![](img/simplesystem/world_image_coords.png)
 
 ## A Simple Image Formation Model
 :::{.callout-tip icon=false}
@@ -171,6 +180,8 @@ From the camera, a point moving parallel to the $Z$-axis will be
 indistinguishable from a point moving parallel to the $Y$-axis.
 :::
 
+# From Images to Edges and Useful Features {#sec-algo_simple_world}
+
 ## A Simple Goal
 
 :::{.callout-tip icon=false}
@@ -190,7 +201,13 @@ combination of the surface albedo and illumination (color of the light
 sources and interreflections).
 :::
 
-# From Images to Edges and Useful Features {#sec-algo_simple_world}
+
+## From Images to Edges
+![](img/simplesystem/coord_recovery.png){width=60%}
+
+::: aside
+We want to recover $X(x,y),Y(x,y), Z(x,y)$ from $l(x,y)$
+:::
 
 ## From Images to Edges
 
@@ -209,7 +226,21 @@ In this **representation**, the image is an array of intensity values
 (color values) indexed by location.
 :::
 
+## From Images to Edges {.smaller}
+:::: {.columns}
+
+::: {.column width="60%"}
+![](img/simplesystem/sinha_adelson.png)
+:::
+
+::: {.column width="40%"}
+Any planar line-drawing is geometrically
+consistent with infinitely many 3-D structures (Sinha-Adelson '93 paper)
+:::
+::::
+
 ## From Images to Edges
+
 ![Image as a surface. The vertical axis corresponds to image intensity.
 For clarity here, we have reversed the vertical axis. Dark values are
 shown higher than lighter
@@ -289,7 +320,7 @@ An image regions where there are strong changes of the image with respect to loc
 ## From Images to Edges
 ![](img/simplesystem/edgeLabeling.png){#fig-edgeLabeling width="90%"}
 
-## From Images to Edges and Useful Features
+## From Images to Edges
 :::{.callout-note icon=false}
 ## Image edge classification
 
@@ -308,7 +339,7 @@ An image regions where there are strong changes of the image with respect to loc
     light.
 :::
 
-## From Images to Edges and Useful Features
+## From Images to Edges
 :::{.callout-tip icon=false}
 ## Object boundary classification
 
@@ -439,6 +470,9 @@ $\theta(x,y)$.
 @fig-gradient and @fig-edge visualize the edges and the normal vector on each edge.
 :::
 
+## From Images to Edges
+![](img/simplesystem/from_edges_to_xyz.png)
+
 # From Edges to Surfaces
 
 ## From Edges to Surfaces 
@@ -483,8 +517,10 @@ psychology**.
 ![](img/simplesystem/figure-ground.png){width="30%"}
 
 ::: aside
-The classical visual illusion ``two faces or a vase'' is an example of **figure-ground** segmentation problem.
+The classical visual illusion "two faces or a vase" is an example of **figure-ground** segmentation problem.
 :::
+
+
 
 ## From Edges to Surfaces
 
@@ -646,6 +682,15 @@ shared by the image and the 3D world.
 :::
 
 ## From Edges to Surfaces
+![](img/simplesystem/generic_view_assumption.png){width=80%}
+
+::: aside
+Generic view assumption: the observer should not assume that he has a special
+position in the world… The most generic interpretation is to see a vertical line as a
+vertical line in 3D.
+:::
+
+## From Edges to Surfaces
 :::{.callout-note icon=false}
 ## Application to simple world
 
@@ -691,6 +736,8 @@ $$\begin{aligned}
 $${#eq-derivative_Y_along_edge}
 :::
 
+![](img/simplesystem/y_derivative_edge.png)
+
 ## From Edges to Surfaces
 :::{.callout-note icon=false}
 ## Formulation
@@ -706,9 +753,17 @@ where the vector $\bf t$ denotes direction tangent to
 the edge, ${\bf t}=(-n_y, n_x)$. 
 :::
 
+:::: {.columns}
+
+::: {.column width="30%"}
 ![](img/simplesystem/tangent.png)
+:::
 
+::: {.column width="70%"}
+![](img/simplesystem/x_derivative_edge.png)
 
+:::
+::::
 ## From Edges to Surfaces
 :::{.callout-note icon=false}
 ## Formulation
@@ -726,7 +781,7 @@ owns the boundary.
 ## From Edges to Surfaces
 :::{.callout-tip}
 ## Approximation
-In this chapter, we represent the world coordinates $X(x,y)$, $Y(x,y)$,
+We represent the world coordinates $X(x,y)$, $Y(x,y)$,
 and $Z(x,y)$ as images where the coordinates $x,y$ correspond to pixel
 locations.
 
@@ -744,228 +799,278 @@ Similar relationships can be obtained from equations
 :::
 
 ## From Edges to Surfaces
-### Constraint Propagation {#sec-constraint}
 
-Most of the image consists of flat regions where we do not have such
-edge constraints and we thus don't have enough local information to
-infer the surface orientation. Therefore, we need some criteria in order
-to propagate information from the boundaries, where we do have
-information about the 3D structure, into the interior of flat image
-regions. This problem is common in many visual domains.
+### No edges
 
+![](img/simplesystem/derivative_no_edges.png)
 
-
-## From Edges to Surfaces
-:::{.column-margin}
-An image patch without context is not enough to infer its 3D shape.
-
-![](img/simplesystem/cube_propagartion_1.png){width="44%"} 
-
-The same patch shown in the original image (right):
-
-![](img/simplesystem/cube_propagartion_2.png){width="44%"}
-
-Information about its 3D orientation its propagated from the surrounding edges.
+::: aside
+The “Rule of Nothing” (Ted Adelson): where you see nothing, assume nothing happens, and just propagate information from where something happened.
 :::
 
 ## From Edges to Surfaces
+:::{.callout-tip icon=false}
+## Constraint Propagation {#sec-constraint}
+Most of the image consists of flat regions where we do not have such
+edge constraints and we thus don't have enough local information to
+infer the surface orientation.
 
+Therefore, we need some criteria in order
+to propagate information from the boundaries, where we do have
+information about the 3D structure, into the interior of flat image
+regions. 
+:::
+
+:::{.callout-note icon=false}
+This problem is common in many visual domains.
+:::
+## From Edges to Surfaces {.smaller}
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](img/simplesystem/cube_propagartion_1.png){width="60%"} 
+
+An image patch without context is not enough to infer its 3D shape.
+:::
+
+::: {.column width="50%"}
+
+![](img/simplesystem/cube_propagartion_2.png){width="60%"}
+
+The same patch shown in the original image. Information about its 3D orientation its propagated from the surrounding edges.
+:::
+::::
+
+## From Edges to Surfaces
+
+:::{.callout-tip icon=false}
+## Assumption
 In this case we will assume that the object faces are planar. Thus, flat
 image regions impose the following constraints on the local 3D
 structure: $$\begin{aligned}
 \partial^2 Y / \partial x^2 &= 0  \\
 \partial^2 Y / \partial y^2 &= 0 \\  
 \partial^2 Y / \partial y \partial x &= 0 
-\end{aligned}$$ That is, the second order derivative of $Y$ should be
+\end{aligned}$$
+
+That is, the second order derivative of $Y$ should be
 zero. As before, we want to approximate the continuous partial
-derivatives. The approximation to the second derivative can be obtained
+derivatives.
+:::
+
+## From Edges to Surfaces
+:::{.callout-note icon=false}
+## Approximation
+The approximation to the second derivative can be obtained
 by applying twice the first order derivative approximated by equations
 (@eq-image_partial_derivatives_aprox). The result is
-$\partial^2 Y / \partial x^2 \simeq 2Y(x,y)-Y(x+1,y)-Y(x-1,y)$, and
-similarly for $\partial^2 X / \partial x^2$.
 
+$$\partial^2 Y / \partial x^2 \simeq 2Y(x,y)-Y(x+1,y)-Y(x-1,y),
+$$
+and similarly for $\partial^2 X / \partial x^2$.
+:::
 
 ## From Edges to Surfaces
 ### A Simple Inference Scheme
 
+:::{.callout-tip icon=false}
+## Equation system
 All the different constraints described previously can be written as an
 overdetermined system of linear equations. Each equation will have the
 form: $$\begin{aligned}
 \mathbf{a}_i \mathbf{Y} = b_i
-\end{aligned}$$ where $\mathbf{Y}$ is a vectorized version of the image
+\end{aligned}$$
+
+where $\mathbf{Y}$ is a vectorized version of the image
 $Y$ (i.e., all rows of pixels have been concatenated into a flat
-vector). Note that there might be many more equations than there are
+vector).
+:::
+
+:::{.callout-note}
+There might be many more equations than there are
 image pixels.
+:::
 
 ## From Edges to Surfaces
+:::{.callout-important icon=false}
+## Translation
 We can translate all the constraints described in the previous sections
-into this form. For instance, if the index $i$ corresponds to one of the
+into this form:
+
+- for instance, if the index $i$ corresponds to one of the
 pixels inside one of the planar faces of a foreground object, then there
-will be three equations. One of the planarity constraint can be written
-as $\mathbf{a}_i = [0, \dots, 0, -1, 2, -1, 0, \dots, 0]$, $b_i=0$, and
-analogous equations can be written for the other two.
+will be three equations
+- one of the planarity constraint can be written
+as $$\mathbf{a}_i = [0, \dots, 0, -1, 2, -1, 0, \dots, 0], \, b_i=0,$$
+and analogous equations can be written for the other two.
+:::
 
 ## From Edges to Surfaces
+:::{.callout-tip}
+## How to solve?
 We can solve the system of equations by minimizing the following cost
 function: 
 $$\begin{aligned}
 J = \sum_i (\mathbf{a}_i\mathbf{Y} - b_i)^2
-\end{aligned}$$ where the sum is over all the constraints.
+\end{aligned}$$
+where the sum is over all the constraints.
+:::
 
-If some constraints are more important than others, it is possible to
-also add a weight $w_i$. 
+:::{.callout-note icon=false}
+## Weights
+If some constraints are more important than others, we can use weights $w_i$. 
 $$\begin{aligned}
 J = \sum_i w_i (\mathbf{a}_i \mathbf{Y} - b_i)^2
 \end{aligned}$$
+:::
+
 
 ## From Edges to Surfaces
+:::{.callout-note}
 Our formulation has resulted on a big system of linear constraints
-(there are more equations than there are pixels in the image). It is
-convenient to write the system of equations in matrix form:
+(there are more equations than there are pixels in the image).
+:::
+
+:::{.callout-tip icon=false}
+## System of equations
+It is convenient to write the system of equations in matrix form:
 $$\begin{aligned}
 \mathbf{A} \mathbf{Y}  = \mathbf{b}
 \end{aligned}$$ 
 
 where row $i$ of the matrix ${\bf A}$ contains the
-constraint coefficients $\mathbf{a}_i$. The system of equations is
-overdetermined ($\mathbf{A}$ has more rows than columns). We can use the
+constraint coefficients $\mathbf{a}_i$.
+
+The system of equations is
+overdetermined ($\mathbf{A}$ has more rows than columns).
+:::
+
+
+## From Edges to Surfaces
+:::{.callout-note icon=false}
+## Solution
+We can use the
 pseudoinverse to compute the solution: 
 
 $$\begin{aligned}
 \bf Y = (\mathbf{A}^T \mathbf{A})^{-1} \mathbf{A}^T \mathbf{b}
-\end{aligned}$$ This problem can be solved efficiently as the matrix
+\end{aligned}$$
+
+This problem can be solved efficiently as the matrix
 $\mathbf{A}$ is very sparse (most of the elements are zero).
+:::
 
-## From Edges to Surfaces
 
-### Results
+## Results
 
-@fig-worldCoordinates shows the resulting world coordinates $X(x,y)$,
-$Y(x,y)$, $Z(x,y)$ for each pixel. The world coordinates are shown here
-as images with the gray level coding the value of each coordinate (black
+![](img/simplesystem/worldCoordinates.png){#fig-worldCoordinates width="100%"}
+
+::: aside
+Coordinates shows the resulting world coordinates $X(x,y)$,
+$Y(x,y)$, $Z(x,y)$ for each pixel.
+
+World coordinates $X$, $Y$, and $Z$ are shown as images
+with the gray level coding the value of each coordinate (black
 corresponds to the value 0).
+:::
 
-![The solution to our vision problem for the input image of
-@fig-edgeLabeling. World coordinates $X$, $Y$, and $Z$ are shown as
-images.](img/simplesystem/worldCoordinates.png){#fig-worldCoordinates
-width="100%"}
 
-## From Edges to Surfaces
+## Results
+
+:::{.callout-note icon=false}
+## What do we get?
 There are a few things to reflect on:
 
--   It works. At least it seems to work pretty well. Knowing how well it
+-   **It works**. At least it seems to work pretty well. Knowing how well it
     works will require having some way of evaluating performance. This
     will be important.
 
--   But it cannot possibly work all the time. We have made lots of
+-   But it cannot possibly work **all the time**. We have made lots of
     assumptions that will work only in this simple world. The rest of
     the book will involve upgrading this approach to apply to more
     general input images.
-
-Despite that this approach will not work on general images, many of the
-general ideas will carry over to more sophisticated solutions (e.g.,
-gather and propagate local evidence). One thing to think about is if
-information about 3D orientation is given in the edges, how does that
-information propagate to the flat areas of the image in order to produce
-the correct solution in those regions?
-
-## From Edges to Surfaces
-Evaluation of performance is a very important topic. Here, one simple
-way to visually verify that the solution is correct is to render the
-objects under new view points. @fig-views shows the reconstructed 3D
-scene rendered under different view points to show that the 3D structure
-has been accurately captured.
-
-## From Edges to Surfaces
-![To show that the algorithm for 3D interpretation gives reasonable
-results we can re-render the inferred 3D structure from different
-viewpoints.](img/simplesystem/views.png){#fig-views width="100%"}
-
-You may also try the interactive demo below to see the 3D structure. (The demo supports mouse zoom in and out, pan, and rotate.)
-<iframe src="./nb/demo_simple_sys/surf_with_colors.html" width="100%" height="500px" frameborder="0"></iframe>
-
-
-
-# Generalization
-## Generalization
-
-One desired property of any vision system is it ability to
-**generalize** outside of the domain for which it was designed to
-operate. In the approach presented in this chapter, the domain of images
-the algorithm is expected to work is defined by the assumptions
-described in . Later in the book, when we describe learning-based
-approaches, the training dataset will specify the domain. What happens
-when assumptions are violated? Or when the images contain configurations
-that we did not consider while designing the algorithm?
-
-
-## Generalization
-:::{.column-margin}
-**Out of domain generalization** refers to the ability of a system to operate outside the **domain** for which it was designed.
 :::
 
-Let's run the algorithm with shapes that do not satisfy the assumptions
-that we have made for the simple world. @fig-out_of_domain shows the
-result when the input image violates several assumptions we made
-(shadows are not soft and the green cube occludes the red one) and when
-it has one object on top of the other, a configuration that we did not
-consider while designing the algorithm. In this case the result happens
-to be good, but it could have gone wrong.
+:::{.callout-important}
+Despite that this approach will not work on general images, many of the
+general ideas will carry over to more sophisticated solutions (e.g.,
+gather and propagate local evidence). 
+:::
+## Results
+
+:::{.callout-tip}
+## Evaluation
+Evaluationof performance is a very important topic. Here, one simple
+way to visually verify that the solution is correct is to render the
+objects under new view points. 
+:::
+
+![](img/simplesystem/views.png){#fig-views width="80%"}
+
+::: aside
+To show that the algorithm for 3D interpretation gives reasonable results we can re-render the inferred 3D structure from different viewpoints.
+:::
+
+## Results
+You may also try the interactive demo below to see the 3D structure. (The demo supports mouse zoom in and out, pan, and rotate.)
+<iframe src="./nb/demo_simple_sys/surf_with_colors.html"></iframe>
+
+
 
 ## Generalization
-![Reconstruction of an out-of-domain example. The input image violates
-several assumptions we made (shadows are not soft and the green cube
-occludes the red one) and it has one object on top of the other, a
-configuration that we did not consider while designing the algorithm.
-](img/simplesystem/out_of_domain_example.png){#fig-out_of_domain
-width="100%"}
 
-@fig-impossible shows the *impossible steps* inspired from @Adelson99.
-On the left side, this shape looks rectangular and the stripes appear to
-be painted on the surface. On the right side, the shape looks as though
-it has steps, with the stripes corresponding to shading due to the
-surface orientation. In the middle, the shape is ambiguous.
-@fig-impossible shows the reconstructed 3D scene for this unlikely
-image. The system has tried to approximate the constraints, but for this
-shape it is not possible to exactly satisfy all the constraints.
+:::{.callout-note icon=false}
+One desired property of any vision system is it ability to
+**generalize** outside of the domain for which it was designed to
+operate.
+
+**Out of domain generalization** refers to the ability of a system to operate outside the **domain** for which it was designed.
+
+We have listed several assumptions earlier.
+
+In learning-based approaches the training dataset specifies the domain. 
+:::
 
 ## Generalization
-![Reconstruction of an impossible figure (inspired from @Adelson99): the
-reconstruction agrees with our 3D
-perception.](img/simplesystem/steps.png){#fig-impossible
-width="100%"}
 
-# Concluding Remarks
+![](img/simplesystem/out_of_domain_example.png){#fig-out_of_domain width="65%"}
+
+::: aside
+
+- shadows are not soft 
+- the green cube occludes the red one
+- one object on top of the other
+:::
+
+## Generalization
+![Impossible steps](img/simplesystem/steps.png){#fig-impossible width="100%"}
+
+::: aside
+
+- **left**: this shape looks rectangular and the stripes appear to
+be painted on the surface
+- **right**: the shape looks as though it has steps, with the stripes corresponding to shading due to the
+surface orientation
+- **middle**: the shape is ambiguous.
+:::
+
 ## Concluding Remarks
 
-Despite having a 3D representation of the structure of the scene, the
-system is still unaware of the fact that the scene is composed of a set
-of distinct objects. For instance, as the system lacks a representation
-of which objects are actually present in the scene, we cannot visualize
-the occluded parts. The system cannot do simple tasks like counting the
-number of cubes.
+:::{.callout-note}
+## Lack of knowledge
+- the system is still unaware of the fact that the scene is composed of a set of distinct objects
+- as the system lacks a representation of which objects are actually present in the scene, we cannot visualize the occluded parts
+:::
+
 
 ## Concluding Remarks
-A different approach to the one discussed here is model-based scene
-interpretation, where we could have a set of predefined models of the
-objects that can be present in the scene and the system can try to
+:::{.callout-tip icon=false}
+## A different approach: model-based
+We could have a set of predefined models of the objects that can be present in the scene and the system can try to
 decide if they are present or not in the image, and recover their
 parameters (i.e., pose, color).
 
-## Concluding Remarks
 Recognition allows indexing properties that are not directly available
-in the image. For instance, we can infer the shape of the invisible
-surfaces. Recognizing each geometric figure also implies extracting the
-parameters of each figure (i.e., pose, size).
-
-## Concluding Remarks
-Given a detailed representation of the world, we could render the image
-back, or at least some aspects of it. We can check that we are
-understanding things correctly and judge if we can make verifiable
-predictions, such as what we would see if we looked behind the object.
-Closing the loop between interpretation and input will be productive at
-some point.
-
-In this chapter, besides introducing some useful vision concepts, we
-also made use of mathematical tools from algebra and calculus that you
-should be familiar with.
+in the image. 
+:::
