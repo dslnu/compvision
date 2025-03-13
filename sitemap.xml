@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://dslnu.github.io/compvision/nb/cv24_pset1/pset1_2024.html</loc>
+    <lastmod>2025-03-13T15:50:31.768Z</lastmod>
+  </url>
+  <url>
     <loc>https://dslnu.github.io/compvision/about.html</loc>
     <lastmod>2025-02-14T08:20:10.898Z</lastmod>
   </url>
   <url>
-    <loc>https://dslnu.github.io/compvision/lab1.html</loc>
-    <lastmod>2025-02-14T08:51:03.343Z</lastmod>
+    <loc>https://dslnu.github.io/compvision/lec2.html</loc>
+    <lastmod>2025-03-13T15:44:04.959Z</lastmod>
   </url>
   <url>
     <loc>https://dslnu.github.io/compvision/lec1.html</loc>
     <lastmod>2025-03-07T09:54:55.099Z</lastmod>
   </url>
   <url>
+    <loc>https://dslnu.github.io/compvision/lab1.html</loc>
+    <lastmod>2025-02-14T08:51:03.343Z</lastmod>
+  </url>
+  <url>
     <loc>https://dslnu.github.io/compvision/index.html</loc>
-    <lastmod>2025-02-14T08:43:19.546Z</lastmod>
+    <lastmod>2025-03-13T09:19:41.063Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dslnu.github.io/compvision/nb/pset2_2024/pset2_2024.html</loc>
+    <lastmod>2024-02-22T15:02:45.000Z</lastmod>
   </url>
 </urlset>

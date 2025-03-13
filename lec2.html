@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/tabby.min.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
+
+  <meta name="author" content="Vitaly Vlasov">
+  <title>Computer Vision – Basic concepts</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-2f366650f320edcfcf53d73c80250a32.css">
+  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Basic concepts</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Vitaly Vlasov 
+</div>
+        <p class="quarto-title-affiliation">
+            Lviv University
+          </p>
+    </div>
+</div>
+
+</section>
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1>Introduction</h1>
+
+</section>
+<section id="goal" class="slide level2">
+<h2>Goal</h2>
+<ul>
+<li>simulate original research from 1960s</li>
+<li>hand-design an end-to-end visual system.</li>
+<li>cover some of the main concepts</li>
+</ul>
+</section>
+<section id="history" class="slide level2">
+<h2>History</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Seymour Papert (1966)</strong></p>
+</div>
+<div class="callout-content">
+<blockquote>
+<p>“The summer vision project is an attempt to use our summer workers effectively in the construction of a significant part of a visual system.”</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="callout callout-warning no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Too optimistic!</p>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-setup" class="slide level2">
+<h2>Problem setup</h2>
+<p>Vision has many different goals:</p>
+<ul>
+<li>object recognition</li>
+<li>scene interpretation</li>
+<li><strong>three-dimensional [3D] interpretation</strong></li>
+</ul>
+</section></section>
+<section>
+<section id="a-simple-world-the-blocks-world" class="title-slide slide level1 center">
+<h1>A Simple World: The Blocks World</h1>
+
+</section>
+<section id="simple-world" class="slide level2">
+<h2>Simple world</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Block world</strong></p>
+</div>
+<div class="callout-content">
+<p>Introduced by Larry G. Roberts in 1963.</p>
+<p><img data-src="img/simplesystem/roberts_phd_figure.png" height="400"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-world-1" class="slide level2">
+<h2>Simple world</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Description</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>world is composed of a very simple (yet varied) set of objects.</li>
+<li>these simple objects are composed of flat surfaces that can be horizontal or vertical</li>
+<li>these objects will be resting on a white horizontal ground plane</li>
+<li>we can build these objects by cutting, folding, and gluing together some pieces of colored paper</li>
+</ul>
+<div id="fig-simpleObjects" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-simpleObjects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/simplesystem/simpleObjects.png" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simpleObjects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A world of simple objects. Print, cut, and build your own blocks world!
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="a-simple-image-formation-model" class="title-slide slide level1 center">
+<h1>A Simple Image Formation Model</h1>
+
+</section>
+<section id="a-simple-image-formation-model-1" class="slide level2">
+<h2>A Simple Image Formation Model</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Parallel of orthographic projection</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>light rays travel parallel to each other and perpendicular to the camera plane</li>
+<li>this type of projection produces images in which objects do not change size as they move closer or farther from the camera</li>
+<li>parallel lines in 3D remain parallel in the 2D image.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="a-simple-image-formation-model-2" class="slide level2">
+<h2>A Simple Image Formation Model</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Perspective projection</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>the image is formed by the convergence of the light rays into a single point (<strong>focal point</strong>).</li>
+<li>most pictures taken with a camera will be better described by <strong>perspective projection</strong></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="a-simple-image-formation-model-3" class="slide level2">
+<h2>A Simple Image Formation Model</h2>
+<div id="fig-parallelProjection" class="quarto-float quarto-figure quarto-figure-center" width="100%">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-parallelProjection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/simplesystem/parallelProjection.png" id="fig-parallelProjection" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-parallelProjection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2
+</figcaption>
+</figure>
+</div>
+
+<aside><div>
+<ol type="a">
+<li><p>Note that near edges are larger than far edges, and parallel lines in 3D are not parallel.</p></li>
+<li><p>Picture taken from far away using zoom resulting in an image that can be described by parallel projection.</p></li>
+</ol>
+</div></aside></section>
+<section id="a-simple-image-formation-model-4" class="slide level2">
+<h2>A Simple Image Formation Model</h2>
+
+<img data-src="img/simplesystem/projection_rays.png" class="r-stretch"></section>
+<section id="a-simple-image-formation-model-5" class="slide level2 smaller">
+<h2>A Simple Image Formation Model</h2>
+<ul>
+<li>how a point in world coordinates <span class="math inline">\((X,Y,Z)\)</span> projects into the image plane</li>
+<li>camera center is inside the 3D plane <span class="math inline">\(X=0\)</span></li>
+<li>the horizontal axis of the camera (<span class="math inline">\(x\)</span>) is parallel to the ground plane (<span class="math inline">\(Y=0\)</span>)</li>
+<li>the camera is tilted so that the line connecting the origin of the world coordinates system and the image center is perpendicular to the image plane</li>
+<li>the angle <span class="math inline">\(\theta\)</span> is the angle between this line and the <span class="math inline">\(Z\)</span>-axis</li>
+<li>the image is parameterized by coordinates <span class="math inline">\((x,y)\)</span>.</li>
+</ul>
+</section>
+<section id="a-simple-image-formation-model-6" class="slide level2">
+<h2>A Simple Image Formation Model</h2>
+<div id="fig-projection" class="quarto-float quarto-figure quarto-figure-center" width="100%">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/simplesystem/projection2.png" id="fig-projection" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3
+</figcaption>
+</figure>
+</div>
+
+<aside><div>
+<p>The <span class="math inline">\(Z\)</span>-axis is identical to the <span class="math inline">\(Y\)</span>-axis up to a sign change and a scaling.</p>
+</div></aside></section>
+<section id="a-simple-image-formation-model-7" class="slide level2">
+<h2>A Simple Image Formation Model</h2>
+
+<img data-src="img/simplesystem/camera_plane.png" class="r-stretch"></section>
+<section id="a-simple-image-formation-model-8" class="slide level2">
+<h2>A Simple Image Formation Model</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Features</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>the origin of the world coordinates projects on the origin of the image coordinates</li>
+<li>therefore, the world point <span class="math inline">\((0,0,0)\)</span> projects into <span class="math inline">\((0,0)\)</span></li>
+<li>the resolution of the image will also affect the transformation from world coordinates to image coordinates via a constant factor <span class="math inline">\(\alpha\)</span></li>
+<li>for now we assume that pixels are square and we will see a more general form in ) and that this constant is <span class="math inline">\(\alpha=1\)</span>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="a-simple-image-formation-model-9" class="slide level2">
+<h2>A Simple Image Formation Model</h2>
+
+<img data-src="img/simplesystem/world_image_coords.png" class="r-stretch"></section>
+<section id="a-simple-image-formation-model-10" class="slide level2">
+<h2>A Simple Image Formation Model</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Coordinate transformation</strong></p>
+</div>
+<div class="callout-content">
+<p>The transformation between world coordinates and image coordinates can be written as follows:</p>
+<p><span id="eq-projection"><span class="math display">\[\begin{aligned}
+x &amp;=&amp; X \\
+y &amp;=&amp;  \cos(\theta) Y - \sin(\theta) Z
+\end{aligned} \qquad(1)\]</span></span></p>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>With this particular parametrization of the world and camera coordinate systems, the world coordinates <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span> are mixed after projection. From the camera, a point moving parallel to the <span class="math inline">\(Z\)</span>-axis will be indistinguishable from a point moving parallel to the <span class="math inline">\(Y\)</span>-axis.</p>
+</div></aside></section></section>
+<section>
+<section id="sec-algo_simple_world" class="title-slide slide level1 center">
+<h1>From Images to Edges and Useful Features</h1>
+
+</section>
+<section id="a-simple-goal" class="slide level2">
+<h2>A Simple Goal</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Our goal</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>recovering the <strong>world coordinates</strong> of all the pixels seen by the camera.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-warning no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Non-goal</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>recover the <strong>actual color</strong> of the surface seen by each pixel <span class="math inline">\((x,y)\)</span></li>
+</ul>
+<p>(requires discounting for illumination effects as the color of the pixel is a combination of the surface albedo and illumination (color of the light sources and interreflections).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges" class="slide level2">
+<h2>From Images to Edges</h2>
+<p><img data-src="img/simplesystem/coord_recovery.png" style="width:60.0%"></p>
+
+<aside><div>
+<p>We want to recover <span class="math inline">\(X(x,y),Y(x,y), Z(x,y)\)</span> from <span class="math inline">\(l(x,y)\)</span></p>
+</div></aside></section>
+<section id="from-images-to-edges-1" class="slide level2">
+<h2>From Images to Edges</h2>
+<p>The observed image is a function: <span class="math display">\[\ell(x,y)\]</span></p>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Description</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><strong>input</strong>: location, <span class="math inline">\((x,y)\)</span></li>
+<li><strong>output</strong>: the intensity at that location.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>What is an image?</strong></p>
+</div>
+<div class="callout-content">
+<p>In this <strong>representation</strong>, the image is an array of intensity values (color values) indexed by location.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-2" class="slide level2 smaller">
+<h2>From Images to Edges</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><img data-src="img/simplesystem/sinha_adelson.png"></p>
+</div><div class="column" style="width:40%;">
+<p>Any planar line-drawing is geometrically consistent with infinitely many 3-D structures (Sinha-Adelson ’93 paper)</p>
+</div></div>
+</section>
+<section id="from-images-to-edges-3" class="slide level2">
+<h2>From Images to Edges</h2>
+
+<img data-src="img/simplesystem/imageAsSurface.jpg" style="width:100.0%" class="r-stretch quarto-figure-center" id="fig-imageAsSurface"><p class="caption">
+Figure&nbsp;4: Image as a surface. The vertical axis corresponds to image intensity. For clarity here, we have reversed the vertical axis. Dark values are shown higher than lighter values.
+</p></section>
+<section id="from-images-to-edges-4" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Benefits</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>this representation is ideal for determining the light intensity originating from different directions in space and striking the camera plane, as it provides explicit representation of this information</li>
+<li>the array of pixel intensities, <span class="math inline">\(\ell(x,y)\)</span>, is a reasonable representation as input to the early stages of visual processing because, although we do not know the distance of surfaces in the world, the direction of each light ray in the world is well defined.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Alternative options</strong></p>
+</div>
+<div class="callout-content">
+<p>Other initial representations:</p>
+<ul>
+<li>images could be coded in the Fourier domain</li>
+<li>pixels could combine light coming in different directions.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-5" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>We are interested in interpreting the 3D structure of the scene and the objects within.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Challenges</strong></p>
+</div>
+<div class="callout-content">
+<p>Need to represent:</p>
+<ul>
+<li>boundaries between objects</li>
+<li>changes in the surface orientation</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-6" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Alternative representation</strong></p>
+</div>
+<div class="callout-content">
+<p>For scene interpretation:</p>
+<ul>
+<li>collections of small image patches</li>
+<li>regions of uniform properties</li>
+<li><strong>edges</strong></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-7" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Alternative initial representations</strong></p>
+</div>
+<div class="callout-content">
+<p>Gekko’s eye. Their pupil has a four-diamond-shaped pinhole aperture that could allow them to encode distance to a target in the retinal image. <img data-src="img/simplesystem/Tokay-Gecko-Eye-1440x954.jpg" style="width:60.0%"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-8" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What is an edge</strong></p>
+</div>
+<div class="callout-content">
+<p>An image regions where there are strong changes of the image with respect to location.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Edge factors</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>occlusion boundaries</li>
+<li>changes in surface orientation</li>
+<li>changes in surface albedo</li>
+<li>shadows</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-9" class="slide level2">
+<h2>From Images to Edges</h2>
+
+<img data-src="img/simplesystem/edgeLabeling.png" id="fig-edgeLabeling" style="width:90.0%" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;5
+</p></section>
+<section id="from-images-to-edges-10" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Image edge classification</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><strong>Object boundaries</strong>: These indicate pixels that delineate the boundaries of any object. Boundaries between objects generally correspond to changes in surface color, texture, and orientation.</p></li>
+<li><p>Changes in <strong>surface orientation</strong>: These indicate locations where there are strong image variations due to changes in the surface orientations. A change in surface orientation produces changes in the image intensity because intensity is a function of the angle between the surface and the incident light.</p></li>
+<li><p><strong>Shadow edges</strong>: This can be harder than it seems. In this simple world, shadows are soft, creating slow transitions between dark and light.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-11" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Object boundary classification</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><strong>Contact edges</strong>: This is a boundary between two objects that are in physical contact. Therefore, there is no depth discontinuity.</p></li>
+<li><p><strong>Occlusion boundaries</strong>: Occlusion boundaries happen when an object is partially in front of another. Occlusion boundaries generally produce depth discontinuities. In this simple world, we will position the objects in such a way that objects do not occlude each other but they will occlude the background.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-12" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Challenges</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>in most natural scenes, this classification is very hard</li>
+<li>requires the interpretation of the scene at different levels.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-13" class="slide level2 smaller">
+<h2>From Images to Edges</h2>
+<p>First step: detecting candidate edges in the image.</p>
+<p>If we think of the image as a function <span class="math inline">\(\ell (x,y) \in C(\mathbb{R}^2)\)</span>, we can measure the degree of variation using the gradient:</p>
+<p><span class="math display">\[\begin{aligned}
+\nabla \ell = \left( \frac{\partial \ell}{\partial x}, \frac{\partial \ell}{\partial y} \right)
+\end{aligned}\]</span></p>
+<p><img data-src="img/simplesystem/gradient2.png" style="width:25.0%"></p>
+
+<aside><div>
+<p>The direction of the gradient indicates the direction in which the variation of intensities is larger. If we are on top of an edge, the direction of larger variation will be in the direction perpendicular to the edge.</p>
+</div></aside></section>
+<section id="from-images-to-edges-14" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>The image is not a continuous function as we only know the values of the <span class="math inline">\(\ell (x,y)\)</span> at discrete locations (pixels).</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Approximation</strong></p>
+</div>
+<div class="callout-content">
+<p>We approximate the partial derivatives by:</p>
+<p><span id="eq-image_partial_derivatives_aprox"><span class="math display">\[\begin{aligned}
+\frac{\partial \ell}{\partial x} &amp;\simeq \ell(x,y) - \ell(x-1,y) \\
+\frac{\partial \ell}{\partial y} &amp;\simeq \ell(x,y) - \ell(x,y-1)
+\end{aligned} \qquad(2)\]</span></span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-15" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Better approximation (TBD)</strong></p>
+</div>
+<div class="callout-content">
+<p>Combine the image pixels around <span class="math inline">\((x,y)\)</span> with the weights: <span class="math display">\[\begin{aligned}
+\frac{1}{4} \times
+\left [
+\begin{matrix}
+-1 &amp; 0 &amp; 1 \\
+-2 &amp; 0 &amp; 2 \\
+-1 &amp; 0 &amp; 1
+\end{matrix}
+\right ] \nonumber
+\end{aligned}\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-16" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Edge properties</strong></p>
+</div>
+<div class="callout-content">
+<p>From the image gradient, we can extract a number of interesting quantities: <span class="math display">\[\begin{aligned}
+    e(x,y) &amp;= \lVert \nabla \ell(x,y) \rVert   &amp; \quad\quad \triangleleft \quad \texttt{edge strength}\\
+    \theta(x,y) &amp;= \angle \nabla \ell =  \arctan \left( \frac{\partial \ell / \partial y}{\partial \ell / \partial x} \right) &amp; \quad\quad \triangleleft \quad \texttt{edge orientation}
+\end{aligned}\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><strong>edge strength</strong> is the gradient magnitude</li>
+<li><strong>edge orientation</strong> is perpendicular to the gradient direction</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-17" class="slide level2">
+<h2>From Images to Edges</h2>
+<p>The unit norm vector perpendicular to an edge is:</p>
+<p><span class="math display">\[\begin{aligned}
+{\bf n} = \frac{\nabla \ell}{\lVert \nabla \ell \rVert}
+\end{aligned}\]</span></p>
+</section>
+<section id="from-images-to-edges-18" class="slide level2">
+<h2>From Images to Edges</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Decision</strong></p>
+</div>
+<div class="callout-content">
+<p>Which pixels belong to:</p>
+<ul>
+<li>edges (regions of the image with sharp intensity variations)</li>
+<li>uniform regions (flat surfaces)</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>How?</strong></p>
+</div>
+<div class="callout-content">
+<p>By thresholding the edge strength <span class="math inline">\(e(x,y)\)</span>.</p>
+<p>In the pixels with edges, we can also measure the edge orientation <span class="math inline">\(\theta(x,y)\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-images-to-edges-19" class="slide level2">
+<h2>From Images to Edges</h2>
+<div id="fig-gradient" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-gradient-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/simplesystem/gradient.png" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gradient-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Gradient and edge types.
+</figcaption>
+</figure>
+</div>
+<div id="fig-edge" class="quarto-float quarto-figure quarto-figure-center" width="70%">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-edge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/simplesystem/edgeTypes.png" id="fig-edge" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-edge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7
+</figcaption>
+</figure>
+</div>
+
+<aside><div>
+<p><a href="#/fig-gradient" class="quarto-xref">Figure&nbsp;6</a> and <a href="#/fig-edge" class="quarto-xref">Figure&nbsp;7</a> visualize the edges and the normal vector on each edge.</p>
+</div></aside></section>
+<section id="from-images-to-edges-20" class="slide level2">
+<h2>From Images to Edges</h2>
+
+<img data-src="img/simplesystem/from_edges_to_xyz.png" class="r-stretch"></section></section>
+<section>
+<section id="from-edges-to-surfaces" class="title-slide slide level1 center">
+<h1>From Edges to Surfaces</h1>
+
+</section>
+<section id="from-edges-to-surfaces-1" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Objective</strong></p>
+</div>
+<div class="callout-content">
+<p>We want to recover world coordinates <span class="math inline">\(X(x,y)\)</span>, <span class="math inline">\(Y(x,y)\)</span>, and <span class="math inline">\(Z(x,y)\)</span> for each image location <span class="math inline">\((x,y)\)</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Steps</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>recovering the <span class="math inline">\(X\)</span> world coordinates is trivial as they are directly observed: for each pixel with image coordinates <span class="math inline">\((x,y)\)</span> the world coordinate is <span class="math inline">\(X(x,y) = x\)</span></li>
+<li>recovering <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span> will be harder as we only observe a mixture of the two world coordinates.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>Here we have written the world coordinates as functions of image location <span class="math inline">\((x,y)\)</span> to make explicit that we want to recover the 3D locations of the visible points.</p>
+<p>In this simple world, we will formulate this problem as a set of linear equations.</p>
+</div></aside></section>
+<section id="from-edges-to-surfaces-2" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Figure/Ground Segmentation</strong></p>
+</div>
+<div class="callout-content">
+<p>Segmentation of an image into figure and ground is a classical problem in human perception and computer vision that was introduced by <strong>Gestalt psychology</strong>.</p>
+</div>
+</div>
+</div>
+<p><img data-src="img/simplesystem/figure-ground.png" style="width:30.0%"></p>
+
+<aside><div>
+<p>The classical visual illusion “two faces or a vase” is an example of <strong>figure-ground</strong> segmentation problem.</p>
+</div></aside></section>
+<section id="from-edges-to-surfaces-3" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Segmentation: goal</strong></p>
+</div>
+<div class="callout-content">
+<p>Decide whether a pixel belongs to one of the <strong>foreground</strong> objects or to the <strong>background</strong>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Segmentation: basic approach</strong></p>
+</div>
+<div class="callout-content">
+<p>We can simply look at the <strong>color values</strong> of each pixel</p>
+<ul>
+<li>bright pixels that have low saturation (similar values of the red-blue-green [RBG] components) correspond to the white ground plane</li>
+<li>and the rest of the pixels are likely to belong to the colored blocks that compose our simple world</li>
+</ul>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>In general, the problem of <strong>image segmentation</strong> into distinct objects is a very challenging task.</p>
+</div></aside></section>
+<section id="from-edges-to-surfaces-4" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Background</strong></p>
+</div>
+<div class="callout-content">
+<p>If we assume that the background corresponds to a horizontal ground plane, then for all pixels that belong to the ground we can set <span class="math inline">\(Y(x,y)=0\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Objects</strong></p>
+</div>
+<div class="callout-content">
+<p>For pixels that belong to objects we will have to measure additional image properties before we can deduce any geometric scene constraints.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-5" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Occlusion Edges</strong></p>
+</div>
+<div class="callout-content">
+<p>An <strong>occlusion boundary</strong> separates two different surfaces at different distances from the observer.</p>
+<p>The object in front is the one owning the boundary.</p>
+</div>
+</div>
+</div>
+<p><img data-src="img/simplesystem/border_ownership.png" style="width:30.0%"></p>
+
+<aside><div>
+<p>Knowing who owns the boundary is important as an edge provides cues about the 3D geometry, but those cues only apply to the surface that owns the boundary.</p>
+</div></aside></section>
+<section id="from-edges-to-surfaces-6" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Assumption</strong></p>
+</div>
+<div class="callout-content">
+<p>In this simple world, we will assume that objects do not occlude each other (this can be relaxed) and that the only occlusion boundaries are the boundaries between the objects and the ground.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Not all boundaries between the objects and the ground correspond to depth gradients.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-7" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Contact Edges</strong></p>
+</div>
+<div class="callout-content">
+<p>Contact edges are boundaries between two distinct objects but where there exists no depth discontinuity.</p>
+<p>Despite that there is not a depth discontinuity, there is an occlusion here (as one surface is hidden behind another), and the edge shape is only owned by one of the two surfaces.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Calculation</strong></p>
+</div>
+<div class="callout-content">
+<p>If we assume that all the objects rest on the ground plane, then we can set <span class="math inline">\(Y(x,y)=0\)</span> on the contact edges.</p>
+<p>Contact edges can be detected as transitions between the object (above) and ground (below). In our simple world only horizontal edges can be contact edges.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-8" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+
+<img data-src="img/simplesystem/ground_figure_points.png" style="width:50.0%" class="r-stretch quarto-figure-center" id="fig-ground_figure_points"><p class="caption">
+Figure&nbsp;8: For each vertical line (shown in red), scanning from top to bottom, transitions from ground to figure are occlusion boundaries, and transitions from figure to ground are contact edges. This heuristic will fails when an object occludes another.
+</p></section>
+<section id="from-edges-to-surfaces-9" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Invariant Scene Properties (world <span class="math inline">\(\rightarrow\)</span> image)</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><strong>Collinearity</strong>: a straight 3D line will project into a straight line in the image.</p></li>
+<li><p><strong>Cotermination</strong>: if two or more 3D lines terminate at the same point, the corresponding projections will also terminate at a common point.</p></li>
+<li><p><strong>Smoothness</strong>: a smooth 3D curve will project into a smooth 2D curve.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+<img data-src="img/simplesystem/invariants.png" class="r-stretch"></section>
+<section id="from-edges-to-surfaces-10" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Reverse invariants (image <span class="math inline">\(\rightarrow\)</span> world)</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>a straight line in the image could correspond to a curved line in the 3D world but that happens to be precisely aligned with respect to the viewers point of view to appear as a straight line</li>
+<li>two lines that intersect in the image plane could be disjointed in the 3D space.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-11" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Reverse invariants (image <span class="math inline">\(\rightarrow\)</span> world)</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>if two lines coterminate in the image, then, one can conclude that it is very likely that they also touch each other in 3D</li>
+<li>if the 3D lines do not touch each other, then it will require a very specific alignment between the observer and the lines for them to appear to coterminate in the image. Therefore, one can safely conclude that the lines might also touch in 3D.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-12" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Nonaccidental properties</strong></p>
+</div>
+<div class="callout-content">
+<p>These properties are called <strong>nonaccidental properties</strong> because they will only be observed in the image if they also exist in the world or by accidental alignments between the observer and scene structures.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Generic view</strong></p>
+</div>
+<div class="callout-content">
+<p>Under a <strong>generic view</strong>, nonaccidental properties will be shared by the image and the 3D world.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-13" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<p><img data-src="img/simplesystem/generic_view_assumption.png" style="width:80.0%"></p>
+
+<aside><div>
+<p>Generic view assumption: the observer should not assume that he has a special position in the world… The most generic interpretation is to see a vertical line as a vertical line in 3D.</p>
+</div></aside></section>
+<section id="from-edges-to-surfaces-14" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Application to simple world</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>in the simple world all 3D edges are either vertical or horizontal</li>
+<li>under parallel projection and with the camera having its horizontal axis parallel to the ground, we know that vertical 3D lines will project into vertical 2D lines in the image</li>
+<li>horizontal lines will, in general, project into oblique lines</li>
+<li>therefore, we can assume than any vertical line in the image is also a vertical line in the world.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-15" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Challenge</strong></p>
+</div>
+<div class="callout-content">
+<p>The assumption that vertical 2D lines are also 3D vertical lines will not always work!</p>
+</div>
+</div>
+</div>
+<div id="fig-accidentalAlignments" class="quarto-float quarto-figure quarto-figure-center" width="100%">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-accidentalAlignments-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/simplesystem/accidentalAlignments.png" id="fig-accidentalAlignments" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-accidentalAlignments-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9
+</figcaption>
+</figure>
+</div>
+
+<aside><div>
+<p>In the case of the cube, there is a particular viewpoint that will make an horizontal line project into a vertical line, but this will require an accidental alignment between the cube and the line of sight of the observer.</p>
+</div></aside></section>
+<section id="from-edges-to-surfaces-16" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Formulation</strong></p>
+</div>
+<div class="callout-content">
+<p>We can now translate the inferred 3D edge orientation into linear constraints on the global 3D structure. We will formulate these constraints in terms of <span class="math inline">\(Y(x,y)\)</span>. Once <span class="math inline">\(Y(x,y)\)</span> is recovered we can also recover <span class="math inline">\(Z(x,y)\)</span> from <a href="#/eq-projection" class="quarto-xref">Equation&nbsp;1</a>.</p>
+<p>In a 3D vertical edge, using the projection equations, the derivative of <span class="math inline">\(Y\)</span> along the edge will be</p>
+<p><span id="eq-derivative_Y_along_edge"><span class="math display">\[\begin{aligned}
+\partial Y / \partial y &amp;= 1/ \cos(\theta)\end{aligned}
+\qquad(3)\]</span></span></p>
+</div>
+</div>
+</div>
+
+<img data-src="img/simplesystem/y_derivative_edge.png" class="r-stretch"></section>
+<section id="from-edges-to-surfaces-17" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Formulation</strong></p>
+</div>
+<div class="callout-content">
+<p>In a 3D horizontal edge, the coordinate <span class="math inline">\(Y\)</span> will not change. Therefore, the derivative along the edge should be zero:</p>
+<p><span id="eq-derivative_Y_along_edge_hor"><span class="math display">\[\begin{aligned}
+\partial Y / \partial {\bf t} &amp;= 0
+\end{aligned}
+\qquad(4)\]</span></span></p>
+<p>where the vector <span class="math inline">\(\bf t\)</span> denotes direction tangent to the edge, <span class="math inline">\({\bf t}=(-n_y, n_x)\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><img data-src="img/simplesystem/tangent.png"></p>
+</div><div class="column" style="width:70%;">
+<p><img data-src="img/simplesystem/x_derivative_edge.png"></p>
+</div></div>
+</section>
+<section id="from-edges-to-surfaces-18" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Formulation</strong></p>
+</div>
+<div class="callout-content">
+<p>We can write this derivative as a function of derivatives along the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> image coordinates: <span id="eq-derivative_Y_along_edge_tan"><span class="math display">\[\begin{aligned}
+\partial Y / \partial {\bf t} =  \nabla Y \cdot {\bf t} = -n_y \partial Y / \partial x + n_x \partial Y / \partial y
+\end{aligned} \qquad(5)\]</span></span></p>
+<p>When the edges coincide with occlusion edges, special care should be taken so that these constraints are only applied to the surface that owns the boundary.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-19" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Approximation</strong></p>
+</div>
+<div class="callout-content">
+<p>We represent the world coordinates <span class="math inline">\(X(x,y)\)</span>, <span class="math inline">\(Y(x,y)\)</span>, and <span class="math inline">\(Z(x,y)\)</span> as images where the coordinates <span class="math inline">\(x,y\)</span> correspond to pixel locations.</p>
+<p>Therefore, it is useful to <strong>approximate</strong> the partial derivatives in the same way that we approximated the image partial derivatives in equations (<a href="#/eq-image_partial_derivatives_aprox" class="quarto-xref">Equation&nbsp;2</a>). Using this approximation, <a href="#/eq-derivative_Y_along_edge" class="quarto-xref">Equation&nbsp;3</a> can be written as follows: <span class="math display">\[\begin{aligned}
+Y(x,y)-Y(x,y-1) &amp;= 1/ \cos(\theta)
+\end{aligned}\]</span></p>
+<p>Similar relationships can be obtained from equations <a href="#/eq-derivative_Y_along_edge_hor" class="quarto-xref">Equation&nbsp;4</a> and <a href="#/eq-derivative_Y_along_edge_tan" class="quarto-xref">Equation&nbsp;5</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-20" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<h3 id="no-edges">No edges</h3>
+<p><img data-src="img/simplesystem/derivative_no_edges.png"></p>
+
+<aside><div>
+<p>The “Rule of Nothing” (Ted Adelson): where you see nothing, assume nothing happens, and just propagate information from where something happened.</p>
+</div></aside></section>
+<section id="from-edges-to-surfaces-21" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Constraint Propagation</strong></p>
+</div>
+<div class="callout-content">
+<p>Most of the image consists of flat regions where we do not have such edge constraints and we thus don’t have enough local information to infer the surface orientation.</p>
+<p>Therefore, we need some criteria in order to propagate information from the boundaries, where we do have information about the 3D structure, into the interior of flat image regions.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>This problem is common in many visual domains.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-22" class="slide level2 smaller">
+<h2>From Edges to Surfaces</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="img/simplesystem/cube_propagartion_1.png" style="width:60.0%"></p>
+<p>An image patch without context is not enough to infer its 3D shape.</p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/simplesystem/cube_propagartion_2.png" style="width:60.0%"></p>
+<p>The same patch shown in the original image. Information about its 3D orientation its propagated from the surrounding edges.</p>
+</div></div>
+</section>
+<section id="from-edges-to-surfaces-23" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Assumption</strong></p>
+</div>
+<div class="callout-content">
+<p>In this case we will assume that the object faces are planar. Thus, flat image regions impose the following constraints on the local 3D structure: <span class="math display">\[\begin{aligned}
+\partial^2 Y / \partial x^2 &amp;= 0  \\
+\partial^2 Y / \partial y^2 &amp;= 0 \\  
+\partial^2 Y / \partial y \partial x &amp;= 0
+\end{aligned}\]</span></p>
+<p>That is, the second order derivative of <span class="math inline">\(Y\)</span> should be zero. As before, we want to approximate the continuous partial derivatives.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-24" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Approximation</strong></p>
+</div>
+<div class="callout-content">
+<p>The approximation to the second derivative can be obtained by applying twice the first order derivative approximated by equations (<a href="#/eq-image_partial_derivatives_aprox" class="quarto-xref">Equation&nbsp;2</a>). The result is</p>
+<p><span class="math display">\[\partial^2 Y / \partial x^2 \simeq 2Y(x,y)-Y(x+1,y)-Y(x-1,y),
+\]</span> and similarly for <span class="math inline">\(\partial^2 X / \partial x^2\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-25" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<h3 id="a-simple-inference-scheme">A Simple Inference Scheme</h3>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Equation system</strong></p>
+</div>
+<div class="callout-content">
+<p>All the different constraints described previously can be written as an overdetermined system of linear equations. Each equation will have the form: <span class="math display">\[\begin{aligned}
+\mathbf{a}_i \mathbf{Y} = b_i
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(\mathbf{Y}\)</span> is a vectorized version of the image <span class="math inline">\(Y\)</span> (i.e., all rows of pixels have been concatenated into a flat vector).</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>There might be many more equations than there are image pixels.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-26" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Translation</strong></p>
+</div>
+<div class="callout-content">
+<p>We can translate all the constraints described in the previous sections into this form:</p>
+<ul>
+<li>for instance, if the index <span class="math inline">\(i\)</span> corresponds to one of the pixels inside one of the planar faces of a foreground object, then there will be three equations</li>
+<li>one of the planarity constraint can be written as <span class="math display">\[\mathbf{a}_i = [0, \dots, 0, -1, 2, -1, 0, \dots, 0], \, b_i=0,\]</span> and analogous equations can be written for the other two.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-27" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>How to solve?</strong></p>
+</div>
+<div class="callout-content">
+<p>We can solve the system of equations by minimizing the following cost function: <span class="math display">\[\begin{aligned}
+J = \sum_i (\mathbf{a}_i\mathbf{Y} - b_i)^2
+\end{aligned}\]</span> where the sum is over all the constraints.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Weights</strong></p>
+</div>
+<div class="callout-content">
+<p>If some constraints are more important than others, we can use weights <span class="math inline">\(w_i\)</span>. <span class="math display">\[\begin{aligned}
+J = \sum_i w_i (\mathbf{a}_i \mathbf{Y} - b_i)^2
+\end{aligned}\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-28" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Our formulation has resulted on a big system of linear constraints (there are more equations than there are pixels in the image).</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>System of equations</strong></p>
+</div>
+<div class="callout-content">
+<p>It is convenient to write the system of equations in matrix form: <span class="math display">\[\begin{aligned}
+\mathbf{A} \mathbf{Y}  = \mathbf{b}
+\end{aligned}\]</span></p>
+<p>where row <span class="math inline">\(i\)</span> of the matrix <span class="math inline">\({\bf A}\)</span> contains the constraint coefficients <span class="math inline">\(\mathbf{a}_i\)</span>.</p>
+<p>The system of equations is overdetermined (<span class="math inline">\(\mathbf{A}\)</span> has more rows than columns).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="from-edges-to-surfaces-29" class="slide level2">
+<h2>From Edges to Surfaces</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<p>We can use the pseudoinverse to compute the solution:</p>
+<p><span class="math display">\[\begin{aligned}
+\bf Y = (\mathbf{A}^T \mathbf{A})^{-1} \mathbf{A}^T \mathbf{b}
+\end{aligned}\]</span></p>
+<p>This problem can be solved efficiently as the matrix <span class="math inline">\(\mathbf{A}\)</span> is very sparse (most of the elements are zero).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="results" class="slide level2">
+<h2>Results</h2>
+<div id="fig-worldCoordinates" class="quarto-float quarto-figure quarto-figure-center" width="100%">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-worldCoordinates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/simplesystem/worldCoordinates.png" id="fig-worldCoordinates" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-worldCoordinates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10
+</figcaption>
+</figure>
+</div>
+
+<aside><div>
+<p>Coordinates shows the resulting world coordinates <span class="math inline">\(X(x,y)\)</span>, <span class="math inline">\(Y(x,y)\)</span>, <span class="math inline">\(Z(x,y)\)</span> for each pixel.</p>
+<p>World coordinates <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>, and <span class="math inline">\(Z\)</span> are shown as images with the gray level coding the value of each coordinate (black corresponds to the value 0).</p>
+</div></aside></section>
+<section id="results-1" class="slide level2">
+<h2>Results</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>What do we get?</strong></p>
+</div>
+<div class="callout-content">
+<p>There are a few things to reflect on:</p>
+<ul>
+<li><p><strong>It works</strong>. At least it seems to work pretty well. Knowing how well it works will require having some way of evaluating performance. This will be important.</p></li>
+<li><p>But it cannot possibly work <strong>all the time</strong>. We have made lots of assumptions that will work only in this simple world. The rest of the book will involve upgrading this approach to apply to more general input images.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>Despite that this approach will not work on general images, many of the general ideas will carry over to more sophisticated solutions (e.g., gather and propagate local evidence).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="results-2" class="slide level2">
+<h2>Results</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Evaluation</strong></p>
+</div>
+<div class="callout-content">
+<p>Evaluationof performance is a very important topic. Here, one simple way to visually verify that the solution is correct is to render the objects under new view points.</p>
+</div>
+</div>
+</div>
+<div id="fig-views" class="quarto-float quarto-figure quarto-figure-center" width="80%">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-views-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/simplesystem/views.png" id="fig-views" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-views-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11
+</figcaption>
+</figure>
+</div>
+
+<aside><div>
+<p>To show that the algorithm for 3D interpretation gives reasonable results we can re-render the inferred 3D structure from different viewpoints.</p>
+</div></aside></section>
+<section id="results-3" class="slide level2">
+<h2>Results</h2>
+<p>You may also try the interactive demo below to see the 3D structure. (The demo supports mouse zoom in and out, pan, and rotate.) <iframe src="./nb/demo_simple_sys/surf_with_colors.html"></iframe></p>
+</section>
+<section id="generalization" class="slide level2">
+<h2>Generalization</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>One desired property of any vision system is it ability to <strong>generalize</strong> outside of the domain for which it was designed to operate.</p>
+<p><strong>Out of domain generalization</strong> refers to the ability of a system to operate outside the <strong>domain</strong> for which it was designed.</p>
+<p>We have listed several assumptions earlier.</p>
+<p>In learning-based approaches the training dataset specifies the domain.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="generalization-1" class="slide level2">
+<h2>Generalization</h2>
+<div id="fig-out_of_domain" class="quarto-float quarto-figure quarto-figure-center" width="65%">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-out_of_domain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/simplesystem/out_of_domain_example.png" id="fig-out_of_domain" style="width:65.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-out_of_domain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12
+</figcaption>
+</figure>
+</div>
+
+<aside><div>
+<ul>
+<li>shadows are not soft</li>
+<li>the green cube occludes the red one</li>
+<li>one object on top of the other</li>
+</ul>
+</div></aside></section>
+<section id="generalization-2" class="slide level2">
+<h2>Generalization</h2>
+<div id="fig-impossible" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-impossible-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/simplesystem/steps.png" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-impossible-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Impossible steps
+</figcaption>
+</figure>
+</div>
+
+<aside><div>
+<ul>
+<li><strong>left</strong>: this shape looks rectangular and the stripes appear to be painted on the surface</li>
+<li><strong>right</strong>: the shape looks as though it has steps, with the stripes corresponding to shading due to the surface orientation</li>
+<li><strong>middle</strong>: the shape is ambiguous.</li>
+</ul>
+</div></aside></section>
+<section id="concluding-remarks" class="slide level2">
+<h2>Concluding Remarks</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Lack of knowledge</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>the system is still unaware of the fact that the scene is composed of a set of distinct objects</li>
+<li>as the system lacks a representation of which objects are actually present in the scene, we cannot visualize the occluded parts</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="concluding-remarks-1" class="slide level2">
+<h2>Concluding Remarks</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>A different approach: model-based</strong></p>
+</div>
+<div class="callout-content">
+<p>We could have a set of predefined models of the objects that can be present in the scene and the system can try to decide if they are present or not in the image, and recover their parameters (i.e., pose, color).</p>
+<p>Recognition allows indexing properties that are not directly available in the image.</p>
+</div>
+</div>
+</div>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="site_libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="site_libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'multiplex': {"url":"https://mplex.vitv.ly","secret":null,"id":""},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/dslnu\.github\.io\/compvision\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

@@ -1,5 +1,40 @@
 [
   {
+    "objectID": "nb/cv24_pset1/pset1_2024.html",
+    "href": "nb/cv24_pset1/pset1_2024.html",
+    "title": "PSET 1",
+    "section": "",
+    "text": "# Ignore the pip dependency error\n\nimport cv2\nimport math\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom scipy.signal import convolve2d as conv2d\nimport scipy.sparse as sps\nfrom PIL import Image\n\n# # Package for fast equation solving\nfrom sys import platform\nprint(platform)\nif platform == \"linux\" or platform == \"linux2\":\n    ! apt-get install libsuitesparse-dev\nelif platform == \"darwin\":\n    ! brew install suite-sparse\n\n! pip3 install sparseqr\nimport sparseqr\n\ndarwin\n==&gt; Auto-updating Homebrew...\nAdjust how often this is run with HOMEBREW_AUTO_UPDATE_SECS or disable with\nHOMEBREW_NO_AUTO_UPDATE. Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).\n==&gt; Auto-updated Homebrew!\nUpdated 3 taps (oven-sh/bun, homebrew/core and homebrew/cask).\n==&gt; New Formulae\nab-av1                     gnome-online-accounts      node-red\nfalcosecurity-libs         keyutils                   oven-sh/bun/bun@1.2.5\nfpm                        krep                       sentry-native\ngcr                        libgoa                     yalantinglibs\ngit-graph                  libgudev\n==&gt; New Casks\nkate                                     mouseless@preview\n\nYou have 14 outdated formulae installed.\n\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/suite-sparse/manifests/7.10.1\n######################################################################### 100.0%\n==&gt; Fetching dependencies for suite-sparse: isl, libmpc, gcc and metis\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/isl/manifests/0.27\n######################################################################### 100.0%\n==&gt; Fetching isl\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/isl/blobs/sha256:de143fddb0e20b\n######################################################################### 100.0%\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/libmpc/manifests/1.3.1\n######################################################################### 100.0%\n==&gt; Fetching libmpc\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/libmpc/blobs/sha256:5c8cdc4d460\n######################################################################### 100.0%\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/gcc/manifests/14.2.0_1\n######################################################################### 100.0%\n==&gt; Fetching gcc\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/gcc/blobs/sha256:96d8bf02f621cf\n######################################################################### 100.0%\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/metis/manifests/5.1.0\n######################################################################### 100.0%\n==&gt; Fetching metis\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/metis/blobs/sha256:60ef633238eb\n######################################################################### 100.0%\n==&gt; Fetching suite-sparse\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/suite-sparse/blobs/sha256:edc57\n######################################################################### 100.0%\n==&gt; Installing dependencies for suite-sparse: isl, libmpc, gcc and metis\n==&gt; Installing suite-sparse dependency: isl\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/isl/manifests/0.27\nAlready downloaded: /Users/vitvly/Library/Caches/Homebrew/downloads/40b1c5526f95db33208143fa79887179e758121659d8877597f553e6e6188879--isl-0.27.bottle_manifest.json\n==&gt; Pouring isl--0.27.arm64_sequoia.bottle.tar.gz\n🍺  /opt/homebrew/Cellar/isl/0.27: 74 files, 7.6MB\n==&gt; Installing suite-sparse dependency: libmpc\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/libmpc/manifests/1.3.1\nAlready downloaded: /Users/vitvly/Library/Caches/Homebrew/downloads/fdfa98e0f8bb3ce075cb32776ac2345aa2f89252706c162aecfc841085fa76be--libmpc-1.3.1.bottle_manifest.json\n==&gt; Pouring libmpc--1.3.1.arm64_sequoia.bottle.tar.gz\n🍺  /opt/homebrew/Cellar/libmpc/1.3.1: 13 files, 492.3KB\n==&gt; Installing suite-sparse dependency: gcc\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/gcc/manifests/14.2.0_1\nAlready downloaded: /Users/vitvly/Library/Caches/Homebrew/downloads/cece94dbe926093c968a24f66b9a0172afe5cc2ef22253029bc591147237045b--gcc-14.2.0_1.bottle_manifest.json\n==&gt; Pouring gcc--14.2.0_1.arm64_sequoia.bottle.tar.gz\n🍺  /opt/homebrew/Cellar/gcc/14.2.0_1: 1,914 files, 459.8MB\n==&gt; Installing suite-sparse dependency: metis\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/metis/manifests/5.1.0\nAlready downloaded: /Users/vitvly/Library/Caches/Homebrew/downloads/f3ed9b4299ad5a23ac4e265012f58bed7574a85759c297dbea217aeb89707128--metis-5.1.0.bottle_manifest.json\n==&gt; Pouring metis--5.1.0.arm64_sequoia.bottle.tar.gz\n🍺  /opt/homebrew/Cellar/metis/5.1.0: 19 files, 12.1MB\n==&gt; Installing suite-sparse\n==&gt; Pouring suite-sparse--7.10.1.arm64_sequoia.bottle.tar.gz\n🍺  /opt/homebrew/Cellar/suite-sparse/7.10.1: 217 files, 49.3MB\n==&gt; Running `brew cleanup suite-sparse`...\nDisable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.\nHide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).\nCollecting sparseqr\n  Downloading sparseqr-1.4.1.tar.gz (18 kB)\n  Installing build dependencies ... \u001b[?done\n  Getting requirements to build wheel ... done\n  Installing backend dependencies ... done\n  Preparing metadata (pyproject.toml) ... done\nRequirement already satisfied: numpy&gt;1.2 in /Users/vitvly/c/lnu/md/compvision/venv/lib/python3.12/site-packages (from sparseqr) (2.1.1)\nRequirement already satisfied: scipy&gt;=1.0 in /Users/vitvly/c/lnu/md/compvision/venv/lib/python3.12/site-packages (from sparseqr) (1.15.1)\nRequirement already satisfied: cffi&gt;=1.0 in /Users/vitvly/c/lnu/md/compvision/venv/lib/python3.12/site-packages (from sparseqr) (1.17.1)\nRequirement already satisfied: setuptools&gt;35 in /Users/vitvly/c/lnu/md/compvision/venv/lib/python3.12/site-packages (from sparseqr) (75.8.0)\nRequirement already satisfied: pycparser in /Users/vitvly/c/lnu/md/compvision/venv/lib/python3.12/site-packages (from cffi&gt;=1.0-&gt;sparseqr) (2.22)\nBuilding wheels for collected packages: sparseqr\n  Building wheel for sparseqr (pyproject.toml) ... done\n  Created wheel for sparseqr: filename=sparseqr-1.4.1-cp312-cp312-macosx_15_0_arm64.whl size=29345 sha256=67d260633bd09b0e824e5dcafa1863f8d27d981c3594c2ad702b5efc20153c61\n  Stored in directory: /Users/vitvly/Library/Caches/pip/wheels/f9/95/5b/d45847ffa40c431a57bbd40628576944de186e3544cc6edca2\nSuccessfully built sparseqr\nInstalling collected packages: sparseqr\nSuccessfully installed sparseqr-1.4.1\n\n[notice] A new release of pip is available: 25.0 -&gt; 25.0.1\n[notice] To update, run: pip install --upgrade pip\n\n\n\n# Get images for plots (images are also included in the pset folder)\n! wget http://6.869.csail.mit.edu/fa19/psets19/pset1/img1.png\n! wget http://6.869.csail.mit.edu/fa19/psets19/pset1/img2.png\n! wget http://6.869.csail.mit.edu/fa19/psets19/pset1/img3.png\n! wget http://6.869.csail.mit.edu/fa19/psets19/pset1/img4.png\n! wget http://6.869.csail.mit.edu/sp23/pset1/pset_1_reference.png"
+  },
+  {
+    "objectID": "nb/cv24_pset1/pset1_2024.html#import-the-necessary-dependencies",
+    "href": "nb/cv24_pset1/pset1_2024.html#import-the-necessary-dependencies",
+    "title": "PSET 1",
+    "section": "",
+    "text": "# Ignore the pip dependency error\n\nimport cv2\nimport math\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom scipy.signal import convolve2d as conv2d\nimport scipy.sparse as sps\nfrom PIL import Image\n\n# # Package for fast equation solving\nfrom sys import platform\nprint(platform)\nif platform == \"linux\" or platform == \"linux2\":\n    ! apt-get install libsuitesparse-dev\nelif platform == \"darwin\":\n    ! brew install suite-sparse\n\n! pip3 install sparseqr\nimport sparseqr\n\ndarwin\n==&gt; Auto-updating Homebrew...\nAdjust how often this is run with HOMEBREW_AUTO_UPDATE_SECS or disable with\nHOMEBREW_NO_AUTO_UPDATE. Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).\n==&gt; Auto-updated Homebrew!\nUpdated 3 taps (oven-sh/bun, homebrew/core and homebrew/cask).\n==&gt; New Formulae\nab-av1                     gnome-online-accounts      node-red\nfalcosecurity-libs         keyutils                   oven-sh/bun/bun@1.2.5\nfpm                        krep                       sentry-native\ngcr                        libgoa                     yalantinglibs\ngit-graph                  libgudev\n==&gt; New Casks\nkate                                     mouseless@preview\n\nYou have 14 outdated formulae installed.\n\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/suite-sparse/manifests/7.10.1\n######################################################################### 100.0%\n==&gt; Fetching dependencies for suite-sparse: isl, libmpc, gcc and metis\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/isl/manifests/0.27\n######################################################################### 100.0%\n==&gt; Fetching isl\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/isl/blobs/sha256:de143fddb0e20b\n######################################################################### 100.0%\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/libmpc/manifests/1.3.1\n######################################################################### 100.0%\n==&gt; Fetching libmpc\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/libmpc/blobs/sha256:5c8cdc4d460\n######################################################################### 100.0%\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/gcc/manifests/14.2.0_1\n######################################################################### 100.0%\n==&gt; Fetching gcc\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/gcc/blobs/sha256:96d8bf02f621cf\n######################################################################### 100.0%\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/metis/manifests/5.1.0\n######################################################################### 100.0%\n==&gt; Fetching metis\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/metis/blobs/sha256:60ef633238eb\n######################################################################### 100.0%\n==&gt; Fetching suite-sparse\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/suite-sparse/blobs/sha256:edc57\n######################################################################### 100.0%\n==&gt; Installing dependencies for suite-sparse: isl, libmpc, gcc and metis\n==&gt; Installing suite-sparse dependency: isl\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/isl/manifests/0.27\nAlready downloaded: /Users/vitvly/Library/Caches/Homebrew/downloads/40b1c5526f95db33208143fa79887179e758121659d8877597f553e6e6188879--isl-0.27.bottle_manifest.json\n==&gt; Pouring isl--0.27.arm64_sequoia.bottle.tar.gz\n🍺  /opt/homebrew/Cellar/isl/0.27: 74 files, 7.6MB\n==&gt; Installing suite-sparse dependency: libmpc\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/libmpc/manifests/1.3.1\nAlready downloaded: /Users/vitvly/Library/Caches/Homebrew/downloads/fdfa98e0f8bb3ce075cb32776ac2345aa2f89252706c162aecfc841085fa76be--libmpc-1.3.1.bottle_manifest.json\n==&gt; Pouring libmpc--1.3.1.arm64_sequoia.bottle.tar.gz\n🍺  /opt/homebrew/Cellar/libmpc/1.3.1: 13 files, 492.3KB\n==&gt; Installing suite-sparse dependency: gcc\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/gcc/manifests/14.2.0_1\nAlready downloaded: /Users/vitvly/Library/Caches/Homebrew/downloads/cece94dbe926093c968a24f66b9a0172afe5cc2ef22253029bc591147237045b--gcc-14.2.0_1.bottle_manifest.json\n==&gt; Pouring gcc--14.2.0_1.arm64_sequoia.bottle.tar.gz\n🍺  /opt/homebrew/Cellar/gcc/14.2.0_1: 1,914 files, 459.8MB\n==&gt; Installing suite-sparse dependency: metis\n==&gt; Downloading https://ghcr.io/v2/homebrew/core/metis/manifests/5.1.0\nAlready downloaded: /Users/vitvly/Library/Caches/Homebrew/downloads/f3ed9b4299ad5a23ac4e265012f58bed7574a85759c297dbea217aeb89707128--metis-5.1.0.bottle_manifest.json\n==&gt; Pouring metis--5.1.0.arm64_sequoia.bottle.tar.gz\n🍺  /opt/homebrew/Cellar/metis/5.1.0: 19 files, 12.1MB\n==&gt; Installing suite-sparse\n==&gt; Pouring suite-sparse--7.10.1.arm64_sequoia.bottle.tar.gz\n🍺  /opt/homebrew/Cellar/suite-sparse/7.10.1: 217 files, 49.3MB\n==&gt; Running `brew cleanup suite-sparse`...\nDisable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.\nHide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).\nCollecting sparseqr\n  Downloading sparseqr-1.4.1.tar.gz (18 kB)\n  Installing build dependencies ... \u001b[?done\n  Getting requirements to build wheel ... done\n  Installing backend dependencies ... done\n  Preparing metadata (pyproject.toml) ... done\nRequirement already satisfied: numpy&gt;1.2 in /Users/vitvly/c/lnu/md/compvision/venv/lib/python3.12/site-packages (from sparseqr) (2.1.1)\nRequirement already satisfied: scipy&gt;=1.0 in /Users/vitvly/c/lnu/md/compvision/venv/lib/python3.12/site-packages (from sparseqr) (1.15.1)\nRequirement already satisfied: cffi&gt;=1.0 in /Users/vitvly/c/lnu/md/compvision/venv/lib/python3.12/site-packages (from sparseqr) (1.17.1)\nRequirement already satisfied: setuptools&gt;35 in /Users/vitvly/c/lnu/md/compvision/venv/lib/python3.12/site-packages (from sparseqr) (75.8.0)\nRequirement already satisfied: pycparser in /Users/vitvly/c/lnu/md/compvision/venv/lib/python3.12/site-packages (from cffi&gt;=1.0-&gt;sparseqr) (2.22)\nBuilding wheels for collected packages: sparseqr\n  Building wheel for sparseqr (pyproject.toml) ... done\n  Created wheel for sparseqr: filename=sparseqr-1.4.1-cp312-cp312-macosx_15_0_arm64.whl size=29345 sha256=67d260633bd09b0e824e5dcafa1863f8d27d981c3594c2ad702b5efc20153c61\n  Stored in directory: /Users/vitvly/Library/Caches/pip/wheels/f9/95/5b/d45847ffa40c431a57bbd40628576944de186e3544cc6edca2\nSuccessfully built sparseqr\nInstalling collected packages: sparseqr\nSuccessfully installed sparseqr-1.4.1\n\n[notice] A new release of pip is available: 25.0 -&gt; 25.0.1\n[notice] To update, run: pip install --upgrade pip\n\n\n\n# Get images for plots (images are also included in the pset folder)\n! wget http://6.869.csail.mit.edu/fa19/psets19/pset1/img1.png\n! wget http://6.869.csail.mit.edu/fa19/psets19/pset1/img2.png\n! wget http://6.869.csail.mit.edu/fa19/psets19/pset1/img3.png\n! wget http://6.869.csail.mit.edu/fa19/psets19/pset1/img4.png\n! wget http://6.869.csail.mit.edu/sp23/pset1/pset_1_reference.png"
+  },
+  {
+    "objectID": "nb/cv24_pset1/pset1_2024.html#define-the-sparse-matrix",
+    "href": "nb/cv24_pset1/pset1_2024.html#define-the-sparse-matrix",
+    "title": "PSET 1",
+    "section": "Define the Sparse Matrix",
+    "text": "Define the Sparse Matrix\n\ndef sparseMatrix(i, j, Aij, imsize):\n    \"\"\" Build a sparse matrix containing 2D linear neighborhood operators\n    Input:\n        Aij = [ni, nj, nc] nc: number of neighborhoods with contraints\n        i: row index\n        j: column index\n        imsize: [nrows ncols]\n    Returns:\n        A: a sparse matrix. Each row contains one 2D linear operator\n    \"\"\"\n    ni, nj, nc = Aij.shape\n    nij = ni*nj\n\n    a = np.zeros((nc*nij))\n    m = np.zeros((nc*nij))\n    n = np.zeros((nc*nij))\n    grid_range = np.arange(-(ni-1)/2, 1+(ni-1)/2)\n    jj, ii = np.meshgrid(grid_range, grid_range)\n    ii = ii.reshape(-1,order='F')\n    jj = jj.reshape(-1,order='F')\n\n\n    k = 0\n    for c in range(nc):\n        # Get matrix index\n        x = (i[c]+ii) + (j[c]+jj)*nrows\n        a[k:k+nij] = Aij[:,:,c].reshape(-1,order='F')\n        m[k:k+nij] = c\n        n[k:k+nij] = x\n\n        k += nij\n\n    m = m.astype(np.int32)\n    n = n.astype(np.int32)\n    A = sps.csr_matrix((a, (m,  n)))\n\n    return A"
+  },
+  {
+    "objectID": "nb/cv24_pset1/pset1_2024.html#define-world-parameters-and-plot-the-edges",
+    "href": "nb/cv24_pset1/pset1_2024.html#define-world-parameters-and-plot-the-edges",
+    "title": "PSET 1",
+    "section": "Define world parameters and plot the edges",
+    "text": "Define world parameters and plot the edges\n\n# World parameters\ntheta = 35*math.pi/180;\n\nimg = cv2.imread('img1.png')\nimg = img[:, :, ::-1].astype(np.float32)\n\nnrows, ncols, colors = img.shape\nground = (np.min(img, axis=2) &gt; 110).astype(np.float32)\nprint('ground', ground.shape, ground)\nforeground = (ground == 0).astype(np.float32)\n\nm = np.mean(img, 2)\nkern = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]], dtype=np.float32)\ndmdx = conv2d(m, kern, 'same')\ndmdy = conv2d(m, kern.transpose(), 'same')\n\nmag = np.sqrt(dmdx**2 + dmdy**2)\nmag[0, :] = 0\nmag[-1, :] = 0\nmag[:, 0] = 0\nmag[:, -1] = 0\n\nedges = mag &gt;= 30\nedges = edges * foreground\n\n## Occlusion and contact edges\n\n####################################################################\n### COMPLETE THE CODE BELOW (TODOs) AND COPY IT INTO YOUR REPORT ###\n####################################################################\n\npi = math.pi\nedge_orientation = ## TODO\nvertical_edges = ## TODO\nhorizontal_edges = ## TODO\n\n####################################################################\n###################### STOP COPYING HERE ###########################\n####################################################################\n\nkern = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]], dtype=np.float32)\nhorizontal_ground_to_foreground_edges = (conv2d(ground, kern, 'same'))&gt;0;\nhorizontal_foreground_to_ground_edges = (conv2d(foreground, kern, 'same'))&gt;0;\nvertical_ground_to_foreground_edges = vertical_edges*np.abs(conv2d(ground, kern.transpose(), 'same'))&gt;0\n\n\nocclusion_edges = edges*(vertical_ground_to_foreground_edges + horizontal_ground_to_foreground_edges)\ncontact_edges   = horizontal_edges*(horizontal_foreground_to_ground_edges);\n\n\nE = np.concatenate([vertical_edges[:,:,None],\n                    horizontal_edges[:,:,None],\n                    np.zeros(occlusion_edges.shape)[:,:,None]], 2)\n\n\n# Plot\nplt.figure()\nplt.subplot(2,2,1)\nplt.imshow(img.astype(np.uint8))\nplt.axis('off')\nplt.title('Input image')\nplt.subplot(2,2,2)\nplt.imshow(edges == 0, cmap='gray')\nplt.axis('off')\nplt.title('Edges')\n\n# Normals\nK = 3\ney, ex = np.where(edges[::K, ::K])\nex *= K\ney *= K\nplt.figure()\nplt.subplot(2,2,3)\nplt.imshow(np.max(mag)-mag, cmap='gray')\ndxe = dmdx[::K, ::K][edges[::K, ::K] &gt; 0]\ndye = dmdy[::K, ::K][edges[::K, ::K] &gt; 0]\nn = np.sqrt(dxe**2 + dye**2)\ndxe = dxe/n\ndye = dye/n\nplt.quiver(ex, ey, dxe, -dye, color='r')\nplt.axis('off')\nplt.title('Normals')\n\n\nplt.subplot(2,2,4)\nplt.imshow(np.max(mag)-mag, cmap='gray')\n# Recreate the normals plot using sin and cos\n# Note: -dye_mod  used in plot because 0 is upper right corner here\ndxe_mod = nx = np.cos(edge_orientation[::K, ::K][edges[::K, ::K] &gt; 0])\ndye_mod = ny = np.sin(edge_orientation[::K, ::K][edges[::K, ::K] &gt; 0])\nplt.quiver(ex, ey, dxe_mod, -dye_mod, color='r') # at ex, ey location, plot dx, -dy\nplt.axis('off')\nplt.title('Recreated Normals')\nplt.show()\n\n\n# Edges and boundaries\nplt.figure()\nplt.subplot(2,2,1)\nplt.imshow(img.astype(np.uint8))\nplt.axis('off')\nplt.title('Input image')\n\n\nplt.subplot(2,2,2)\nplt.imshow(E+(edges == 0)[:, :, None])\nplt.axis('off')\nplt.title('Edges')\n\n\nplt.subplot(2,2,3)\nplt.imshow(1-(occlusion_edges&gt;0), cmap='gray')\nplt.axis('off')\nplt.title('Occlusion boundaries')\n\nplt.subplot(2,2,4)\nplt.imshow(1-contact_edges, cmap='gray')\nplt.axis('off')\nplt.title('Contact boundaries');"
+  },
+  {
+    "objectID": "nb/cv24_pset1/pset1_2024.html#populate-edge-variables",
+    "href": "nb/cv24_pset1/pset1_2024.html#populate-edge-variables",
+    "title": "PSET 1",
+    "section": "Populate edge variables",
+    "text": "Populate edge variables\n\nNconstraints = nrows*ncols*20\nAij = np.zeros((3, 3, Nconstraints))\nb = np.zeros((Nconstraints, 1))\n\n#Indices and counters\nii = np.zeros((Nconstraints, 1))\njj = np.zeros((Nconstraints, 1))\nglobal c\nc = 0\n\n# These will always be updated with the current indices\ndef update_indices():\n  global c\n  ii[c] = i\n  jj[c] = j\n  c += 1\n\n# Create linear contraints\nfor i in range(1, nrows-1):\n  for j in range(1, ncols-1):\n    # Y = 0\n    if ground[i,j]:\n      Aij[:,:,c] = np.array([[0, 0, 0], [0, 1, 0], [0, 0, 0]])\n      b[c]       = 0\n      update_indices()\n    else:\n      # Check if current neighborhood touches an edge\n      edgesum = np.sum(edges[i-1:i+2,j-1:j+2])\n      # Check if current neighborhood touches ground pixels\n      groundsum = np.sum(ground[i-1:i+2,j-1:j+2])\n      # Check if current neighborhood touches vertical pixels\n      verticalsum = np.sum(vertical_edges[i-1:i+2,j-1:j+2])\n      # Check if current neighborhood touches horizontal pixels\n      horizontalsum = np.sum(horizontal_edges[i-1:i+2,j-1:j+2])\n\n      ####################################################################\n      ### COMPLETE THE CODE BELOW (TODOs) AND COPY IT INTO YOUR REPORT ###\n      ####################################################################\n\n      # TODO: edge orientation (average of edge pixels in current neighborhood)\n      # Populate Aij, ii, jj, b, and c using theta, edge_orientation, and\n      # the constraint/transform matrices you derived in the written segment\n\n      # Contact edge: Y = 0\n      # Requires: a transform matrix\n      # TODO: Complete the code\n      if contact_edges[i, j]:\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n      # Vertical edge: dY/dy = 1/cos(theta)\n      # Requires: a transform matrix, theta\n      # The 1/8 is for normalization\n      # TODO: Complete the code\n      if verticalsum &gt; 0 and groundsum == 0:\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n      # Horizontal edge: dY/dt = 0\n      # Note: You'll have to express t using other variables\n      # Requires: a transform matrix, i, j, edge_orientation\n      # TODO: Complete the code\n      if horizontalsum &gt; 0 and groundsum == 0 and verticalsum == 0:\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n      # Second derivative = 0 (weighted by 0.1 to reduce constraint strength)\n      # Requires: multiple transform matrices\n      # TODO: Complete the code\n      if groundsum == 0:\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n      ####################################################################\n      ###################### STOP COPYING HERE ###########################\n      ####################################################################\n\n# Solve for constraints\nii = ii[:c]\njj = jj[:c]\nAij = Aij[:,:,:c]\nb = b[:c]\nA = sparseMatrix(ii, jj, Aij, nrows)\nY = sparseqr.solve( A, b)\n\n# Transform vector into image\nY = np.reshape(Y, [nrows, ncols], order='F')\n\n# Recover 3D world coordinates\nx, y = np.meshgrid(np.arange(ncols), np.arange(nrows))\nx = x.astype(np.float32)\ny = y.astype(np.float32)\nx -= nrows/2\ny -= ncols/2\n\n# Final coordinates\nX = x\nZ = Y*np.cos(theta)/np.sin(theta) - y/np.sin(theta)\nY = -Y\nY = np.maximum(Y, 0);\n\nE = occlusion_edges.astype(np.float32);\nE[E &gt; 0] = np.nan;\nZ = Z+E; #  remove occluded edges\n\n# Visualize solution\nplt.figure()\nplt.subplot(2,2,1)\nplt.imshow(img[1:-1, 1:-1].astype(np.uint8))\nplt.axis('off')\nplt.title('Edges')\n\nplt.subplot(2,2,2)\nplt.imshow(Z[1:-1, 1:-1], cmap='gray')\nplt.axis('off')\nplt.title('Z')\n\n\nplt.subplot(2,2,3)\nplt.imshow(Y[1:-1, 1:-1], cmap='gray', vmin=0, vmax=175)\nplt.axis('off')\nplt.title('Y')\n\nplt.subplot(2,2,4)\nplt.imshow(X[1:-1, 1:-1], cmap='gray')\nplt.axis('off')\nplt.title('X')\n\n# 3D projection\nimport matplotlib.pyplot as plt\nfrom mpl_toolkits.mplot3d import Axes3D\nfig = plt.figure()\nax = fig.add_subplot(111, projection='3d')\nax.set_zlim(0, 175)\n\n# TODO for Problem 5\n# Rerun the script with at least two more of the provided images and for each\n# image try at least two different view angles.\n# Include the generated plots in your report (under Problem 5).\n# Note that we expect results to be quite brittle -- in answering Problem 6,\n# think about the strong assumptions that this approach makes.\n# We'll see more robust methods for similar problems later in the course\n\n# Specify here the angle you want to see\nax.view_init(20, -120)\nax.plot_surface(X,Z,Y, facecolors=img/255., shade=False)\n\n\nReference solution\nYours should render on a white background (note that the outline on Z is transparency) but be identical otherwise\nUploading the reference will be considered an honor code violation\n\nplt.imshow(cv2.cvtColor(cv2.imread('pset_1_reference.png'), cv2.COLOR_BGR2RGB))\nplt.show()"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
@@ -7,11 +42,529 @@
     "text": "Computer vision course"
   },
   {
-    "objectID": "lab1.html",
-    "href": "lab1.html",
-    "title": "Lab 1",
-    "section": "",
-    "text": "Please enroll at OpenCV intro course.\nComplete the following items in the course:\n2.1. Getting Started with Images.\n2.2. Basic Image Manipulation.\nPractice cropping/resizing on a couple of images downloaded from the net."
+    "objectID": "lec2.html#goal",
+    "href": "lec2.html#goal",
+    "title": "Basic concepts",
+    "section": "Goal",
+    "text": "Goal\n\nsimulate original research from 1960s\nhand-design an end-to-end visual system.\ncover some of the main concepts"
+  },
+  {
+    "objectID": "lec2.html#history",
+    "href": "lec2.html#history",
+    "title": "Basic concepts",
+    "section": "History",
+    "text": "History\n\n\n\nSeymour Papert (1966)\n\n\n\n“The summer vision project is an attempt to use our summer workers effectively in the construction of a significant part of a visual system.”\n\n\n\n\n\n\n\nWarning\n\n\nToo optimistic!"
+  },
+  {
+    "objectID": "lec2.html#problem-setup",
+    "href": "lec2.html#problem-setup",
+    "title": "Basic concepts",
+    "section": "Problem setup",
+    "text": "Problem setup\nVision has many different goals:\n\nobject recognition\nscene interpretation\nthree-dimensional [3D] interpretation"
+  },
+  {
+    "objectID": "lec2.html#simple-world",
+    "href": "lec2.html#simple-world",
+    "title": "Basic concepts",
+    "section": "Simple world",
+    "text": "Simple world\n\n\n\nBlock world\n\n\nIntroduced by Larry G. Roberts in 1963."
+  },
+  {
+    "objectID": "lec2.html#simple-world-1",
+    "href": "lec2.html#simple-world-1",
+    "title": "Basic concepts",
+    "section": "Simple world",
+    "text": "Simple world\n\n\n\nDescription\n\n\n\nworld is composed of a very simple (yet varied) set of objects.\nthese simple objects are composed of flat surfaces that can be horizontal or vertical\nthese objects will be resting on a white horizontal ground plane\nwe can build these objects by cutting, folding, and gluing together some pieces of colored paper\n\n\n\n\n\n\n\nFigure 1: A world of simple objects. Print, cut, and build your own blocks world!"
+  },
+  {
+    "objectID": "lec2.html#a-simple-image-formation-model-1",
+    "href": "lec2.html#a-simple-image-formation-model-1",
+    "title": "Basic concepts",
+    "section": "A Simple Image Formation Model",
+    "text": "A Simple Image Formation Model\n\n\n\nParallel of orthographic projection\n\n\n\nlight rays travel parallel to each other and perpendicular to the camera plane\nthis type of projection produces images in which objects do not change size as they move closer or farther from the camera\nparallel lines in 3D remain parallel in the 2D image."
+  },
+  {
+    "objectID": "lec2.html#a-simple-image-formation-model-2",
+    "href": "lec2.html#a-simple-image-formation-model-2",
+    "title": "Basic concepts",
+    "section": "A Simple Image Formation Model",
+    "text": "A Simple Image Formation Model\n\n\n\nPerspective projection\n\n\n\nthe image is formed by the convergence of the light rays into a single point (focal point).\nmost pictures taken with a camera will be better described by perspective projection"
+  },
+  {
+    "objectID": "lec2.html#a-simple-image-formation-model-3",
+    "href": "lec2.html#a-simple-image-formation-model-3",
+    "title": "Basic concepts",
+    "section": "A Simple Image Formation Model",
+    "text": "A Simple Image Formation Model\n\n\n\n\n\n\nFigure 2\n\n\n\n\n\n\nNote that near edges are larger than far edges, and parallel lines in 3D are not parallel.\nPicture taken from far away using zoom resulting in an image that can be described by parallel projection."
+  },
+  {
+    "objectID": "lec2.html#a-simple-image-formation-model-4",
+    "href": "lec2.html#a-simple-image-formation-model-4",
+    "title": "Basic concepts",
+    "section": "A Simple Image Formation Model",
+    "text": "A Simple Image Formation Model"
+  },
+  {
+    "objectID": "lec2.html#a-simple-image-formation-model-5",
+    "href": "lec2.html#a-simple-image-formation-model-5",
+    "title": "Basic concepts",
+    "section": "A Simple Image Formation Model",
+    "text": "A Simple Image Formation Model\n\nhow a point in world coordinates \\((X,Y,Z)\\) projects into the image plane\ncamera center is inside the 3D plane \\(X=0\\)\nthe horizontal axis of the camera (\\(x\\)) is parallel to the ground plane (\\(Y=0\\))\nthe camera is tilted so that the line connecting the origin of the world coordinates system and the image center is perpendicular to the image plane\nthe angle \\(\\theta\\) is the angle between this line and the \\(Z\\)-axis\nthe image is parameterized by coordinates \\((x,y)\\)."
+  },
+  {
+    "objectID": "lec2.html#a-simple-image-formation-model-6",
+    "href": "lec2.html#a-simple-image-formation-model-6",
+    "title": "Basic concepts",
+    "section": "A Simple Image Formation Model",
+    "text": "A Simple Image Formation Model\n\n\n\n\n\n\nFigure 3\n\n\n\n\n\nThe \\(Z\\)-axis is identical to the \\(Y\\)-axis up to a sign change and a scaling."
+  },
+  {
+    "objectID": "lec2.html#a-simple-image-formation-model-7",
+    "href": "lec2.html#a-simple-image-formation-model-7",
+    "title": "Basic concepts",
+    "section": "A Simple Image Formation Model",
+    "text": "A Simple Image Formation Model"
+  },
+  {
+    "objectID": "lec2.html#a-simple-image-formation-model-8",
+    "href": "lec2.html#a-simple-image-formation-model-8",
+    "title": "Basic concepts",
+    "section": "A Simple Image Formation Model",
+    "text": "A Simple Image Formation Model\n\n\n\nFeatures\n\n\n\nthe origin of the world coordinates projects on the origin of the image coordinates\ntherefore, the world point \\((0,0,0)\\) projects into \\((0,0)\\)\nthe resolution of the image will also affect the transformation from world coordinates to image coordinates via a constant factor \\(\\alpha\\)\nfor now we assume that pixels are square and we will see a more general form in ) and that this constant is \\(\\alpha=1\\)."
+  },
+  {
+    "objectID": "lec2.html#a-simple-image-formation-model-9",
+    "href": "lec2.html#a-simple-image-formation-model-9",
+    "title": "Basic concepts",
+    "section": "A Simple Image Formation Model",
+    "text": "A Simple Image Formation Model"
+  },
+  {
+    "objectID": "lec2.html#a-simple-image-formation-model-10",
+    "href": "lec2.html#a-simple-image-formation-model-10",
+    "title": "Basic concepts",
+    "section": "A Simple Image Formation Model",
+    "text": "A Simple Image Formation Model\n\n\n\nCoordinate transformation\n\n\nThe transformation between world coordinates and image coordinates can be written as follows:\n\\[\\begin{aligned}\nx &=& X \\\\\ny &=&  \\cos(\\theta) Y - \\sin(\\theta) Z\n\\end{aligned} \\qquad(1)\\]\n\n\n\n\n\nWith this particular parametrization of the world and camera coordinate systems, the world coordinates \\(Y\\) and \\(Z\\) are mixed after projection. From the camera, a point moving parallel to the \\(Z\\)-axis will be indistinguishable from a point moving parallel to the \\(Y\\)-axis."
+  },
+  {
+    "objectID": "lec2.html#a-simple-goal",
+    "href": "lec2.html#a-simple-goal",
+    "title": "Basic concepts",
+    "section": "A Simple Goal",
+    "text": "A Simple Goal\n\n\n\nOur goal\n\n\n\nrecovering the world coordinates of all the pixels seen by the camera.\n\n\n\n\n\n\n\nNon-goal\n\n\n\nrecover the actual color of the surface seen by each pixel \\((x,y)\\)\n\n(requires discounting for illumination effects as the color of the pixel is a combination of the surface albedo and illumination (color of the light sources and interreflections)."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges",
+    "href": "lec2.html#from-images-to-edges",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\nWe want to recover \\(X(x,y),Y(x,y), Z(x,y)\\) from \\(l(x,y)\\)"
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-1",
+    "href": "lec2.html#from-images-to-edges-1",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\nThe observed image is a function: \\[\\ell(x,y)\\]\n\n\n\nDescription\n\n\n\ninput: location, \\((x,y)\\)\noutput: the intensity at that location.\n\n\n\n\n\n\n\nWhat is an image?\n\n\nIn this representation, the image is an array of intensity values (color values) indexed by location."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-2",
+    "href": "lec2.html#from-images-to-edges-2",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\n\nAny planar line-drawing is geometrically consistent with infinitely many 3-D structures (Sinha-Adelson ’93 paper)"
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-3",
+    "href": "lec2.html#from-images-to-edges-3",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\nFigure 4: Image as a surface. The vertical axis corresponds to image intensity. For clarity here, we have reversed the vertical axis. Dark values are shown higher than lighter values."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-4",
+    "href": "lec2.html#from-images-to-edges-4",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\nBenefits\n\n\n\nthis representation is ideal for determining the light intensity originating from different directions in space and striking the camera plane, as it provides explicit representation of this information\nthe array of pixel intensities, \\(\\ell(x,y)\\), is a reasonable representation as input to the early stages of visual processing because, although we do not know the distance of surfaces in the world, the direction of each light ray in the world is well defined.\n\n\n\n\n\n\n\nAlternative options\n\n\nOther initial representations:\n\nimages could be coded in the Fourier domain\npixels could combine light coming in different directions."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-5",
+    "href": "lec2.html#from-images-to-edges-5",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\n\n\n\nNote\n\n\nWe are interested in interpreting the 3D structure of the scene and the objects within.\n\n\n\n\n\n\nChallenges\n\n\nNeed to represent:\n\nboundaries between objects\nchanges in the surface orientation"
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-6",
+    "href": "lec2.html#from-images-to-edges-6",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\nAlternative representation\n\n\nFor scene interpretation:\n\ncollections of small image patches\nregions of uniform properties\nedges"
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-7",
+    "href": "lec2.html#from-images-to-edges-7",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\nAlternative initial representations\n\n\nGekko’s eye. Their pupil has a four-diamond-shaped pinhole aperture that could allow them to encode distance to a target in the retinal image."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-8",
+    "href": "lec2.html#from-images-to-edges-8",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\n\n\n\nWhat is an edge\n\n\nAn image regions where there are strong changes of the image with respect to location.\n\n\n\n\n\n\nEdge factors\n\n\n\nocclusion boundaries\nchanges in surface orientation\nchanges in surface albedo\nshadows"
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-9",
+    "href": "lec2.html#from-images-to-edges-9",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\nFigure 5"
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-10",
+    "href": "lec2.html#from-images-to-edges-10",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\nImage edge classification\n\n\n\nObject boundaries: These indicate pixels that delineate the boundaries of any object. Boundaries between objects generally correspond to changes in surface color, texture, and orientation.\nChanges in surface orientation: These indicate locations where there are strong image variations due to changes in the surface orientations. A change in surface orientation produces changes in the image intensity because intensity is a function of the angle between the surface and the incident light.\nShadow edges: This can be harder than it seems. In this simple world, shadows are soft, creating slow transitions between dark and light."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-11",
+    "href": "lec2.html#from-images-to-edges-11",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\nObject boundary classification\n\n\n\nContact edges: This is a boundary between two objects that are in physical contact. Therefore, there is no depth discontinuity.\nOcclusion boundaries: Occlusion boundaries happen when an object is partially in front of another. Occlusion boundaries generally produce depth discontinuities. In this simple world, we will position the objects in such a way that objects do not occlude each other but they will occlude the background."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-12",
+    "href": "lec2.html#from-images-to-edges-12",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\n\n\n\nChallenges\n\n\n\nin most natural scenes, this classification is very hard\nrequires the interpretation of the scene at different levels."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-13",
+    "href": "lec2.html#from-images-to-edges-13",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\nFirst step: detecting candidate edges in the image.\nIf we think of the image as a function \\(\\ell (x,y) \\in C(\\mathbb{R}^2)\\), we can measure the degree of variation using the gradient:\n\\[\\begin{aligned}\n\\nabla \\ell = \\left( \\frac{\\partial \\ell}{\\partial x}, \\frac{\\partial \\ell}{\\partial y} \\right)\n\\end{aligned}\\]\n\n\n\nThe direction of the gradient indicates the direction in which the variation of intensities is larger. If we are on top of an edge, the direction of larger variation will be in the direction perpendicular to the edge."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-14",
+    "href": "lec2.html#from-images-to-edges-14",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\nImportant\n\n\nThe image is not a continuous function as we only know the values of the \\(\\ell (x,y)\\) at discrete locations (pixels).\n\n\n\n\n\n\nApproximation\n\n\nWe approximate the partial derivatives by:\n\\[\\begin{aligned}\n\\frac{\\partial \\ell}{\\partial x} &\\simeq \\ell(x,y) - \\ell(x-1,y) \\\\\n\\frac{\\partial \\ell}{\\partial y} &\\simeq \\ell(x,y) - \\ell(x,y-1)\n\\end{aligned} \\qquad(2)\\]"
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-15",
+    "href": "lec2.html#from-images-to-edges-15",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\nBetter approximation (TBD)\n\n\nCombine the image pixels around \\((x,y)\\) with the weights: \\[\\begin{aligned}\n\\frac{1}{4} \\times\n\\left [\n\\begin{matrix}\n-1 & 0 & 1 \\\\\n-2 & 0 & 2 \\\\\n-1 & 0 & 1\n\\end{matrix}\n\\right ] \\nonumber\n\\end{aligned}\\]"
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-16",
+    "href": "lec2.html#from-images-to-edges-16",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\nEdge properties\n\n\nFrom the image gradient, we can extract a number of interesting quantities: \\[\\begin{aligned}\n    e(x,y) &= \\lVert \\nabla \\ell(x,y) \\rVert   & \\quad\\quad \\triangleleft \\quad \\texttt{edge strength}\\\\\n    \\theta(x,y) &= \\angle \\nabla \\ell =  \\arctan \\left( \\frac{\\partial \\ell / \\partial y}{\\partial \\ell / \\partial x} \\right) & \\quad\\quad \\triangleleft \\quad \\texttt{edge orientation}\n\\end{aligned}\\]\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nedge strength is the gradient magnitude\nedge orientation is perpendicular to the gradient direction"
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-17",
+    "href": "lec2.html#from-images-to-edges-17",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\nThe unit norm vector perpendicular to an edge is:\n\\[\\begin{aligned}\n{\\bf n} = \\frac{\\nabla \\ell}{\\lVert \\nabla \\ell \\rVert}\n\\end{aligned}\\]"
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-18",
+    "href": "lec2.html#from-images-to-edges-18",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\nDecision\n\n\nWhich pixels belong to:\n\nedges (regions of the image with sharp intensity variations)\nuniform regions (flat surfaces)\n\n\n\n\n\n\n\nHow?\n\n\nBy thresholding the edge strength \\(e(x,y)\\).\nIn the pixels with edges, we can also measure the edge orientation \\(\\theta(x,y)\\)."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-19",
+    "href": "lec2.html#from-images-to-edges-19",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges\n\n\n\n\n\n\nFigure 6: Gradient and edge types.\n\n\n\n\n\n\n\n\n\nFigure 7\n\n\n\n\n\nFigure 6 and Figure 7 visualize the edges and the normal vector on each edge."
+  },
+  {
+    "objectID": "lec2.html#from-images-to-edges-20",
+    "href": "lec2.html#from-images-to-edges-20",
+    "title": "Basic concepts",
+    "section": "From Images to Edges",
+    "text": "From Images to Edges"
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-1",
+    "href": "lec2.html#from-edges-to-surfaces-1",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nObjective\n\n\nWe want to recover world coordinates \\(X(x,y)\\), \\(Y(x,y)\\), and \\(Z(x,y)\\) for each image location \\((x,y)\\)\n\n\n\n\n\n\nSteps\n\n\n\nrecovering the \\(X\\) world coordinates is trivial as they are directly observed: for each pixel with image coordinates \\((x,y)\\) the world coordinate is \\(X(x,y) = x\\)\nrecovering \\(Y\\) and \\(Z\\) will be harder as we only observe a mixture of the two world coordinates.\n\n\n\n\n\n\nHere we have written the world coordinates as functions of image location \\((x,y)\\) to make explicit that we want to recover the 3D locations of the visible points.\nIn this simple world, we will formulate this problem as a set of linear equations."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-2",
+    "href": "lec2.html#from-edges-to-surfaces-2",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nFigure/Ground Segmentation\n\n\nSegmentation of an image into figure and ground is a classical problem in human perception and computer vision that was introduced by Gestalt psychology.\n\n\n\n\n\n\nThe classical visual illusion “two faces or a vase” is an example of figure-ground segmentation problem."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-3",
+    "href": "lec2.html#from-edges-to-surfaces-3",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\n\n\n\nSegmentation: goal\n\n\nDecide whether a pixel belongs to one of the foreground objects or to the background.\n\n\n\n\n\n\n\n\n\nSegmentation: basic approach\n\n\nWe can simply look at the color values of each pixel\n\nbright pixels that have low saturation (similar values of the red-blue-green [RBG] components) correspond to the white ground plane\nand the rest of the pixels are likely to belong to the colored blocks that compose our simple world\n\n\n\n\n\n\nIn general, the problem of image segmentation into distinct objects is a very challenging task."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-4",
+    "href": "lec2.html#from-edges-to-surfaces-4",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nBackground\n\n\nIf we assume that the background corresponds to a horizontal ground plane, then for all pixels that belong to the ground we can set \\(Y(x,y)=0\\).\n\n\n\n\n\n\nObjects\n\n\nFor pixels that belong to objects we will have to measure additional image properties before we can deduce any geometric scene constraints."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-5",
+    "href": "lec2.html#from-edges-to-surfaces-5",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nOcclusion Edges\n\n\nAn occlusion boundary separates two different surfaces at different distances from the observer.\nThe object in front is the one owning the boundary.\n\n\n\n\n\n\nKnowing who owns the boundary is important as an edge provides cues about the 3D geometry, but those cues only apply to the surface that owns the boundary."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-6",
+    "href": "lec2.html#from-edges-to-surfaces-6",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nAssumption\n\n\nIn this simple world, we will assume that objects do not occlude each other (this can be relaxed) and that the only occlusion boundaries are the boundaries between the objects and the ground.\n\n\n\n\n\n\n\n\n\nNote\n\n\nNot all boundaries between the objects and the ground correspond to depth gradients."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-7",
+    "href": "lec2.html#from-edges-to-surfaces-7",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nContact Edges\n\n\nContact edges are boundaries between two distinct objects but where there exists no depth discontinuity.\nDespite that there is not a depth discontinuity, there is an occlusion here (as one surface is hidden behind another), and the edge shape is only owned by one of the two surfaces.\n\n\n\n\n\n\nCalculation\n\n\nIf we assume that all the objects rest on the ground plane, then we can set \\(Y(x,y)=0\\) on the contact edges.\nContact edges can be detected as transitions between the object (above) and ground (below). In our simple world only horizontal edges can be contact edges."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-8",
+    "href": "lec2.html#from-edges-to-surfaces-8",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\nFigure 8: For each vertical line (shown in red), scanning from top to bottom, transitions from ground to figure are occlusion boundaries, and transitions from figure to ground are contact edges. This heuristic will fails when an object occludes another."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-9",
+    "href": "lec2.html#from-edges-to-surfaces-9",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\n\n\n\nInvariant Scene Properties (world \\(\\rightarrow\\) image)\n\n\n\nCollinearity: a straight 3D line will project into a straight line in the image.\nCotermination: if two or more 3D lines terminate at the same point, the corresponding projections will also terminate at a common point.\nSmoothness: a smooth 3D curve will project into a smooth 2D curve."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-10",
+    "href": "lec2.html#from-edges-to-surfaces-10",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nReverse invariants (image \\(\\rightarrow\\) world)\n\n\n\na straight line in the image could correspond to a curved line in the 3D world but that happens to be precisely aligned with respect to the viewers point of view to appear as a straight line\ntwo lines that intersect in the image plane could be disjointed in the 3D space."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-11",
+    "href": "lec2.html#from-edges-to-surfaces-11",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nReverse invariants (image \\(\\rightarrow\\) world)\n\n\n\nif two lines coterminate in the image, then, one can conclude that it is very likely that they also touch each other in 3D\nif the 3D lines do not touch each other, then it will require a very specific alignment between the observer and the lines for them to appear to coterminate in the image. Therefore, one can safely conclude that the lines might also touch in 3D."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-12",
+    "href": "lec2.html#from-edges-to-surfaces-12",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nNonaccidental properties\n\n\nThese properties are called nonaccidental properties because they will only be observed in the image if they also exist in the world or by accidental alignments between the observer and scene structures.\n\n\n\n\n\n\nGeneric view\n\n\nUnder a generic view, nonaccidental properties will be shared by the image and the 3D world."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-13",
+    "href": "lec2.html#from-edges-to-surfaces-13",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nGeneric view assumption: the observer should not assume that he has a special position in the world… The most generic interpretation is to see a vertical line as a vertical line in 3D."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-14",
+    "href": "lec2.html#from-edges-to-surfaces-14",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nApplication to simple world\n\n\n\nin the simple world all 3D edges are either vertical or horizontal\nunder parallel projection and with the camera having its horizontal axis parallel to the ground, we know that vertical 3D lines will project into vertical 2D lines in the image\nhorizontal lines will, in general, project into oblique lines\ntherefore, we can assume than any vertical line in the image is also a vertical line in the world."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-15",
+    "href": "lec2.html#from-edges-to-surfaces-15",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\n\n\n\nChallenge\n\n\nThe assumption that vertical 2D lines are also 3D vertical lines will not always work!\n\n\n\n\n\n\n\n\n\nFigure 9\n\n\n\n\n\nIn the case of the cube, there is a particular viewpoint that will make an horizontal line project into a vertical line, but this will require an accidental alignment between the cube and the line of sight of the observer."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-16",
+    "href": "lec2.html#from-edges-to-surfaces-16",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nFormulation\n\n\nWe can now translate the inferred 3D edge orientation into linear constraints on the global 3D structure. We will formulate these constraints in terms of \\(Y(x,y)\\). Once \\(Y(x,y)\\) is recovered we can also recover \\(Z(x,y)\\) from Equation 1.\nIn a 3D vertical edge, using the projection equations, the derivative of \\(Y\\) along the edge will be\n\\[\\begin{aligned}\n\\partial Y / \\partial y &= 1/ \\cos(\\theta)\\end{aligned}\n\\qquad(3)\\]"
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-17",
+    "href": "lec2.html#from-edges-to-surfaces-17",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nFormulation\n\n\nIn a 3D horizontal edge, the coordinate \\(Y\\) will not change. Therefore, the derivative along the edge should be zero:\n\\[\\begin{aligned}\n\\partial Y / \\partial {\\bf t} &= 0\n\\end{aligned}\n\\qquad(4)\\]\nwhere the vector \\(\\bf t\\) denotes direction tangent to the edge, \\({\\bf t}=(-n_y, n_x)\\)."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-18",
+    "href": "lec2.html#from-edges-to-surfaces-18",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nFormulation\n\n\nWe can write this derivative as a function of derivatives along the \\(x\\) and \\(y\\) image coordinates: \\[\\begin{aligned}\n\\partial Y / \\partial {\\bf t} =  \\nabla Y \\cdot {\\bf t} = -n_y \\partial Y / \\partial x + n_x \\partial Y / \\partial y\n\\end{aligned} \\qquad(5)\\]\nWhen the edges coincide with occlusion edges, special care should be taken so that these constraints are only applied to the surface that owns the boundary."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-19",
+    "href": "lec2.html#from-edges-to-surfaces-19",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\n\n\n\nApproximation\n\n\nWe represent the world coordinates \\(X(x,y)\\), \\(Y(x,y)\\), and \\(Z(x,y)\\) as images where the coordinates \\(x,y\\) correspond to pixel locations.\nTherefore, it is useful to approximate the partial derivatives in the same way that we approximated the image partial derivatives in equations (Equation 2). Using this approximation, Equation 3 can be written as follows: \\[\\begin{aligned}\nY(x,y)-Y(x,y-1) &= 1/ \\cos(\\theta)\n\\end{aligned}\\]\nSimilar relationships can be obtained from equations Equation 4 and Equation 5."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-20",
+    "href": "lec2.html#from-edges-to-surfaces-20",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\nNo edges\n\n\n\nThe “Rule of Nothing” (Ted Adelson): where you see nothing, assume nothing happens, and just propagate information from where something happened."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-21",
+    "href": "lec2.html#from-edges-to-surfaces-21",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nConstraint Propagation\n\n\nMost of the image consists of flat regions where we do not have such edge constraints and we thus don’t have enough local information to infer the surface orientation.\nTherefore, we need some criteria in order to propagate information from the boundaries, where we do have information about the 3D structure, into the interior of flat image regions.\n\n\n\n\n\n\nNote\n\n\nThis problem is common in many visual domains."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-22",
+    "href": "lec2.html#from-edges-to-surfaces-22",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nAn image patch without context is not enough to infer its 3D shape.\n\n\nThe same patch shown in the original image. Information about its 3D orientation its propagated from the surrounding edges."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-23",
+    "href": "lec2.html#from-edges-to-surfaces-23",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nAssumption\n\n\nIn this case we will assume that the object faces are planar. Thus, flat image regions impose the following constraints on the local 3D structure: \\[\\begin{aligned}\n\\partial^2 Y / \\partial x^2 &= 0  \\\\\n\\partial^2 Y / \\partial y^2 &= 0 \\\\  \n\\partial^2 Y / \\partial y \\partial x &= 0\n\\end{aligned}\\]\nThat is, the second order derivative of \\(Y\\) should be zero. As before, we want to approximate the continuous partial derivatives."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-24",
+    "href": "lec2.html#from-edges-to-surfaces-24",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nApproximation\n\n\nThe approximation to the second derivative can be obtained by applying twice the first order derivative approximated by equations (Equation 2). The result is\n\\[\\partial^2 Y / \\partial x^2 \\simeq 2Y(x,y)-Y(x+1,y)-Y(x-1,y),\n\\] and similarly for \\(\\partial^2 X / \\partial x^2\\)."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-25",
+    "href": "lec2.html#from-edges-to-surfaces-25",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\nA Simple Inference Scheme\n\n\n\nEquation system\n\n\nAll the different constraints described previously can be written as an overdetermined system of linear equations. Each equation will have the form: \\[\\begin{aligned}\n\\mathbf{a}_i \\mathbf{Y} = b_i\n\\end{aligned}\\]\nwhere \\(\\mathbf{Y}\\) is a vectorized version of the image \\(Y\\) (i.e., all rows of pixels have been concatenated into a flat vector).\n\n\n\n\n\n\n\n\n\nNote\n\n\nThere might be many more equations than there are image pixels."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-26",
+    "href": "lec2.html#from-edges-to-surfaces-26",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nTranslation\n\n\nWe can translate all the constraints described in the previous sections into this form:\n\nfor instance, if the index \\(i\\) corresponds to one of the pixels inside one of the planar faces of a foreground object, then there will be three equations\none of the planarity constraint can be written as \\[\\mathbf{a}_i = [0, \\dots, 0, -1, 2, -1, 0, \\dots, 0], \\, b_i=0,\\] and analogous equations can be written for the other two."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-27",
+    "href": "lec2.html#from-edges-to-surfaces-27",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\n\n\n\nHow to solve?\n\n\nWe can solve the system of equations by minimizing the following cost function: \\[\\begin{aligned}\nJ = \\sum_i (\\mathbf{a}_i\\mathbf{Y} - b_i)^2\n\\end{aligned}\\] where the sum is over all the constraints.\n\n\n\n\n\n\nWeights\n\n\nIf some constraints are more important than others, we can use weights \\(w_i\\). \\[\\begin{aligned}\nJ = \\sum_i w_i (\\mathbf{a}_i \\mathbf{Y} - b_i)^2\n\\end{aligned}\\]"
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-28",
+    "href": "lec2.html#from-edges-to-surfaces-28",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\n\n\n\nNote\n\n\nOur formulation has resulted on a big system of linear constraints (there are more equations than there are pixels in the image).\n\n\n\n\n\n\nSystem of equations\n\n\nIt is convenient to write the system of equations in matrix form: \\[\\begin{aligned}\n\\mathbf{A} \\mathbf{Y}  = \\mathbf{b}\n\\end{aligned}\\]\nwhere row \\(i\\) of the matrix \\({\\bf A}\\) contains the constraint coefficients \\(\\mathbf{a}_i\\).\nThe system of equations is overdetermined (\\(\\mathbf{A}\\) has more rows than columns)."
+  },
+  {
+    "objectID": "lec2.html#from-edges-to-surfaces-29",
+    "href": "lec2.html#from-edges-to-surfaces-29",
+    "title": "Basic concepts",
+    "section": "From Edges to Surfaces",
+    "text": "From Edges to Surfaces\n\n\n\nSolution\n\n\nWe can use the pseudoinverse to compute the solution:\n\\[\\begin{aligned}\n\\bf Y = (\\mathbf{A}^T \\mathbf{A})^{-1} \\mathbf{A}^T \\mathbf{b}\n\\end{aligned}\\]\nThis problem can be solved efficiently as the matrix \\(\\mathbf{A}\\) is very sparse (most of the elements are zero)."
+  },
+  {
+    "objectID": "lec2.html#results",
+    "href": "lec2.html#results",
+    "title": "Basic concepts",
+    "section": "Results",
+    "text": "Results\n\n\n\n\n\n\nFigure 10\n\n\n\n\n\nCoordinates shows the resulting world coordinates \\(X(x,y)\\), \\(Y(x,y)\\), \\(Z(x,y)\\) for each pixel.\nWorld coordinates \\(X\\), \\(Y\\), and \\(Z\\) are shown as images with the gray level coding the value of each coordinate (black corresponds to the value 0)."
+  },
+  {
+    "objectID": "lec2.html#results-1",
+    "href": "lec2.html#results-1",
+    "title": "Basic concepts",
+    "section": "Results",
+    "text": "Results\n\n\n\nWhat do we get?\n\n\nThere are a few things to reflect on:\n\nIt works. At least it seems to work pretty well. Knowing how well it works will require having some way of evaluating performance. This will be important.\nBut it cannot possibly work all the time. We have made lots of assumptions that will work only in this simple world. The rest of the book will involve upgrading this approach to apply to more general input images.\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\nDespite that this approach will not work on general images, many of the general ideas will carry over to more sophisticated solutions (e.g., gather and propagate local evidence)."
+  },
+  {
+    "objectID": "lec2.html#results-2",
+    "href": "lec2.html#results-2",
+    "title": "Basic concepts",
+    "section": "Results",
+    "text": "Results\n\n\n\n\n\n\nEvaluation\n\n\nEvaluationof performance is a very important topic. Here, one simple way to visually verify that the solution is correct is to render the objects under new view points.\n\n\n\n\n\n\n\n\n\nFigure 11\n\n\n\n\n\nTo show that the algorithm for 3D interpretation gives reasonable results we can re-render the inferred 3D structure from different viewpoints."
+  },
+  {
+    "objectID": "lec2.html#results-3",
+    "href": "lec2.html#results-3",
+    "title": "Basic concepts",
+    "section": "Results",
+    "text": "Results\nYou may also try the interactive demo below to see the 3D structure. (The demo supports mouse zoom in and out, pan, and rotate.)"
+  },
+  {
+    "objectID": "lec2.html#generalization",
+    "href": "lec2.html#generalization",
+    "title": "Basic concepts",
+    "section": "Generalization",
+    "text": "Generalization\n\n\n\nNote\n\n\nOne desired property of any vision system is it ability to generalize outside of the domain for which it was designed to operate.\nOut of domain generalization refers to the ability of a system to operate outside the domain for which it was designed.\nWe have listed several assumptions earlier.\nIn learning-based approaches the training dataset specifies the domain."
+  },
+  {
+    "objectID": "lec2.html#generalization-1",
+    "href": "lec2.html#generalization-1",
+    "title": "Basic concepts",
+    "section": "Generalization",
+    "text": "Generalization\n\n\n\n\n\n\nFigure 12\n\n\n\n\n\n\nshadows are not soft\nthe green cube occludes the red one\none object on top of the other"
+  },
+  {
+    "objectID": "lec2.html#generalization-2",
+    "href": "lec2.html#generalization-2",
+    "title": "Basic concepts",
+    "section": "Generalization",
+    "text": "Generalization\n\n\n\n\n\n\nFigure 13: Impossible steps\n\n\n\n\n\n\nleft: this shape looks rectangular and the stripes appear to be painted on the surface\nright: the shape looks as though it has steps, with the stripes corresponding to shading due to the surface orientation\nmiddle: the shape is ambiguous."
+  },
+  {
+    "objectID": "lec2.html#concluding-remarks",
+    "href": "lec2.html#concluding-remarks",
+    "title": "Basic concepts",
+    "section": "Concluding Remarks",
+    "text": "Concluding Remarks\n\n\n\n\n\n\nLack of knowledge\n\n\n\nthe system is still unaware of the fact that the scene is composed of a set of distinct objects\nas the system lacks a representation of which objects are actually present in the scene, we cannot visualize the occluded parts"
+  },
+  {
+    "objectID": "lec2.html#concluding-remarks-1",
+    "href": "lec2.html#concluding-remarks-1",
+    "title": "Basic concepts",
+    "section": "Concluding Remarks",
+    "text": "Concluding Remarks\n\n\n\nA different approach: model-based\n\n\nWe could have a set of predefined models of the objects that can be present in the scene and the system can try to decide if they are present or not in the image, and recover their parameters (i.e., pose, color).\nRecognition allows indexing properties that are not directly available in the image."
   },
   {
     "objectID": "lec1.html#euclid",
@@ -567,17 +1120,66 @@
     "text": "Thank you"
   },
   {
+    "objectID": "lab1.html",
+    "href": "lab1.html",
+    "title": "Lab 1",
+    "section": "",
+    "text": "Please enroll at OpenCV intro course.\nComplete the following items in the course:\n2.1. Getting Started with Images.\n2.2. Basic Image Manipulation.\nPractice cropping/resizing on a couple of images downloaded from the net."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Computer vision course",
     "section": "",
-    "text": "Slides\n\n\n\nLab1"
+    "text": "Slides\n\n\n\nSlides\n\n\n\nLab1"
   },
   {
     "objectID": "index.html#lectures",
     "href": "index.html#lectures",
     "title": "Computer vision course",
     "section": "",
-    "text": "Slides\n\n\n\nLab1"
+    "text": "Slides\n\n\n\nSlides\n\n\n\nLab1"
+  },
+  {
+    "objectID": "nb/pset2_2024/pset2_2024.html",
+    "href": "nb/pset2_2024/pset2_2024.html",
+    "title": "Problem 1",
+    "section": "",
+    "text": "%matplotlib inline\nimport numpy as np\nfrom numpy.fft import fft2, ifft2, fftshift, ifftshift\nfrom numpy import angle, real\nfrom numpy import exp, abs, pi, sqrt\nimport matplotlib.pyplot as plt\nimport cv2\nimport scipy.ndimage as ndimage\n\ndef imshow(im, cmap='gray'):\n    # clip image from 0-1\n    im = np.clip(im, 0, 1)\n    plt.imshow(im, cmap=cmap)\n! curl http://6.869.csail.mit.edu/sp21/pset3_data/einsteinandwho.jpg &gt; einsteinandwho.jpg\n! curl http://6.869.csail.mit.edu/sp21/pset3_data/bill.avi &gt; bill.avi\n### TODO: ENTER YOUR CODE BELOW"
+  },
+  {
+    "objectID": "nb/pset2_2024/pset2_2024.html#problem-2",
+    "href": "nb/pset2_2024/pset2_2024.html#problem-2",
+    "title": "Problem 1",
+    "section": "Problem 2",
+    "text": "Problem 2\n\n# scale image's intensity to [0,1] with mean value of 0.5 for better visualization.\ndef intensityscale(raw_img):\n\n    # scale an image's intensity from [min, max] to [0, 1].\n    v_min, v_max = raw_img.min(), raw_img.max()\n    scaled_im = (raw_img * 1.0 - v_min) / (v_max - v_min)\n\n    # keep the mean to be 0.5.\n    meangray = np.mean(scaled_im)\n    scaled_im = scaled_im - meangray + 0.5\n\n    # clip to [0, 1]\n    scaled_im = np.clip(scaled_im, 0, 1)\n\n    return scaled_im\n\n\n### ENTER YOUR CODE BELOW"
+  },
+  {
+    "objectID": "nb/pset2_2024/pset2_2024.html#problem-3.a",
+    "href": "nb/pset2_2024/pset2_2024.html#problem-3.a",
+    "title": "Problem 1",
+    "section": "Problem 3.a",
+    "text": "Problem 3.a\n\n# 9x9 images\nimSize = 9\n\n# we would like to magnify the change between im1 and im2 by 4x\nmagnificationFactor = 4;\n\n# horizontal movement from (0, 0) to (0, 1)\nim1 = np.zeros([imSize, imSize])\nim2 = np.zeros([imSize, imSize])\nim1[0,0] = 1\nim2[0,1] = 1\n\nff1 = fftshift(fft2(im1))\nff2 = fftshift(fft2(im2))\n\nplt.figure()\nplt.subplot(121)\nimshow(im1)\nplt.subplot(122)\nimshow(im2)\n\nplt.figure()\nplt.subplot(121)\nimshow(angle(ff1))\nplt.subplot(122)\nimshow(angle(ff2))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMagnify Change\n\ndef magnifyChange(im1, im2, magnificationFactor):\n\n    # find phase shift in frequency domain\n    im1Dft = fft2(im1)\n    im2Dft = fft2(im2)\n    phaseShift = # TODO\n\n    # magnify the phase change in frequency domain\n    magnifiedDft = # TODO\n\n    # what does the magnified phase change cause in image space?\n    magnified = ifft2(magnifiedDft).real;\n\n    return magnified\n\nHINT: If you’re not familiar with complex number in python, here’s a quickstart.\n\n# create a complex number\nx = 1 + 1j\nprint(\"x =\", x)\nprint(\"x.real\", x.real, \"x.imag\", x.imag)\n\n# magnitude and phase of complex number\nmag = abs(x)\nphase = angle(x)\n\nprint(\"Magnitude\", mag)\nprint(\"Phase\", phase)\n\n# Euler's formula\ny = mag * exp(phase * 1j)\nprint(\"y =\", y)\n\n\n# magnify position change\nmagnified = magnifyChange(im1, im2, magnificationFactor);\n\nplt.figure(figsize=(12,36))\nplt.subplot(131)\nimshow(im1); plt.title('im1');\n\nplt.subplot(132)\nimshow(im2); plt.title('im2');\n\nplt.subplot(133)\nimshow(magnified); plt.title('magnified');\nplt.savefig(\"problem_3a.png\", bbox=\"tight\")"
+  },
+  {
+    "objectID": "nb/pset2_2024/pset2_2024.html#problem-3.b",
+    "href": "nb/pset2_2024/pset2_2024.html#problem-3.b",
+    "title": "Problem 1",
+    "section": "Problem 3.b",
+    "text": "Problem 3.b\n\n# 9x9 images\nimSize = 9\n\n# we would like to magnify the change between im1 and im2 by 4x\nmagnificationFactor = 4\n\n# horizontal movement from (1, 1) to (1, 2)\n# additional vertical movement from (9, 9) to (8, 9)\nim1 = np.zeros([imSize, imSize])\nim2 = np.zeros([imSize, imSize])\nim1[0,0] = 1\nim2[0,1] = 1\nim1[8,8] = 1\nim2[7,8] = 1\n\n\n### TODO: ENTER YOUR CODE BELOW\n### manually edit the expected matrix (currently set as zeros) by creating 1s to show the expected output\nexpected = np.zeros([imSize, imSize])\n\n\n\n# magnify position change\nmagnified = magnifyChange(im1, im2, magnificationFactor)\n\n\nplt.figure(figsize=(12,36))\nplt.subplot(141)\nimshow(im1); plt.title('im1');\n\nplt.subplot(142)\nimshow(im2); plt.title('im2');\n\nplt.subplot(143)\nimshow(expected); plt.title('expected');\n\nplt.subplot(144)\nimshow(magnified); plt.title('magnified');\nplt.savefig(\"problem_3b.png\", bbox=\"tight\")"
+  },
+  {
+    "objectID": "nb/pset2_2024/pset2_2024.html#problem-3.c",
+    "href": "nb/pset2_2024/pset2_2024.html#problem-3.c",
+    "title": "Problem 1",
+    "section": "Problem 3.c",
+    "text": "Problem 3.c\n\n# 9x9 images\nimSize = 9\n\n# we would like to magnify the change between im1 and im2 by 4x\nmagnificationFactor = 4\n\n# width of our Gaussian window\nsigma = 2\n\n# horizontal movement from (1, 1) to (1, 2)\n# additional vertical movement from (9, 9) to (8, 9)\nim1 = np.zeros([imSize, imSize])\nim2 = np.zeros([imSize, imSize])\nim1[0,0] = 1\nim2[0,1] = 1\nim1[8,8] = 1\nim2[7,8] = 1\n\n# we will magnify windows of the image and aggregate the results\nmagnified = np.zeros([imSize, imSize])\n\n# meshgrid for computing Gaussian window\nX, Y = np.meshgrid(np.arange(imSize), np.arange(imSize))\n\nfor y in range(0, imSize, 2*sigma):\n    for x in range(0, imSize, 2*sigma):\n        gaussianMask = # TODO\n        windowMagnified = magnifyChange(# TODO,\\\n            magnificationFactor)\n        magnified = magnified + windowMagnified\n\nplt.figure(figsize=(12,36))\nplt.subplot(131)\nimshow(im1); plt.title('im1');\n\nplt.subplot(132)\nimshow(im2); plt.title('im2');\n\nplt.subplot(133)\nimshow(magnified); plt.title('magnified');\nplt.savefig(\"problem_3c.png\", bbox=\"tight\")"
+  },
+  {
+    "objectID": "nb/pset2_2024/pset2_2024.html#problem-3.d",
+    "href": "nb/pset2_2024/pset2_2024.html#problem-3.d",
+    "title": "Problem 1",
+    "section": "Problem 3.d",
+    "text": "Problem 3.d\n\nimport numpy as np\nimport cv2\n\ncap = cv2.VideoCapture('bill.avi')\n\n# list of video frames\nframes = []\n\nwhile(cap.isOpened()):\n    # read frame from the video\n    ret, frame = cap.read()\n\n    if ret is False:\n        break\n\n    frames.append(frame)\n\ncap.release()\n\n# scale frame to 0-1\nframes = np.array(frames) / 255.\nprint(\"frames size:\", frames.shape, \"# (nb_frames, height, width, channel)\")\n\n# get height, width\nnumFrames = frames.shape[0]\nheight = frames.shape[1]\nwidth = frames.shape[2]\n\n\nMotion magnification\nFill out code here\n\n# 10x magnification of motion\nmagnificationFactor = 10\n\n# width of Gaussian window\nsigma = 13\n\n# alpha for moving average\nalpha = 0.5\n\n# we will magnify windows of the video and aggregate the results\nmagnified = np.zeros_like(frames)\n\n# meshgrid for computing Gaussian window\nX, Y = np.meshgrid(np.arange(width), np.arange(height))\n\n# iterate over windows of the frames\nxRange = list(range(0, width, 2*sigma))\nyRange = list(range(0, height, 2*sigma))\nnumWindows = len(xRange) * len(yRange)\nwindowIndex = 1\n\nfor y in yRange:\n    for x in xRange:\n        for channelIndex in range(3): # RGB channels\n            for frameIndex in range(numFrames):\n\n                # create windowed frames\n                gaussianMask = # TODO\n                windowedFrames = gaussianMask * frames[frameIndex,:,:,channelIndex]\n\n                # initialize moving average of phase for current window/channel\n                if frameIndex == 0:\n                    windowAveragePhase = angle(fft2(windowedFrames))\n\n                windowDft = fft2(windowedFrames)\n\n                # compute phase shift and constrain to [-pi, pi] since\n                # angle space wraps around\n                windowPhaseShift = angle(windowDft) - windowAveragePhase\n                windowPhaseShift[windowPhaseShift &gt; pi] = windowPhaseShift[windowPhaseShift &gt; pi] - 2 * pi\n                windowPhaseShift[windowPhaseShift &lt; -pi] = windowPhaseShift[windowPhaseShift &lt; -pi] + 2 * pi\n\n                # magnify phase shift\n                windowMagnifiedPhase = # TODO\n\n                # go back to image space\n                windowMagnifiedDft = # TODO\n                windowMagnified = abs(ifft2(windowMagnifiedDft))\n\n                # update moving average\n                windowPhaseUnwrapped = windowAveragePhase + windowPhaseShift\n                windowAveragePhase = alpha * windowAveragePhase + (1 - alpha) * windowPhaseUnwrapped\n\n                # aggregate\n                magnified[frameIndex,:,:,channelIndex] = magnified[frameIndex,:,:,channelIndex] + windowMagnified\n\n        # print progress\n        print('{}/{}'.format(windowIndex, numWindows), end='\\r')\n        windowIndex += 1\n\n\noutputs = magnified / np.max(magnified)\nfor channelIndex in range(3):\n    originalFrame = frames[0,:,:,channelIndex]\n    magnifiedFrame = outputs[0,:,:,channelIndex]\n    scale = np.std(originalFrame[:]) / np.std(magnifiedFrame[:])\n    originalMean = np.mean(originalFrame[:])\n    magnifiedMean = np.mean(magnifiedFrame[:])\n    outputs[:,:,:,channelIndex] = magnifiedMean + scale * (outputs[:,:,:,channelIndex] - magnifiedMean)\n\noutputs = np.clip(outputs, 0, 1)\n\n\n# create output video\nfourcc = cv2.VideoWriter_fourcc('M','J','P','G')\n# fourcc = cv2.VideoWriter_fourcc(*'XVID')\nout = cv2.VideoWriter('bill_magnified.avi',fourcc, 30.0, (height, width))\n\nfor i in range(frames.shape[0]):\n    # scale the frame back to 0-255\n    frame = (np.clip(outputs[i], 0, 1) * 255).astype(np.uint8)\n\n    # write frame to output video\n    out.write(frame)\n\nout.release()\n\n\n# Only for colab downloading videos\ntry:\n    from google.colab import files\n    files.download('bill_magnified.avi')\nexcept:\n    print(\"Only for google colab\")"
   }
 ]
