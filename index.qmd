@@ -10,6 +10,12 @@ title: "Computer vision course"
 ### Lec 2: basic concepts
 [Slides](./lec2.qmd)
 
+### Lec 3: image filtering
+[Slides](./lec3.qmd)
+
 
 ### Lab1
 [Lab1](./lab1.qmd)
+
+### Lab2
+[Lab2](./lab2.qmd)

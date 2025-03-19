@@ -33,8 +33,8 @@ format:
     theme: default
     multiplex:
       url: 'https://mplex.vitv.ly'
-      secret: ''
-      id: ''
+      secret: '7a7b30786fae8264bf00b7e14bb13f44'
+      id: '95045e67634f05266de13af2da3db90481eef7d6c5e52b5c5ea7339b42d7896f'
 ---
 
 # Introduction

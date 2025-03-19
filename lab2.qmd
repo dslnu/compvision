@@ -1,0 +1,9 @@
+---
+title: "Lab 2"
+---
+
+Complete the following items in the course:
+
+   1. `Image Annotation`.
+
+   2. `Image Enhancement`.
