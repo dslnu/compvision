@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/tabby.min.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
+
+  <meta name="author" content="Vitaly Vlasov">
+  <title>Computer Vision – Filtering</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-2f366650f320edcfcf53d73c80250a32.css">
+  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Filtering</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Vitaly Vlasov 
+</div>
+        <p class="quarto-title-affiliation">
+            Lviv University
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>Human visual system is complex.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>We have a fairly good idea of what happens at the initial stages of visual processing.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>We will describe some mathematically simple processing that will help us to parse an image into useful tokens, or <strong>low-level features</strong> that will be useful later to construct visual interpretations.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="introduction-1" class="slide level2">
+<h2>Introduction</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Processing features</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>enhance image structures of use for subsequent interpretation</li>
+<li>remove variability within the image that makes more difficult comparisons with previously learned visual signals.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Linear filters</strong></p>
+</div>
+<div class="callout-content">
+<p>The simplest mathematical processing we can think of.</p>
+<ul>
+<li>nicely model some aspects of the processing carried our by early visual areas such as the retina, the lateral geniculate nucleus (LGN) and primary visual cortex (V1) <span class="citation" data-cites="Hubel62">@Hubel62</span>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="signals-and-images" class="slide level2">
+<h2>Signals and Images</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Signal</strong></p>
+</div>
+<div class="callout-content">
+<p>A <strong>signal</strong> is a measurement of some physical quantity (light, sound, height, temperature, etc.) as a function of another independent quantity (time, space, wavelength, etc.).</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>System</strong></p>
+</div>
+<div class="callout-content">
+<p>A <strong>system</strong> is a process/function that transforms a signal into another.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="signals-and-images-1" class="slide level2">
+<h2>Signals and Images</h2>
+<h3 id="continuous-and-discrete-signals">Continuous and Discrete Signals</h3>
+<ul>
+<li>most of the signals that exist in nature are infinite <strong>continuous signals</strong></li>
+<li>however, when we introduce them into a computer they are sampled and transformed into a finite sequence of numbers, also called a <strong>discrete signal</strong>.</li>
+</ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Sampling</strong> is the process of transforming a continuous signal into a discrete one.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="signals-and-images-2" class="slide level2">
+<h2>Signals and Images</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Signal representation</strong></p>
+</div>
+<div class="callout-content">
+<p>If we consider the light that reaches one camera photo sensor, we could write it as a one dimensional function of time, <span class="math inline">\(\ell(t)\)</span>, where <span class="math inline">\(\ell(t)\)</span> denotes the incident <span class="math inline">\(\ell\)</span>ight at time <span class="math inline">\(t\)</span>, and <span class="math inline">\(t\)</span> is a continuous variable that can take on any real value.</p>
+<p>The signal <span class="math inline">\(\ell(t)\)</span> is then <strong>sampled</strong> in time (as is done in a video) by the camera where the values are only captured at discrete times (e.g., 30 times per second). In that case, the signal <span class="math inline">\(\ell\)</span> will be defined only on discrete time instants and we will write the sequence of measured values as: <span class="math inline">\(\ell\left[ n \right]\)</span>, where <span class="math inline">\(n\)</span> can only take on integer values.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="signals-and-images-3" class="slide level2">
+<h2>Signals and Images</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Discrete-continuous Relationship</strong></p>
+</div>
+<div class="callout-content">
+<p>The relationship between the discrete and the continuous signals is given by the sampling equation: <span class="math display">\[
+\ell\left[n\right] = \ell\left(n~\Delta T \right)
+\]</span> where <span class="math inline">\(\Delta T\)</span>is the <strong>sampling period</strong>.</p>
+<p>For instance, <span class="math inline">\(\Delta T = 1/30\)</span>&nbsp;s in the case of sampling the signal 30 times per second.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="signals-and-images-4" class="slide level2">
+<h2>Signals and Images</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>As is common in signal processing, we will use parenthesis to indicate continuous variables and brackets to denote discrete variables.</p>
+<p>For instance, if we sample the signal shown in <a href="#/fig-contdiscsignal" class="quarto-xref">Figure&nbsp;1</a> (a) once every second (<span class="math inline">\(\Delta T = 1\)</span>&nbsp;s) we get the discrete signal shown in <a href="#/fig-contdiscsignal" class="quarto-xref">Figure&nbsp;1</a> (b).</p>
+</div>
+</div>
+</div>
+
+<img data-src="img/linear_image_filtering/contdiscsignal.png" class="r-stretch quarto-figure-center" id="fig-contdiscsignal"><p class="caption">
+Figure&nbsp;1: Fig (a) A continuous signal, and (b) a discrete signal obtained by sampling the continuous signal at the times <span class="math inline">\(t=n\)</span>.
+</p></section>
+<section id="signals-and-images-5" class="slide level2">
+<h2>Signals and Images</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Signal values</strong></p>
+</div>
+<div class="callout-content">
+<p>The signal in <a href="#/fig-contdiscsignal" class="quarto-xref">Figure&nbsp;1</a> (b) is a function that takes on the values <span class="math inline">\(\ell\left[0\right] = 3\)</span>, <span class="math inline">\(\ell\left[1\right] = 2\)</span>, <span class="math inline">\(\ell\left[2\right] = 1\)</span> and <span class="math inline">\(\ell\left[3\right] = 4\)</span> and all other values are zero, <span class="math inline">\(\ell\left[n\right] = 0\)</span>. In most of the book we will work with discrete signals.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Vector notation</strong></p>
+</div>
+<div class="callout-content">
+<p>In many cases it will be convenient to write discrete signals as vectors. Using vector notation we will write the previous signal, in the interval <span class="math inline">\(n \in \left[0,6 \right],\)</span> as a column vector <span class="math inline">\(\boldsymbol\ell= \left[3, 2, 1, 4, 0, 0, 0\right]^T\)</span>, where <span class="math inline">\(T\)</span> denotes transpose.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="signals-and-images-6" class="slide level2">
+<h2>Signals and Images</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Image</strong></p>
+</div>
+<div class="callout-content">
+<p>An image is a two dimensional array of values: <span class="math display">\[
+\boldsymbol\ell\in \mathbb{R}^{M \times N},
+\]</span> where <span class="math inline">\(N\)</span> is the image width and <span class="math inline">\(M\)</span> is the image height.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="signals-and-images-7" class="slide level2">
+<h2>Signals and Images</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example</strong></p>
+</div>
+<div class="callout-content">
+<p>A grayscale image is then just an array of numbers such as the following (in this example, intensity values are scaled between 0 and 256):</p>
+<p><span class="math display">\[\begin{array}{cc}
+\boldsymbol\ell= &amp;
+\left[
+\begin{smallmatrix} 160 &amp; 175 &amp; 171 &amp; 168 &amp; 168 &amp; 172 &amp; 164 &amp; 158 &amp; 167 &amp; 173 &amp; 167 &amp; 163 &amp; 162 &amp; 164 &amp; 160 &amp; 159 &amp; 163 &amp; 162\\ 149 &amp; 164 &amp; 172 &amp; 175 &amp; 178 &amp; 179 &amp; 176 &amp; 118 &amp; 97 &amp; 168 &amp; 175 &amp; 171 &amp; 169 &amp; 175 &amp; 176 &amp; 177 &amp; 165 &amp; 152\\ 161 &amp; 166 &amp; 182 &amp; 171 &amp; 170 &amp; 177 &amp; 175 &amp; 116 &amp; 109 &amp; 169 &amp; 177 &amp; 173 &amp; 168 &amp; 175 &amp; 175 &amp; 159 &amp; 153 &amp; 123\\ 171 &amp; 174 &amp; 177 &amp; 175 &amp; 167 &amp; 161 &amp; 157 &amp; 138 &amp; 103 &amp; 112 &amp; 157 &amp; 164 &amp; 159 &amp; 160 &amp; 165 &amp; 169 &amp; 148 &amp; 144\\ 163 &amp; 163 &amp; 162 &amp; 165 &amp; 167 &amp; 164 &amp; 178 &amp; 167 &amp; 77 &amp; 55 &amp; 134 &amp; 170 &amp; 167 &amp; 162 &amp; 164 &amp; 175 &amp; 168 &amp; 160\\ 173 &amp; 164 &amp; 158 &amp; 165 &amp; 180 &amp; 180 &amp; 150 &amp; 89 &amp; 61 &amp; 34 &amp; 137 &amp; 186 &amp; 186 &amp; 182 &amp; 175 &amp; 165 &amp; 160 &amp; 164\\ 152 &amp; 155 &amp; 146 &amp; 147 &amp; 169 &amp; 180 &amp; 163 &amp; 51 &amp; 24 &amp; 32 &amp; 119 &amp; 163 &amp; 175 &amp; 182 &amp; 181 &amp; 162 &amp; 148 &amp; 153\\ 134 &amp; 135 &amp; 147 &amp; 149 &amp; 150 &amp; 147 &amp; 148 &amp; 62 &amp; 36 &amp; 46 &amp; 114 &amp; 157 &amp; 163 &amp; 167 &amp; 169 &amp; 163 &amp; 146 &amp; 147\\ 135 &amp; 132 &amp; 131 &amp; 125 &amp; 115 &amp; 129 &amp; 132 &amp; 74 &amp; 54 &amp; 41 &amp; 104 &amp; 156 &amp; 152 &amp; 156 &amp; 164 &amp; 156 &amp; 141 &amp; 144\\ 151 &amp; 155 &amp; 151 &amp; 145 &amp; 144 &amp; 149 &amp; 143 &amp; 71 &amp; 31 &amp; 29 &amp; 129 &amp; 164 &amp; 157 &amp; 155 &amp; 159 &amp; 158 &amp; 156 &amp; 148\\ 172 &amp; 174 &amp; 178 &amp; 177 &amp; 177 &amp; 181 &amp; 174 &amp; 54 &amp; 21 &amp; 29 &amp; 136 &amp; 190 &amp; 180 &amp; 179 &amp; 176 &amp; 184 &amp; 187 &amp; 182\\ 177 &amp; 178 &amp; 176 &amp; 173 &amp; 174 &amp; 180 &amp; 150 &amp; 27 &amp; 101 &amp; 94 &amp; 74 &amp; 189 &amp; 188 &amp; 186 &amp; 183 &amp; 186 &amp; 188 &amp; 187\\ 160 &amp; 160 &amp; 163 &amp; 163 &amp; 161 &amp; 167 &amp; 100 &amp; 45 &amp; 169 &amp; 166 &amp; 59 &amp; 136 &amp; 184 &amp; 176 &amp; 175 &amp; 177 &amp; 185 &amp; 186\\ 147 &amp; 150 &amp; 153 &amp; 155 &amp; 160 &amp; 155 &amp; 56 &amp; 111 &amp; 182 &amp; 180 &amp; 104 &amp; 84 &amp; 168 &amp; 172 &amp; 171 &amp; 164 &amp; 168 &amp; 167\\ 184 &amp; 182 &amp; 178 &amp; 175 &amp; 179 &amp; 133 &amp; 86 &amp; 191 &amp; 201 &amp; 204 &amp; 191 &amp; 79 &amp; 172 &amp; 220 &amp; 217 &amp; 205 &amp; 209 &amp; 200\\ 184 &amp; 187 &amp; 192 &amp; 182 &amp; 124 &amp; 32 &amp; 109 &amp; 168 &amp; 171 &amp; 167 &amp; 163 &amp; 51 &amp; 105 &amp; 203 &amp; 209 &amp; 203 &amp; 210 &amp; 205\\ 191 &amp; 198 &amp; 203 &amp; 197 &amp; 175 &amp; 149 &amp; 169 &amp; 189 &amp; 190 &amp; 173 &amp; 160 &amp; 145 &amp; 156 &amp; 202 &amp; 199 &amp; 201 &amp; 205 &amp; 202\\ 153 &amp; 149 &amp; 153 &amp; 155 &amp; 173 &amp; 182 &amp; 179 &amp; 177 &amp; 182 &amp; 177 &amp; 182 &amp; 185 &amp; 179 &amp; 177 &amp; 167 &amp; 176 &amp; 182 &amp; 180 \end{smallmatrix}\right]
+\end{array}\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="signals-and-images-8" class="slide level2">
+<h2>Signals and Images</h2>
+
+<img data-src="img/linear_image_filtering/gray_image.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Grayscale image showing a person walking in the street. This tiny image has only <span class="math inline">\(18\times18\)</span> pixels.</p></section>
+<section id="signals-and-images-9" class="slide level2">
+<h2>Signals and Images</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Pixel location</strong></p>
+</div>
+<div class="callout-content">
+<p>When we want to make explicit the location of a pixel we will write <span class="math inline">\(\ell\left[n, m \right]\)</span>, where <span class="math inline">\(n \in \left[0,N-1 \right]\)</span> and <span class="math inline">\(m \in \left[0,M-1 \right]\)</span> are the indices for the horizontal and vertical dimensions, respectively.</p>
+<ul>
+<li><p>each value in the array indicates the intensity of the image in that location.</p></li>
+<li><p>for color images we will have three channels, one for each color.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="signals-and-images-10" class="slide level2">
+<h2>Signals and Images</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Approximation</strong></p>
+</div>
+<div class="callout-content">
+<p>Working on the continuous domain simplifies the derivation of analytical solutions. In those cases we will write images as <span class="math display">\[
+\ell(x,y)
+\]</span> and video sequences as <span class="math display">\[
+\ell(x,y,t)
+\]</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="signal-properties" class="slide level2">
+<h2>Signal Properties</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Signal length</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Infinite length</strong> signals are signals that extend over the entire support <span class="math inline">\(\ell\left[n \right]\)</span> for <span class="math inline">\(n \in (-\infty, \infty)\)</span>.</p>
+<p><strong>Finite length</strong> signals have non-zero values on a compact time interval and they are zero outside, i.e.&nbsp;<span class="math inline">\(\ell\left[n \right] = 0\)</span> for <span class="math inline">\(n \notin S\)</span> where <span class="math inline">\(S\)</span> is a finite length interval.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Periodicity</strong></p>
+</div>
+<div class="callout-content">
+<p>A signal <span class="math inline">\(\ell\left[n \right]\)</span> is <strong>periodic</strong> if there is a value <span class="math inline">\(N\)</span> such that <span class="math inline">\(\ell\left[n \right] = \ell\left[n + k N\right]\)</span> for all <span class="math inline">\(n\)</span> and <span class="math inline">\(k\)</span>. A periodic signal is an infinite length signal.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="signal-properties-1" class="slide level2">
+<h2>Signal Properties</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Mean value</strong></p>
+</div>
+<div class="callout-content">
+<p>Mean value of a signal often called the <strong>DC value</strong>.</p>
+<p>In the case of an image, the DC component is the <strong>average intensity</strong> of the image.</p>
+<p>The <strong>DC value</strong> is computed as <span class="math display">\[
+\mu = \begin{cases}
+\frac{1}{N} \sum_{n=0}^{N-1} \ell\left[n\right], \, \text{finite case} \\
+\lim_{N \xrightarrow{} \infty} \frac{1}{2N+1} \sum_{n=-N}^{N} \ell\left[n\right], \, \text{infinite case}
+\end{cases}
+\]</span></p>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>DC means <strong>direct current</strong> and it comes from electrical engineering. Although most signals have nothing to do with currents, the term DC is still commonly used.</p>
+</div></aside></section>
+<section id="signal-properties-2" class="slide level2">
+<h2>Signal Properties</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Energy</strong></p>
+</div>
+<div class="callout-content">
+<p>The <strong>energy of a signal</strong> is defined as the sum of squared magnitude values: <span class="math display">\[
+E = \sum_{n = -\infty}^{\infty} \left| \ell\left[n\right] \right| ^2
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Signal are further classified as <strong>finite energy</strong> and <strong>infinite energy</strong> signals</p>
+<ul>
+<li>finite length signals are finite energy</li>
+<li>periodic signals are infinite energy signals when measuring the energy in the whole time axis.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="signal-properties-3" class="slide level2">
+<h2>Signal Properties</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Comparison</strong></p>
+</div>
+<div class="callout-content">
+<p>If we want to compare two signals, we can use the squared Euclidean distance (squared <span class="math inline">\(L_2\)</span> norm) between them: <span class="math display">\[
+D^2 = \frac{1}{N} \sum_{n=0}^{N-1} \left| \ell_1 \left[n\right] - \ell_2 \left[n\right] \right| ^2
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-warning no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>However, the euclidean distance (<span class="math inline">\(L_2\)</span>) is a poor metric when we are interested in comparing the content of the two images and the building better metrics is an important area of research. Sometimes, the metric is <span class="math inline">\(L_2\)</span> but in a different representation space than pixel values.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="signal-properties-4" class="slide level2">
+<h2>Signal Properties</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Continuous signal properties</strong></p>
+</div>
+<div class="callout-content">
+<p>All the equations are analogous by replacing the sums with integrals.</p>
+<p>For instance, in the case of the energy of a continuous signal, we can write</p>
+<p><span class="math display">\[
+E = \int_{-\infty}^{\infty} \left| \ell\left( t \right) \right|^2 dt,
+\]</span> which assumes that the integral is finite.</p>
+<p>Most natural signals will have infinite energy.</p>
+</div>
+</div>
+</div>
+</section>
+<section>
+<section id="systems" class="title-slide slide level1 center">
+<h1>Systems</h1>
+
+</section>
+<section id="systems-1" class="slide level2">
+<h2>Systems</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Systems flow</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><strong>input:</strong> <span class="math inline">\(\boldsymbol\ell_{\texttt{in}}\)</span></li>
+<li><strong>computation</strong>: <span class="math inline">\(f\)</span></li>
+<li><strong>output</strong>: another signal <span class="math inline">\(\boldsymbol\ell_{\texttt{out}}= f(\boldsymbol\ell_{\texttt{in}})\)</span>.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<img data-src="img/linear_image_filtering/genericfilterH.png" style="width:40.0%" class="r-stretch quarto-figure-center" id="fig-genericfilterH"><p class="caption">
+Figure&nbsp;2: System processing one signal.
+</p></section>
+<section id="systems-2" class="slide level2">
+<h2>Systems</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>What can this do?</strong></p>
+</div>
+<div class="callout-content">
+<p>All kinds of things:</p>
+<ul>
+<li>detect edges in images</li>
+<li>recognize objects</li>
+<li>detect motion in sequences</li>
+<li>apply aesthetic transformations to a picture.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>The function <span class="math inline">\(f\)</span> could be specified as a mathematical operation or as an algorithm. As a consequence, it is very difficult to find a simple way of characterizing what the function <span class="math inline">\(f\)</span> does</p>
+</div></aside></section>
+<section id="linear-systems" class="slide level2">
+<h2>Linear Systems</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Linear systems</strong></p>
+</div>
+<div class="callout-content">
+<p>A function <span class="math inline">\(f\)</span> is linear is it satisfies the following two properties:</p>
+<p><span class="math display">\[\begin{aligned}
+&amp; 1. \; f\left( \boldsymbol\ell_1+\boldsymbol\ell_2 \right) = f(\boldsymbol\ell_1)+ f(\boldsymbol\ell_2) \\ \nonumber
+&amp; 2. \; f(a\boldsymbol\ell) = af(\boldsymbol\ell) ~~\text{for any scalar} ~ a
+\end{aligned}\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="systems-3" class="slide level2">
+<h2>Systems</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Which operations are linear?</strong></p>
+</div>
+<div class="callout-content">
+<p>Which ones of the image transformations can be written as linear systems?</p>
+<div id="fig-transformationsquizz" class="quarto-float quarto-figure quarto-figure-center" width="100%">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-transformationsquizz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/linear_image_filtering/whichoneislinear.png" id="fig-transformationsquizz" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-transformationsquizz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="systems-4" class="slide level2">
+<h2>Systems</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Linear system: inputs/outputs</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><strong>input</strong>: a 1D signal with length <span class="math inline">\(N\)</span> that we will write as <span class="math inline">\(\ell_{\texttt{in}}\left[n \right]\)</span>,</li>
+<li><strong>output</strong> another 1D signal with length <span class="math inline">\(M\)</span> that we will write as <span class="math inline">\(\ell_{\texttt{out}}\left[n \right]\)</span>.</li>
+</ul>
+<p>Most of the times we will work with input and output pairs with the same length <span class="math inline">\(M=N\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Linear system: definition</strong></p>
+</div>
+<div class="callout-content">
+<p>A linear system, in its most general form, can be written as follows:</p>
+<p><span id="eq-general_lin_filter"><span class="math display">\[\ell_{\texttt{out}}\left[n \right] = \sum_{k=0}^{N-1} h \left[n,k\right] \ell_{\texttt{in}}\left[k \right] ~~~ for ~~~ n \in \left[0, M-1 \right]
+\qquad(1)\]</span></span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="systems-5" class="slide level2">
+<h2>Systems</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Linear system: properties</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>each output value <span class="math inline">\(\ell_{\texttt{out}}\left[n \right]\)</span> is a linear combination of values of the input signal <span class="math inline">\(\ell_{\texttt{in}}\left[n \right]\)</span> with weights <span class="math inline">\(h \left[n,k\right]\)</span></li>
+<li>the value <span class="math inline">\(h \left[n,k\right]\)</span> is the weight applied to the input sample <span class="math inline">\(\ell_{\texttt{in}}\left[k \right]\)</span> to compute the output sample <span class="math inline">\(\ell_{\texttt{out}}\left[n \right]\)</span>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="systems-6" class="slide level2 smaller">
+<h2>Systems</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Matrix form</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[\begin{bmatrix}\ell_{\texttt{out}}\left[ 0 \right] \\
+\ell_{\texttt{out}}\left[ 1 \right] \\
+\vdots \\
+\ell_{\texttt{out}}\left[ n \right] \\
+\vdots \\
+\ell_{\texttt{out}}\left[ M-1 \right]
+\end{bmatrix}
+=
+\begin{bmatrix}
+  h\left[0,0\right] ~&amp;~ h\left[0,1\right] ~&amp;~ ... ~&amp;~ h\left[0,N-1\right] \\
+  h\left[1,0\right] ~&amp;~ h\left[1,1\right] ~&amp;~ ... ~&amp;~ h\left[1,N-1\right] \\
+  \vdots ~&amp;~  \vdots ~&amp;~  \vdots ~&amp;~  \vdots \\
+  \vdots ~&amp;~  \vdots ~&amp;~  h \left[n,k\right] ~&amp;~  \vdots \\
+\vdots ~&amp;~  \vdots ~&amp;~  \vdots ~&amp;~  \vdots \\
+  h\left[M-1,0\right] ~&amp;~ h\left[M-1,1\right] ~&amp;~ ... ~&amp;~ h\left[M-1,N-1\right]
+\end{bmatrix}
+~
+\begin{bmatrix}
+  \ell_{\texttt{in}}\left[0\right] \\
+  \ell_{\texttt{in}}\left[1\right] \\
+  \vdots \\
+  \ell_{\texttt{in}}\left[k\right] \\
+  \vdots \\
+  \ell_{\texttt{in}}\left[N-1\right]
+\end{bmatrix}\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Short form</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[
+\boldsymbol\ell_{\texttt{out}}=  \mathbf{H} \boldsymbol\ell_{\texttt{in}}.
+\]</span></p>
+<p>The matrix <span class="math inline">\(\mathbf{H}\)</span> has size <span class="math inline">\(M \times N\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="systems-7" class="slide level2">
+<h2>Systems</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Linear function as a neural network</strong></p>
+</div>
+<div class="callout-content">
+<p>A linear function can also be drawn as a <strong>fully connected layer</strong> in a neural network, with weights <span class="math inline">\(\mathbf{W} = \mathbf{H}\)</span>, where the output unit <span class="math inline">\(i\)</span>, <span class="math inline">\(\ell_{\texttt{out}}\left[i \right]\)</span>, is a linear combination of the input signal <span class="math inline">\(\boldsymbol\ell_{\texttt{in}}\)</span> with weights given by the row vectors of <span class="math inline">\(\mathbf{H}\)</span>. Graphically it looks like this:</p>
+<div id="fig-linear_filter" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-linear_filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/linear_image_filtering/linear_filter.png" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linear_filter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: A linear function drawn as a <strong>fully connected layer</strong> in a neural network.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="systems-8" class="slide level2">
+<h2>Systems</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>2D case</strong></p>
+</div>
+<div class="callout-content">
+<p>In two dimensions the equations are analogous. Each pixel of the output image, <span class="math inline">\(\ell_{\texttt{out}}\left[n,m\right]\)</span>, is computed as a linear combination of pixels of the input image, <span class="math inline">\(\ell_{\texttt{in}}\left[n, m\right]\)</span>:</p>
+<p><span id="eq-lin"><span class="math display">\[
+\ell_{\texttt{out}}\left[n,m \right] = \sum_{k=0}^{M-1} \sum_{l=0}^{N-1} h \left[n,m,k,l \right] \ell_{\texttt{in}}\left[k,l \right]
+\qquad(2)\]</span></span></p>
+<p>By writing the images as column vectors, concatenating all the image columns into a long vector, we can also write the previous equation using matrices and vectors: <span class="math inline">\(\boldsymbol\ell_{\texttt{out}}=  \mathbf{H} \boldsymbol\ell_{\texttt{in}}\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="linear-translation-invariant-systems" class="slide level2">
+<h2>Linear Translation Invariant Systems</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Linear translation invariant (LTI) systems</strong></p>
+</div>
+<div class="callout-content">
+<p><img data-src="img/linear_image_filtering/space_of_functions.png" height="500"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="linear-translation-invariant-systems-1" class="slide level2">
+<h2>Linear Translation Invariant Systems</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Motivation</strong></p>
+</div>
+<div class="callout-content">
+<p>We don’t know where within the image we expect to find any given item, so we often want to process the image in a spatially invariant manner, the same processing algorithm at every pixel.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/linear_image_filtering/fredo_birds1.jpg" height="400"></p>
+<figcaption>A fundamental property of images is translation invariance–the same image may appear at arbitrary spatial positions within the image. <em>Source</em>: Fredo Durand.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="linear-translation-invariant-systems-2" class="slide level2">
+<h2>Linear Translation Invariant Systems</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example</strong></p>
+</div>
+<div class="callout-content">
+<p>An example of a translation invariant system is a function that takes as input an image and computes at each location a local average value of the pixels around in a window of <span class="math inline">\(5 \times 5\)</span> pixels:</p>
+<p><span class="math display">\[\ell_{\texttt{out}}\left[n,m \right] = \frac{1}{25} \sum_{k=-2}^{2} \sum_{l=-2}^{2} \ell_{\texttt{in}}\left[n+k,m+l \right]\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="linear-translation-invariant-systems-3" class="slide level2">
+<h2>Linear Translation Invariant Systems</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p>A system is an LTI system if it is linear and when we translate the input signal by <span class="math inline">\(n_0, m_0\)</span>, then output is also translated by <span class="math inline">\(n_0, m_0\)</span>: <span class="math display">\[
+\ell_{\texttt{out}}\left[ n - n_0, m-m_0 \right] = f \left( \ell_{\texttt{in}}\left[ n-n_0, m-m_0 \right] \right)
+\]</span> for any <span class="math inline">\(n_0,m_0\)</span>. This property is called <strong>equivariant</strong> with respect to translation.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p>The convolution, denoted <span class="math inline">\(\circ\)</span>, between a signal <span class="math inline">\(\ell_{\texttt{in}}\left[n \right]\)</span> and the <strong>convolutional kernel</strong> <span class="math inline">\(h\left[n \right]\)</span> is defined as follows: <span id="eq-1dconv"><span class="math display">\[
+\ell_{\texttt{out}}\left[n\right] = h \left[n\right] \circ \ell_{\texttt{in}}\left[n\right] =  \sum_{k=-\infty}^{\infty} h \left[n-k \right] \ell_{\texttt{in}}\left[k \right]
+\qquad(3)\]</span></span></p>
+<p>If the signal <span class="math inline">\(\ell_{\texttt{in}}\left[n \right]\)</span> has a finite length, <span class="math inline">\(N\)</span>, then the sum is only done in the interval <span class="math inline">\(k \in \left[0,N-1\right]\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Weight</strong></p>
+</div>
+<div class="callout-content">
+<p>The convolution computes the output values as a linear weighted sum. The <strong>weight</strong> between the input sample <span class="math inline">\(\ell_{\texttt{in}}\left[k \right]\)</span> and the output sample <span class="math inline">\(\ell_{\texttt{out}}\left[n\right]\)</span> is a function <span class="math inline">\(h\left[n, k \right]\)</span> that depends only on their relative position <span class="math inline">\(n-k\)</span>. Therefore, <span class="math inline">\(h\left[n, k \right]=h\left[n-k \right]\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-1" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Correlation</strong></p>
+</div>
+<div class="callout-content">
+<p>The convolution is related to the <strong>correlation</strong> operator. In the correlation, the weights are defined as <span class="math inline">\(h\left[n, k \right]=h\left[k-n \right]\)</span>. The convolution and the correlation use the same kernel but mirrored around the origin. The correlation is also translation invariant as we will discuss at the end of the chapter.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-2" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Commutativity</strong></p>
+</div>
+<div class="callout-content">
+<p>One important property of the convolution is that it is commutative: <span class="math display">\[
+h\left[n\right] \circ \ell\left[n\right] = \ell\left[n\right] \circ h\left[n\right].
+\]</span></p>
+<p>This property is easy to prove by changing the variables, <span class="math inline">\(k = n - k'\)</span>, so that:</p>
+<p><span class="math display">\[h \left[n\right] \circ \ell_{\texttt{in}}\left[n\right] =\sum_{k=-\infty}^{\infty} h \left[n-k \right] \ell_{\texttt{in}}\left[k \right] = \sum_{k'=-\infty}^{\infty} h \left[k' \right] \ell_{\texttt{in}}\left[n-k' \right]  =
+\ell_{\texttt{in}}\left[n\right] \circ h \left[n\right]\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-3" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Textual description</strong></p>
+</div>
+<div class="callout-content">
+<ol type="1">
+<li>Take the kernel <span class="math inline">\(h\left[k\right]\)</span> and mirror it <span class="math inline">\(h\left[-k \right]\)</span></li>
+<li>Shift the mirrored kernel so that the origin is at location <span class="math inline">\(n\)</span></li>
+<li>Multiply the input values around location <span class="math inline">\(n\)</span> by the mirrored kernel and sum the result.</li>
+<li>Store the result in the output vector <span class="math inline">\(\ell_{\texttt{out}}\left[n\right]\)</span>.</li>
+</ol>
+<p>For instance, if the convolutional kernel has three non-zero values: <span class="math display">\[h\left[-1 \right] =1, ~ h\left[0 \right] = 2, ~ h\left[1 \right] = 3,
+\]</span> then the output value at location <span class="math inline">\(n\)</span> is <span class="math display">\[\ell_{\texttt{out}}\left[n\right] = 3 \ell_{\texttt{in}}\left[n-1\right]+2 \ell_{\texttt{in}}\left[n\right] + 1 \ell_{\texttt{in}}\left[n+1\right].\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-4" class="slide level2 smaller">
+<h2>Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Matrix form</strong></p>
+</div>
+<div class="callout-content">
+<p>If the convolutional kernel has only three non-zero values, then:</p>
+<p><span class="math display">\[\begin{bmatrix}
+\ell_{\texttt{out}}\left[ 0 \right] \\
+\ell_{\texttt{out}}\left[ 1 \right] \\
+\ell_{\texttt{out}}\left[ 2 \right] \\
+\vdots \\
+\ell_{\texttt{out}}\left[ N-1 \right]
+\end{bmatrix}
+=
+\begin{bmatrix}
+  h\left[0\right] ~&amp;~ h\left[-1\right] ~&amp;~ 0 ~&amp;~ ... ~&amp;~ 0 \\
+  h\left[1\right] ~&amp;~ h\left[0\right] ~&amp;~ h\left[-1\right] ~&amp;~... ~&amp;~ 0 \\
+  0 ~&amp;~ h\left[1\right] ~&amp;~ h\left[0\right] ~&amp;~... ~&amp;~ 0 \\
+  \vdots ~&amp;~  \vdots ~&amp;~  \vdots ~&amp;~  \vdots \\
+  0 ~&amp;~ 0 ~&amp;~ 0 ~&amp;~... ~&amp;~ h\left[0\right]
+\end{bmatrix}
+~
+\begin{bmatrix}
+  \ell_{\texttt{in}}\left[0\right] \\
+  \ell_{\texttt{in}}\left[1\right] \\
+  \ell_{\texttt{in}}\left[2\right] \\
+  \vdots \\
+  \ell_{\texttt{in}}\left[N-1\right]
+\end{bmatrix}\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-5" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Neural network representation</strong></p>
+</div>
+<div class="callout-content">
+<div id="fig-conv_filter2_nn" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-conv_filter2_nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/linear_image_filtering/conv_filter2.png" height="400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conv_filter2_nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: convolution represented as a layer in a neural network. Each output unit <span class="math inline">\(i\)</span>, <span class="math inline">\(\ell_{\text {out }}[i]\)</span>, is a linear combination of the input signal values around location <span class="math inline">\(i\)</span> always using the same set of weights given by <span class="math inline">\(\mathbf{h}\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-6" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>2D case</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>the input filter is flipped vertically and horizontally</li>
+<li>then slid over the image to record the inner product with the image everywhere</li>
+</ul>
+<p><span id="eq-2dconv"><span class="math display">\[
+\ell_{\texttt{out}}\left[n,m\right] = h \left[n,m\right] \circ \ell_{\texttt{in}}\left[n,m\right] =  \sum_{k,l}h \left[n-k,m-l \right] \ell_{\texttt{in}}\left[k,l \right]
+\qquad(4)\]</span></span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-7" class="slide level2">
+<h2>Convolution</h2>
+
+<img data-src="img/linear_image_filtering/circle_conv_example.png" style="width:100.0%" class="r-stretch quarto-figure-center" id="fig-circle_2dconv"><p class="caption">
+Figure&nbsp;6: Illustration of a 2D convolution of an <span class="math inline">\(9 \times 9\)</span> input image with a kernel of size <span class="math inline">\(3 \times 3\)</span>.For the pixels in the boundary we assumed that input image has zero values outside its boundary. The red and green boxes show the input pixels used to compute the corresponding output pixels.
+</p></section>
+<section id="convolution-8" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Which operations are convolutions?</strong></p>
+</div>
+<div class="callout-content">
+<p><img data-src="img/linear_image_filtering/whichoneislinear.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-9" class="slide level2">
+<h2>Convolution</h2>
+
+<img data-src="img/linear_image_filtering/whichoneislinear2.png" style="width:100.0%" class="r-stretch quarto-figure-center" id="fig-transformationsquizz2"><p class="caption">
+Figure&nbsp;7: Fig (a) Defocusing an image can be written as a convolution. (b) Rotation can’t be written as a convolution: it’s not translation invariant.
+</p></section>
+<section id="convolution-10" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Properties</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><strong>Commutative</strong>. As we have already discussed before the convolution is commutative, <span class="math display">\[h\left[n\right] \circ \ell\left[n\right] = \ell\left[n\right] \circ h\left[n\right]\]</span> which means that the order of convolutions is irrelevant. This is not true for the correlation.</p></li>
+<li><p><strong>Associative</strong>. Convolutions can be applied in any order: <span id="eq-linear_image_filtering-conv_associative_property"><span class="math display">\[\ell_1 \left[n\right] \circ \ell_2 \left[n\right] \circ \ell_3 \left[n\right] = \ell_1\left[n\right] \circ (\ell_2\left[n\right] \circ \ell_3\left[n\right]) = (\ell_1\left[n\right] \circ \ell_2\left[n\right]) \circ \ell_3\left[n\right] \qquad(5)\]</span></span> In practice, for finite length signals, the associative property might be affected by how boundary conditions are implemented.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-11" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Properties</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><strong>Distributive</strong> with respect to the sum: <span class="math display">\[\ell_1\left[n\right] \circ (\ell_2\left[n\right] + \ell_3\left[n\right] ) = \ell_1\left[n\right] \circ \ell_2\left[n\right] +  \ell_1 \left[n\right] \circ \ell_3 \left[n\right]\]</span></p></li>
+<li><p><strong>Shift</strong>. Another interesting property involves shifting the two convolved functions. Let’s consider the convolution <span class="math inline">\(\ell_{\texttt{out}}\left[n\right] = h\left[n\right] \circ \ell_{\texttt{in}}\left[n\right]\)</span>. If the input signal, <span class="math inline">\(\ell_{\texttt{in}}\left[n\right]\)</span>, is translated by a constant <span class="math inline">\(n_0\)</span>, i.e. <span class="math inline">\(\ell_{\texttt{in}}\left[n - n_0\right]\)</span>, the result of the convolution with the same kernel, <span class="math inline">\(h\left[n\right]\)</span>, is the same output as before but translated by the same constant <span class="math inline">\(n_0\)</span>: <span class="math display">\[\ell_{\texttt{out}}\left[n-n_0\right] =  h\left[n\right] \circ \ell_{\texttt{in}}\left[n-n_0\right]\]</span> Translating the kernel is equivalent: <span class="math display">\[\ell_{\texttt{out}}\left[n-n_0\right] =  h\left[n\right] \circ \ell_{\texttt{in}}\left[n-n_0\right]  = h\left[n-n_0\right] \circ \ell_{\texttt{in}}\left[n\right]\]</span></p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-12" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Properties</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><strong>Support</strong>. The convolution of a discrete signal of length <span class="math inline">\(N\)</span> with another discrete signal of length <span class="math inline">\(M\)</span> results in a discrete signal with length <span class="math inline">\(L \leq M+N-1\)</span>.</p></li>
+<li><p><strong>Identity</strong>. The convolution also has an identity function, that is the <strong>impulse</strong>, <span class="math inline">\(\delta \left[n\right]\)</span>, which takes the value 1 for <span class="math inline">\(n=0\)</span> and it is zero everywhere else: <span class="math display">\[\delta \left[n\right] =
+  \begin{cases}
+    1       &amp; \quad \text{if } n=0\\
+    0       &amp; \quad \text{if } n \neq 0 \\
+  \end{cases}\]</span> The convolution of the impulse with any other signal, <span class="math inline">\(\ell\left[n\right]\)</span>, returns the same signal: <span class="math display">\[\delta \left[n\right] \circ \ell\left[n\right] = \ell\left[n\right]\]</span></p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-13" class="slide level2">
+<h2>Convolution</h2>
+<div class="column-margin">
+<p>Given the signal:</p>
+<p><img data-src="img/linear_image_filtering/mn1.png" style="width:80.0%"></p>
+<p>The signal <span class="math inline">\(\ell \left[n - n_0\right]\)</span> is a shifted version of <span class="math inline">\(\ell \left[n\right]\)</span>. With <span class="math inline">\(n_0 = 2\)</span> this is</p>
+<p><img data-src="img/linear_image_filtering/mn2.png" style="width:80.0%"></p>
+</div>
+<div class="column-margin">
+<p>The impulse function is</p>
+<p><img data-src="img/linear_image_filtering/mn3.png" style="width:80.0%"></p>
+</div>
+</section>
+<section id="convolution-14" class="slide level2">
+<h2>Convolution</h2>
+
+<img data-src="img/linear_image_filtering/examples_cube2.png" style="width:100.0%" class="r-stretch quarto-figure-center" id="fig-convExamps"><p class="caption">
+Figure&nbsp;8: Fig a) An impulse convolved with the input image gives no change, kernel <span class="math inline">\(\delta \left[n,m\right]\)</span>. (b) A shifted impulse shifts the image, kernel <span class="math inline">\(\delta \left[n,m-2\right]\)</span>. (c) Sum of two shifted copies of the image, kernel <span class="math inline">\(0.5 \delta \left[n-2,m-2\right]+ 0.5 \delta \left[n+2,m+2\right]\)</span>. (d) Image defocusing by computing a local average over windows of <span class="math inline">\(5 \times 5\)</span> pixels, uniform kernel of all <span class="math inline">\(1/25\)</span>. All the examples use zero padding for handling boundary conditions.
+</p></section>
+<section id="convolution-15" class="slide level2">
+<h2>Convolution</h2>
+<h3 id="handling-boundaries">Handling Boundaries</h3>
+
+<img data-src="img/linear_image_filtering/regions_convolution.png" style="width:90.0%" class="r-stretch quarto-figure-center"><p class="caption">Only the green region contains values that can be computed, the rest will be affected by how we decide to handle the boundaries:</p></section>
+<section id="convolution-16" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Boundary handling: extension</strong></p>
+</div>
+<div class="callout-content">
+<p>For a kernel with support <span class="math display">\[
+\left[ -N, N \right] \times \left[-M, M\right],
+\]</span> one has to add <span class="math inline">\(N/2\)</span> additional pixels left and right of the image and <span class="math inline">\(M/2\)</span> pixels at the top and bottom.</p>
+<p>Then, the output will have the same size as the original input image.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-17" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Boundary handling types</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><strong>Zero padding</strong>: Set the pixels outside the boundary to zero (or to some other constant such as the mean image value). This is the default option in most neural networks.</p></li>
+<li><p><strong>Circular padding</strong>: Extend the image by replicating the pixels from the other side. If the image has size <span class="math inline">\(P \times Q\)</span>, circular padding consists of the following: <span class="math display">\[\ell_{\texttt{in}}\left[n,m\right] = \ell_{\texttt{in}}\left[(n)_P,(m)_Q\right]\]</span> where <span class="math inline">\((n)_P\)</span> denotes the modulo operation and <span class="math inline">\((n)_P\)</span> is the reminder of <span class="math inline">\(n/P\)</span>.</p>
+<p>This padding transform the finite length signal into a periodic infinite length signal. Although this will introduce many artifacts, it is a convenient extension for analytical derivations.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-18" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><strong>Mirror padding</strong>: Reflect the valid image pixels over the boundary of valid output pixels. This is the most common approach and the one that gives the best results.</p></li>
+<li><p><strong>Repeat padding</strong>: Set the value to that of the nearest output image pixel with valid mask inputs.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-19" class="slide level2">
+<h2>Convolution</h2>
+
+<img data-src="img/linear_image_filtering/boundary.png" style="width:100.0%" class="r-stretch quarto-figure-center" id="fig-boundaries"><p class="caption">
+Figure&nbsp;9: (a) Different types of boundary extension. (b) The output of convolving the image with a uniform kernel of size <span class="math inline">\(11 \times 11\)</span> with all the values equal to <span class="math inline">\(1/121\)</span>. (c) The difference between each output and the ground truth output; see last column of (b).
+</p></section>
+<section id="convolution-20" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Circular Convolution</strong></p>
+</div>
+<div class="callout-content">
+<p>Special case: the <strong>circular convolution</strong> uses circular padding.</p>
+<p>The circular convolution of two signals, <span class="math inline">\(h\)</span> and <span class="math inline">\(\ell_{\texttt{in}}\)</span>, of length <span class="math inline">\(N\)</span> is defined as follows:</p>
+<p><span class="math display">\[
+\ell_{\texttt{out}}\left[n\right] = h \left[n\right] \circ_N \ell_{\texttt{in}}\left[n\right] =  \sum_{k=0}^{N-1} h \left[(n-k)_N \right] \ell_{\texttt{in}}\left[k \right]
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Properties</strong></p>
+</div>
+<div class="callout-content">
+<p>In this formulation, the signal <span class="math inline">\(h \left[ (n)_N \right]\)</span> is the infinite periodic extension, with period <span class="math inline">\(N\)</span>, of the finite length signal <span class="math inline">\(h \left[n \right]\)</span>. The output of the circular convolution is a periodic signal with period <span class="math inline">\(N\)</span>, <span class="math inline">\(\ell_{\texttt{out}}\left[n \right] = \ell_{\texttt{out}}\left[(n)_N \right]\)</span>.</p>
+<p>The circular convolution has the same properties than the convolution (e.g., is commutative.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-21" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Circular Confolution: Matrix Form</strong></p>
+</div>
+<div class="callout-content">
+<p><img data-src="img/linear_image_filtering/circ_conv.png" height="500"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-22" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Convolution in the Continuous Domain</strong></p>
+</div>
+<div class="callout-content">
+<p>Given two continuous signals <span class="math inline">\(h(t)\)</span> and <span class="math inline">\(\ell_{\texttt{in}}(t)\)</span>, the convolution operator is defined as follows: <span class="math display">\[
+\ell_{\texttt{out}}(t) = h(t) \circ \ell_{\texttt{in}}(t) = \int_{-\infty}^{\infty} h(t-\tau) \ell_{\texttt{in}}(\tau) d\tau
+\]</span></p>
+<p>The properties of the continuous domain convolution are analogous to the properties of the discrete convolution, with the commutative, associative and distributive relationships still holding.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-23" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Continuous impulse</strong></p>
+</div>
+<div class="callout-content">
+<p>We can also define the impulse, <span class="math inline">\(\delta (t)\)</span>, in the continuous domain such that <span class="math inline">\(\ell(t) \circ \delta(t) = \ell(t)\)</span>.</p>
+<p>The impulse is defined as being zero everywhere but at the origin where it takes an infinitely high value so that its integral is equal to 1: <span class="math display">\[
+\int_{-\infty}^{\infty} \delta(t) dt = 1
+\]</span> The impulse function is also called the <strong>impulse distribution</strong> (as it is not a function in the strict sense) or the Dirac delta function.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="convolution-24" class="slide level2">
+<h2>Convolution</h2>
+
+<img data-src="img/linear_image_filtering/mn4.png" style="width:70.0%" class="r-stretch quarto-figure-center"><p class="caption">The delta distribution is usually represented with an arrow of height 1, indicating that it has an finite value at that point, and a finite area equal to 1:</p></section>
+<section id="convolution-25" class="slide level2">
+<h2>Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Impulse properties</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><strong>Scaling</strong> property: <span class="math inline">\(\delta (at) =  \delta (t) / |a|\)</span></p></li>
+<li><p><strong>Symmetry</strong>: <span class="math inline">\(\delta (-t) = \delta (t)\)</span></p></li>
+<li><p><strong>Sampling</strong> property: <span class="math inline">\(\ell(t) \delta (t-a) = \ell(a) \delta (t-a)\)</span> where <span class="math inline">\(a\)</span> is a constant. From this, we have the following: <span class="math display">\[\int_{-\infty}^{\infty} \ell(t) \delta (t-a) dt = \ell(a)\]</span></p></li>
+<li><p>As in the discrete case, the continuous impulse is also the <strong>identity</strong> for the convolution: <span class="math inline">\(\ell(t) \circ \delta (t) = \ell(t)\)</span>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-correlation-versus-convolution" class="slide level2">
+<h2>Cross-Correlation Versus Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Cross-correlation</strong></p>
+</div>
+<div class="callout-content">
+<p>The <strong>cross-correlation</strong> (denoted by <span class="math inline">\(\star\)</span>) between the image <span class="math inline">\(\ell_{\texttt{in}}\)</span> and the kernel <span class="math inline">\(h\)</span>: <span class="math display">\[
+\ell_{\texttt{out}}\left[n,m\right] = \ell_{\texttt{in}}\star h =  \sum_{k,l=-N}^N \ell_{\texttt{in}}\left[n+k,m+l \right] h \left[k,l \right]
+\]</span> where the sum is done over the support of the filter <span class="math inline">\(h \equiv (-N,N)\times(-N,N)\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-correlation-versus-convolution-1" class="slide level2">
+<h2>Cross-Correlation Versus Convolution</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Compared to convolution</strong></p>
+</div>
+<div class="callout-content">
+<p>In the convolution, the kernel is inverted left-right and up-down, while in the cross-correlation is not. Remember that the convolution between image <span class="math inline">\(\ell_{\texttt{in}}\)</span> and kernel <span class="math inline">\(h\)</span>: <span class="math display">\[
+\ell_{\texttt{out}}\left[n,m\right] = \ell_{\texttt{in}}\circ h = \sum_{k,l=-N}^N \ell_{\texttt{in}}\left[n-k,m-l \right] h \left[k,l \right]
+\]</span></p>
+<ul>
+<li>the cross-correlation provides a simple technique to locate a template in an image.</li>
+<li>convolution is commutative and associative while the correlation is not. The correlation breaks the symmetry between the two functions <span class="math inline">\(h\)</span> and <span class="math inline">\(\ell_{\texttt{in}}\)</span>. For instance, in the correlation, shifting <span class="math inline">\(h\)</span> is not equivalent to shifting <span class="math inline">\(\ell_{\texttt{in}}\)</span> (the output will move in opposite directions).</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-correlation-versus-convolution-2" class="slide level2">
+<h2>Cross-Correlation Versus Convolution</h2>
+
+<img data-src="img/linear_image_filtering/correlation_vs_convolution.png" style="width:100.0%" class="r-stretch quarto-figure-center" id="fig-corrvsconv"><p class="caption">
+Figure&nbsp;10: Cross-correlation versus convolution. (a) Kernel. (b) and (e) are two input images. (c) and (f) are the output convolution with the kernel (a). (d) and (g) are the cross-correlation output with the kernel (a).
+</p></section>
+<section id="cross-correlation-versus-convolution-3" class="slide level2">
+<h2>Cross-Correlation Versus Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Correlation for template matching</strong></p>
+</div>
+<div class="callout-content">
+<div id="fig-normcorr" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-normcorr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/linear_image_filtering/normcorr.png" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normcorr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Fig (a) Template. (b) Input image. (c) Correlation between input (b) and template (a). (d) Normalized correlation. e) Locations with cross-correlation above 75 percent of its maximum value.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-correlation-versus-convolution-4" class="slide level2">
+<h2>Cross-Correlation Versus Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Normalized cross-correlation</strong></p>
+</div>
+<div class="callout-content">
+<p>The normalized cross-correlation, at location <span class="math inline">\((n,m)\)</span>, is the dot product between a template, <span class="math inline">\(h\)</span>, (normalized to be zero mean and unit norm) and the local image patch, <span class="math inline">\(p\)</span>, centered at that location and with the same size as the kernel, normalized to be unit norm. This can be implemented with the following steps:</p>
+<ol type="1">
+<li>Normalize the kernel <span class="math inline">\(h\)</span>. The normalized kernel <span class="math inline">\(\hat h\)</span> is the result of making the kernel <span class="math inline">\(h\)</span> zero mean and unit norm.</li>
+<li>The normalized cross-correlation is as follows (<a href="#/fig-normcorr" class="quarto-xref">Figure&nbsp;11</a> (d)):</li>
+</ol>
+<p><span class="math display">\[
+\ell_{\texttt{out}}\left[n,m\right]
+                =
+                \frac{1}{\sigma \left[n,m \right]}
+                \sum_{k,l=-N}^N
+                \ell_{\texttt{in}}\left[n+k,m+l \right]
+                \hat{h} \left[k,l \right]
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-correlation-versus-convolution-5" class="slide level2">
+<h2>Cross-Correlation Versus Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Normalized cross-correlation: computation</strong></p>
+</div>
+<div class="callout-content">
+<p>Note that this equation is similar to the correlation function, but the output is scaled by the local standard deviation, <span class="math inline">\(\sigma \left[m,n \right]\)</span>, of the image patch centered in <span class="math inline">\((n,m)\)</span> and with support <span class="math inline">\((-N,N)\times(-N,N)\)</span>, where <span class="math inline">\((-N,N)\times(-N,N)\)</span> is the size of the kernel <span class="math inline">\(h\)</span>. To compute the local standard deviation, we first compute the local mean, <span class="math inline">\(\mu \left[n,m \right]\)</span>, as follows: <span class="math display">\[
+\mu \left[n,m \right] = \frac{1}{(2N+1)^2} \sum_{k,l=-N}^N \ell_{\texttt{in}}\left[n+k,m+l \right]
+\]</span> And then we compute: <span class="math display">\[
+\sigma^2 \left[n,m \right] = \frac{1}{(2N+1)^2} \sum_{k,l=-N}^N \left( \ell_{\texttt{in}}\left[n+k,m+l \right] - \mu \left[n,m \right] \right) ^2
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-correlation-versus-convolution-6" class="slide level2">
+<h2>Cross-Correlation Versus Convolution</h2>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Normalized cross-correlation: features</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>will detect the object independently of location,</li>
+<li>not robust to changes such as:
+<ul>
+<li>rotation</li>
+<li>scaling</li>
+<li>appearance</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="system-identification" class="slide level2">
+<h2>System Identification</h2>
+<p>One important task that we will study is that of explaining the behavior of complex systems such as neural networks. For an LTI filter with kernel <span class="math inline">\(h\left[n\right]\)</span>, the output from an impulse is <span class="math inline">\(y\left[n\right] = h\left[n\right]\)</span>. The output of a translated impulse <span class="math inline">\(\delta \left[n -n_0 \right]\)</span> is <span class="math inline">\(h \left[n -n_0 \right]\)</span>. This is why the kernel that defines an LTI system, <span class="math inline">\(h\left[n\right]\)</span>, is also called the impulse response of the system.</p>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="site_libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="site_libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'multiplex': {"url":"https://mplex.vitv.ly","secret":null,"id":"80f10525fcbaaf16a185d4ea5f8ff3259d9b729afa85af9b24141a7ba6b43c71"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/dslnu\.github\.io\/compvision\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
