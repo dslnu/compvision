@@ -33,8 +33,8 @@ format:
     theme: default
     multiplex:
       url: 'https://mplex.vitv.ly'
-      secret: '7a7b30786fae8264bf00b7e14bb13f44'
-      id: '95045e67634f05266de13af2da3db90481eef7d6c5e52b5c5ea7339b42d7896f'
+      secret: '531a2579be2c8337fe873f028c4582fe'
+      id: '80f10525fcbaaf16a185d4ea5f8ff3259d9b729afa85af9b24141a7ba6b43c71'
 ---
 
 ## Introduction
@@ -744,42 +744,34 @@ The impulse function is
  change, kernel $\delta \left[n,m\right]$.  (b) A shifted impulse shifts the image, kernel $\delta \left[n,m-2\right]$.  (c) Sum of two shifted copies of the image, kernel $0.5 \delta \left[n-2,m-2\right]+ 0.5 \delta \left[n+2,m+2\right]$.  (d) Image defocusing by computing a local average over windows of $5 \times 5$ pixels, uniform kernel of all $1/25$. All the examples use zero padding for handling boundary conditions.](img/linear_image_filtering/examples_cube2.png){width="100%" #fig-convExamps}
 
 ## Convolution
+
 ### Handling Boundaries
 
-When implementing a convolution, one is confronted with the question of
-what to do at the image boundaries. There's really no satisfactory
-answer for how to handle the boundaries that works well for all
-applications. One solution consists in omitting from the output any
-pixels that are affected by the input boundary. The issue with this is
-that the output will have a different size than the input and, for large
-convolutional kernels, there might be a large portion of the output
-image missing.
+![Only the green region contains values that can be computed, the rest will be affected by how we decide to handle the boundaries:](img/linear_image_filtering/regions_convolution.png){width="90%"}
 
+## Convolution
+:::{.callout-important icon=false}
+## Boundary handling: extension
+For a kernel with support
+$$
+\left[ -N, N \right] \times \left[-M, M\right],
+$$
+one has to add $N/2$ additional pixels left and right of the image and $M/2$ pixels at the
+top and bottom.
 
-:::{.column-margin}
-Only the green region contains values that can be computed, the rest will be affected by how we decide to handle the boundaries:
-
-![](img/linear_image_filtering/regions_convolution.png){width="90%"}
+Then, the output will have the same size as the original
+input image.
 :::
 
 ## Convolution
-The most general approach consists in extending the input image by
-adding additional pixels so that the output can have the same size as
-the input. So, for a kernel with support
-$\left[ -N, N \right] \times \left[-M, M\right]$, one has to add $N/2$
-additional pixels left and right of the image and $M/2$ pixels at the
-top and bottom. Then, the output will have the same size as the original
-input image.
+:::{.callout-tip icon=false}
+## Boundary handling types
 
-## Convolution
-Some typical choices for how to pad the input image are (see
-@fig-boundaries):
-
--   Zero padding: Set the pixels outside the boundary to zero (or to
+-   **Zero padding**: Set the pixels outside the boundary to zero (or to
     some other constant such as the mean image value). This is the
     default option in most neural networks.
 
--   Circular padding: Extend the image by replicating the pixels from
+-   **Circular padding**: Extend the image by replicating the pixels from
     the other side. If the image has size $P \times Q$, circular padding
     consists of the following:
     $$\ell_{\texttt{in}}\left[n,m\right] = \ell_{\texttt{in}}\left[(n)_P,(m)_Q\right]$$
@@ -789,62 +781,36 @@ Some typical choices for how to pad the input image are (see
     This padding transform the finite length signal into a periodic
     infinite length signal. Although this will introduce many artifacts,
     it is a convenient extension for analytical derivations.
+:::
 
--   Mirror padding: Reflect the valid image pixels over the boundary of
+## Convolution
+:::{.callout-tip icon=false}
+-   **Mirror padding**: Reflect the valid image pixels over the boundary of
     valid output pixels. This is the most common approach and the one
     that gives the best results.
 
--   Repeat padding: Set the value to that of the nearest output image
+-   **Repeat padding**: Set the value to that of the nearest output image
     pixel with valid mask inputs.
-
-## Convolution
-@fig-boundaries shows different examples of boundary extensions.
-Boundary extensions are different ways of approximating the ground truth
-image that exists beyond the image boundary. The top row shows how the
-image is extended beyond its boundary when using different types of
-boundary extensions (only the central part corresponds to the input).
-The middle row shows the output of the convolution (cropped to match the
-size of the input image). We can see that the zero-padding makes a
-darkening appear on the boundary of the image. This is not very
-desirable in general. The other padding methods seem to produce better
-visual results.
-
-
-
-## Convolution
-But which one is the best boundary extension? Ideally, we would to get a
-result that is a close as possible to the output we would get if we had
-access to a larger image. In this case we know what the larger image
-looks like as shown in the last column of @fig-boundaries. For each
-boundary extension method, the final row shows the absolute value of the
-difference between the convolution output and the result obtained with
-the ground truth.
-
-For the example of @fig-boundaries, the error seems to be smaller when
-extending the image using mirror padding. On the other extreme, zero
-padding seems to be the worst.
-
-![Each row shows: (a) Different types of boundary extension. The last image shows the ground truth. (b) The output of convolving the image with a uniform kernel of size $11 \times 11$ with all the values equal to $1/121$. The output only shows the central region that corresponds to the input image without boundary extension. (c) The difference between each output and the ground truth output; see last column of (b). Note that the ground truth will not be available in practice.](img/linear_image_filtering/boundary.png){#fig-boundaries width="100%"}
-
-## Convolution
-### Circular Convolution
-
-:::{.column-margin}
-Writing the circular convolution in matrix form will look like:
-![](img/linear_image_filtering/circ_conv.png){width="80%"}
 :::
 
-When convolving a finite length signal with a kernel, we have seen that
-it can be convenient to extend the signal beyond its boundary to reduce
-boundary artifacts. This trick is also very useful analytically and
-conduces to a special case of the convolution: the **circular
-convolution** uses circular padding. The circular convolution of two
-signals, $h$ and $\ell_{\texttt{in}}$, of length $N$ is defined as
-follows:
+## Convolution
 
-$$\ell_{\texttt{out}}\left[n\right] = h \left[n\right] \circ_N \ell_{\texttt{in}}\left[n\right] =  \sum_{k=0}^{N-1} h \left[(n-k)_N \right] \ell_{\texttt{in}}\left[k \right]$$
+![(a) Different types of boundary extension. (b) The output of convolving the image with a uniform kernel of size $11 \times 11$ with all the values equal to $1/121$. (c) The difference between each output and the ground truth output; see last column of (b).](img/linear_image_filtering/boundary.png){#fig-boundaries width="100%"}
 
 ## Convolution
+:::{.callout-note icon=false}
+## Circular Convolution
+Special case: the **circular convolution** uses circular padding.
+
+The circular convolution of two signals, $h$ and $\ell_{\texttt{in}}$, of length $N$ is defined as follows:
+
+$$
+\ell_{\texttt{out}}\left[n\right] = h \left[n\right] \circ_N \ell_{\texttt{in}}\left[n\right] =  \sum_{k=0}^{N-1} h \left[(n-k)_N \right] \ell_{\texttt{in}}\left[k \right]
+$$
+:::
+
+:::{.callout-tip icon=false}
+## Properties
 In this formulation, the signal $h \left[ (n)_N \right]$ is the infinite
 periodic extension, with period $N$, of the finite length signal
 $h \left[n \right]$. The output of the circular convolution is a
@@ -853,165 +819,160 @@ $\ell_{\texttt{out}}\left[n \right] = \ell_{\texttt{out}}\left[(n)_N \right]$.
 
 The circular convolution has the same properties than the convolution
 (e.g., is commutative.)
-
-
+:::
 
 ## Convolution
-### Convolution in the Continuous Domain
+:::{.callout-important icon=false}
+## Circular Confolution: Matrix Form
 
-The convolution in the continuous domain is defined in the same way as
-with discrete signals but replacing the sums by integrals. Given two
-continuous signals $h(t)$ and $\ell_{\texttt{in}}(t)$, the convolution
+![](img/linear_image_filtering/circ_conv.png){height=500}
+:::
+
+## Convolution
+:::{.callout-note icon=false}
+## Convolution in the Continuous Domain
+Given two continuous signals $h(t)$ and $\ell_{\texttt{in}}(t)$, the convolution
 operator is defined as follows:
-$$\ell_{\texttt{out}}(t) = h(t) \circ \ell_{\texttt{in}}(t) = \int_{-\infty}^{\infty} h(t-\tau) \ell_{\texttt{in}}(\tau) d\tau$$
+$$
+\ell_{\texttt{out}}(t) = h(t) \circ \ell_{\texttt{in}}(t) = \int_{-\infty}^{\infty} h(t-\tau) \ell_{\texttt{in}}(\tau) d\tau
+$$
 
 The properties of the continuous domain convolution are analogous to the
 properties of the discrete convolution, with the commutative,
 associative and distributive relationships still holding.
-
-We can also define the impulse, $\delta (t)$, in the continuous domain
-such that $\ell(t) \circ \delta(t) = \ell(t)$. 
-
-## Convolution
-The impulse is defined as
-being zero everywhere but at the origin where it takes an infinitely
-high value so that its integral is equal to 1:
-$$\int_{-\infty}^{\infty} \delta(t) dt = 1$$ The impulse function is
-also called the impulse distribution (as it is not a function in the
-strict sense) or the Dirac delta function.  
-
-
-## Convolution
-:::{.column-margin}
-The delta distribution is usually represented with an arrow of height 1, indicating that it has an finite value at that point, and a finite area equal to 1:
-
-![](img/linear_image_filtering/mn4.png){width="70%"}
 :::
 
 ## Convolution
-The impulse has several important properties:
+:::{.callout-important icon=false}
+## Continuous impulse
+We can also define the impulse, $\delta (t)$, in the continuous domain
+such that $\ell(t) \circ \delta(t) = \ell(t)$. 
 
--   Scaling property: $\delta (at) =  \delta (t) / |a|$
+The impulse is defined as
+being zero everywhere but at the origin where it takes an infinitely
+high value so that its integral is equal to 1:
+$$
+\int_{-\infty}^{\infty} \delta(t) dt = 1
+$$
+The impulse function is
+also called the **impulse distribution** (as it is not a function in the
+strict sense) or the Dirac delta function.  
+:::
 
--   Symmetry: $\delta (-t) = \delta (t)$
 
--   Sampling property: $\ell(t) \delta (t-a) = \ell(a) \delta (t-a)$
+## Convolution
+![The delta distribution is usually represented with an arrow of height 1, indicating that it has an finite value at that point, and a finite area equal to 1:](img/linear_image_filtering/mn4.png){width="70%"}
+
+
+## Convolution
+:::{.callout-tip icon=false}
+## Impulse properties
+
+-   **Scaling** property: $\delta (at) =  \delta (t) / |a|$
+
+-   **Symmetry**: $\delta (-t) = \delta (t)$
+
+-   **Sampling** property: $\ell(t) \delta (t-a) = \ell(a) \delta (t-a)$
     where $a$ is a constant. From this, we have the following:
     $$\int_{-\infty}^{\infty} \ell(t) \delta (t-a) dt = \ell(a)$$
 
--   As in the discrete case, the continuous impulse is also the identity
+-   As in the discrete case, the continuous impulse is also the **identity**
     for the convolution: $\ell(t) \circ \delta (t) = \ell(t)$.
-
-The impulse will be useful in analytical derivations.
+:::
 
 ## Cross-Correlation Versus Convolution
 
-Another form of writing a translation invariant filter is using the
-cross-correlation operator. The cross-correlation provides a simple
-technique to locate a template in an image. The cross-correlation and
-the convolution are closely related.
+:::{.callout-tip icon=false}
+## Cross-correlation
+The **cross-correlation** (denoted by $\star$) between the
+image $\ell_{\texttt{in}}$ and the kernel $h$:
+$$
+\ell_{\texttt{out}}\left[n,m\right] = \ell_{\texttt{in}}\star h =  \sum_{k,l=-N}^N \ell_{\texttt{in}}\left[n+k,m+l \right] h \left[k,l \right]
+$$
+where the sum is done over the support of the filter $h \equiv (-N,N)\times(-N,N)$.
+:::
 
-The **cross-correlation** operator (denoted by $\star$) between the
-image $\ell_{\texttt{in}}$ and the kernel $h$ is written as follows:
-$$\ell_{\texttt{out}}\left[n,m\right] = \ell_{\texttt{in}}\star h =  \sum_{k,l=-N}^N \ell_{\texttt{in}}\left[n+k,m+l \right] h \left[k,l \right]$$
-where the sum is done over the support of the filter $h$, which we
-assume is a square $(-N,N)\times(-N,N)$. In the convolution, the kernel
+## Cross-Correlation Versus Convolution
+:::{.callout-note icon=false}
+## Compared to convolution
+In the convolution, the kernel
 is inverted left-right and up-down, while in the cross-correlation is
 not. Remember that the convolution between image $\ell_{\texttt{in}}$
-and kernel $h$ is written as follows:
-$$\ell_{\texttt{out}}\left[n,m\right] = \ell_{\texttt{in}}\circ h = \sum_{k,l=-N}^N \ell_{\texttt{in}}\left[n-k,m-l \right] h \left[k,l \right]$$
+and kernel $h$:
+$$
+\ell_{\texttt{out}}\left[n,m\right] = \ell_{\texttt{in}}\circ h = \sum_{k,l=-N}^N \ell_{\texttt{in}}\left[n-k,m-l \right] h \left[k,l \right]
+$$
 
-## Cross-Correlation Versus Convolution
-@fig-corrvsconv illustrates the difference between the correlation and
-the convolution. In these examples, the kernel $h[n,m]$ is a triangle
-pointing up (the center of the triangle is $n=0$ and $m=0$) as shown in
-@fig-corrvsconv (a). When the input image is black (all zeros) with only
-four bright pixels, @fig-corrvsconv (b), this is the convolution of the
-triangle with four impulses, which results in four triangles pointing up
-(@fig-corrvsconv\[c\]). However, the cross-correlation looks different;
-it still results in four copies of the triangles centered on each point,
-but the triangles are pointing downward (@fig-corrvsconv\[d\]).
-
-For the input image containing triangles pointing up and down,
-@fig-corrvsconv (e), the convolution will have its maximum output on the
-triangles points down, @fig-corrvsconv (f), while the correlation will
-output the maximum values in the center of the triangles pointing up
-(@fig-corrvsconv\[g\]).
+- the cross-correlation provides a simple technique to locate a template in an image. 
+- convolution is commutative and associative while the correlation is not.
+The correlation breaks the symmetry between the two functions $h$ and
+$\ell_{\texttt{in}}$. For instance, in the correlation, shifting $h$ is
+not equivalent to shifting $\ell_{\texttt{in}}$ (the output will move in
+opposite directions).
+:::
 
 ## Cross-Correlation Versus Convolution
 ![Cross-correlation versus convolution. (a) Kernel. (b) and (e) are two input images. (c) and (f) are the output convolution with the kernel (a). (d) and (g) are the cross-correlation output with the kernel (a).](img/linear_image_filtering/correlation_vs_convolution.png){width="100%" #fig-corrvsconv}
 
-Another important difference between the two operators is that the
-convolution is commutative and associative while the correlation is not.
-The correlation breaks the symmetry between the two functions $h$ and
-$\ell_{\texttt{in}}$. For instance, in the correlation, shifting $h$ is
-not equivalent to shifting $\ell_{\texttt{in}}$ (the output will move in
-opposite directions). Note that the cross-correlation and convolution
-outputs are identical when the kernel $h$ has central symmetry.
-
 ## Cross-Correlation Versus Convolution
-### Template Matching and Normalized Correlation
 
-The goal of template matching is to find a small image patch within a
-larger image. @fig-normcorr shows how to use template matching to
-detect all the occurrences of the letter "a" with an image of text,
-shown in @fig-normcorr (b). @fig-normcorr (a) shows the template of the
-letter "a".
+:::{.callout-tip icon=false}
+## Correlation for template matching
 
 ![Fig (a) Template. (b) Input image. (c) Correlation between input (b) and template (a). (d) Normalized correlation. e) Locations with cross-correlation above 75 percent of its maximum value.](img/linear_image_filtering/normcorr.png){width="100%" #fig-normcorr}
-
-Cross-correlation is a potential method for template matching, but it
-has certain flaws. Consider matching the "a" template in @fig-normcorr (a)
-in a given input image. Just by increasing the brightness of the image
-in different parts we can increase the filter response since correlation
-is essentially a multiplication between the kernel $h$ and any input
-image patch $p$ (note that all the values are positive in $p$ and $h$).
-In bright image regions we will have the maximum correlation values
-regardless of regions' content as shown in @fig-normcorr (c).
+:::
 
 ## Cross-Correlation Versus Convolution
+:::{.callout-tip icon=false}
+## Normalized cross-correlation
 The normalized cross-correlation, at location $(n,m)$, is the dot
 product between a template, $h$, (normalized to be zero mean and unit
 norm) and the local image patch, $p$, centered at that location and with
-the same size as the kernel, normalized to be unit norm. This can be
-implemented with the following steps: First, we normalize the kernel
-$h$. The normalized kernel $\hat h$ is the result of making the kernel
-$h$ zero mean and unit norm. Then, the normalized cross-correlation is
-as follows (@fig-normcorr (d)): 
+the same size as the kernel, normalized to be unit norm.
+This can be implemented with the following steps: 
 
-$$\ell_{\texttt{out}}\left[n,m\right] 
+1. Normalize the kernel $h$. The normalized kernel $\hat h$ is the result of making the kernel
+$h$ zero mean and unit norm. 
+2. The normalized cross-correlation is as follows (@fig-normcorr (d)): 
+
+$$
+\ell_{\texttt{out}}\left[n,m\right] 
                 = 
                 \frac{1}{\sigma \left[n,m \right]}
                 \sum_{k,l=-N}^N
                 \ell_{\texttt{in}}\left[n+k,m+l \right]
-                \hat{h} \left[k,l \right]$$ 
-                
+                \hat{h} \left[k,l \right]
+$$ 
+:::                
+
 ## Cross-Correlation Versus Convolution
+:::{.callout-tip icon=false}
+## Normalized cross-correlation: computation
 Note that this equation is similar to the correlation function, but the output is scaled by the local standard deviation, $\sigma \left[m,n \right]$, of the image patch
 centered in $(n,m)$ and with support $(-N,N)\times(-N,N)$, where
 $(-N,N)\times(-N,N)$ is the size of the kernel $h$. To compute the local
 standard deviation, we first compute the local mean,
 $\mu \left[n,m \right]$, as follows:
-$$\mu \left[n,m \right] = \frac{1}{(2N+1)^2} \sum_{k,l=-N}^N \ell_{\texttt{in}}\left[n+k,m+l \right]$$
+$$
+\mu \left[n,m \right] = \frac{1}{(2N+1)^2} \sum_{k,l=-N}^N \ell_{\texttt{in}}\left[n+k,m+l \right]
+$$
 And then we compute:
-$$\sigma^2 \left[n,m \right] = \frac{1}{(2N+1)^2} \sum_{k,l=-N}^N \left( \ell_{\texttt{in}}\left[n+k,m+l \right] - \mu \left[n,m \right] \right) ^2$$
-
-@fig-normcorr (e) shows the detected copies of the template
-@fig-normcorr (a) in the image @fig-normcorr (b). The red bounding boxes in
-@fig-normcorr (e) correspond to the location with local maximum values of
-the normalized cross-correlation (@fig-normcorr (d) that are above a
-threshold chosen by hand.
+$$
+\sigma^2 \left[n,m \right] = \frac{1}{(2N+1)^2} \sum_{k,l=-N}^N \left( \ell_{\texttt{in}}\left[n+k,m+l \right] - \mu \left[n,m \right] \right) ^2
+$$
+:::
 
 ## Cross-Correlation Versus Convolution
-In the example of @fig-normcorr, all the instances of the letter 'a'
-have been correctly detected. But this method is very fragile when used
-to detect objects and is useful only under very limited conditions.
-Normalized correlation will detect the object independently of location,
-but it will not be robust to any other changes such as rotation,
-scaling, and changes in appearance. Just changing the font of the
-letters will certainly make the approach fail.
+:::{.callout-tip icon=false}
+## Normalized cross-correlation: features
 
-# System Identification
+- will detect the object independently of location,
+- not robust to changes such as:
+  - rotation
+  - scaling
+  - appearance
+:::
+
 ## System Identification
 
 One important task that we will study is that of explaining the behavior
@@ -1022,13 +983,14 @@ $\delta \left[n -n_0 \right]$ is $h \left[n -n_0 \right]$. This is why
 the kernel that defines an LTI system, $h\left[n\right]$, is also called
 the impulse response of the system.
 
+## System Identification
 ![LTI system with impulse response $h\left[n\right]$.](img/linear_image_filtering/genericfilterH2.png){width="30%" #fig-genericfilterH}
 
 For an unknown system, one way of finding the convolution kernel $h$
 consists in computing the output of the system when the input is an
 impulse.
 
-## System Identification
+## System Identification {.smaller}
 Let's start with a beautiful example from acoustics @TraerE7856. When
 you are in a room you often hear that sounds are distorted with echos
 (@fig-impulse_response_room_a). The number and strength of the echos
@@ -1039,16 +1001,6 @@ materials in the walls and ceilings.
 
 
 ## System Identification
-Interestingly the relationship between the sounds that are originated in
-one location and what a listener hears in another position are related
-by an LTI system. If you are in a room and you clap (which is a good
-approximation to an impulse of sound), the echoes that you hear are very
-close to the impulse response of the system formed by the acoustics of
-the room. Any sounds that originates at the location of your clap will
-produce a sound in the room that will be qualitatively similar to the
-convolution of the acoustic signal with the echoes that you hear before
-when you clapped. @fig-impulse_response_room_a2 shows a recording made
-in a restaurant in Cambridge, Massachusetts.
 
 ![Fig (a) Apparatus used to measure the impulse response generated by a battery-powered speaker and a portable digital recorder. (b) Recorded acoustic impulse response of a room. Figure modified from @TraerE7856.](img/linear_image_filtering/impulse_response_room_a2.png){width="100%" #fig-impulse_response_room_a2}  
 
@@ -1066,7 +1018,7 @@ $$h (t) = a_0 \delta (t)
 + a_2 \delta \left( t-T_2 \right)
 + a_3 \delta \left( t-T_3 \right)$$ 
 
-## System Identification
+## System Identification {.smaller}
 The sound that reaches the listener
 is the superposition of four copies of the sound emitted by the speaker.
 This can be written as the convolution of the input sound,
@@ -1080,12 +1032,3 @@ $$\ell_{\texttt{out}}(t) = \ell_{\texttt{in}}(t) \circ h(t) = a_0 \ell_{\texttt{
 
 ![Modified from @TraerE7856.](img/linear_image_filtering/impulse_response_room_b.png){width="100%" #fig-impulse_response_room_b}
 
-## Concluding Remarks
-
-A good foundation in signal processing is a valuable background for
-computer vision scientists and engineers. This short introduction should
-now allow you go deeper by consulting other specialized books.
-
-But we are not done yet. In the next chapter we will study the Fourier
-transform, which will provide a useful characterization of signals and
-images.
