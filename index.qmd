@@ -13,6 +13,10 @@ title: "Computer vision course"
 ### Lec 3: image filtering
 [Slides](./lec3.qmd)
 
+### Lec 4: Fourier filtering
+[Slides](./lec4.qmd)
+
+
 
 ### Lab1
 [Lab1](./lab1.qmd)
