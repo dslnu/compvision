@@ -33,61 +33,72 @@ format:
     theme: default
     multiplex:
       url: 'https://mplex.vitv.ly'
-      secret: '531a2579be2c8337fe873f028c4582fe'
-      id: '80f10525fcbaaf16a185d4ea5f8ff3259d9b729afa85af9b24141a7ba6b43c71'
+      secret: '701983790cb49f0305d621abfd1c06bf'
+      id: '0623eaeb78cd62d74a293dd87ad65affd248201173509008578f7fd7bfa7ad87'
 ---
-
-# Fourier Analysis
 
 ## Introduction
 
+:::{.callout-important}
 We need a more precise language to talk about the effect of linear
 filters, and the different image components, than to say "sharp" and
-"blurry" parts of the image. The Fourier transform provides that
-precision. 
+"blurry" parts of the image.
+
+The **Fourier transform** provides that precision. 
+:::
+
+## Fourier transform
 
 :::{.callout-tip icon=false}
 ## Frequencies
 By analogy with temporal frequencies, which describe how
 quickly signals vary over time, a **spatial frequency** describes how
-quickly a signal varies over space. The Fourier transform lets us
-describe a signal as a sum of complex exponentials, each of a different
-spatial frequency.
+quickly a signal varies over space.
+
+The Fourier transform lets us describe a signal as:
+
+- a sum of **complex exponentials**, 
+- each of a different **spatial frequency**.
 :::
 
 
-Fourier transforms are the basis of a number of computer vision
-approaches and are an important tool to understand images and how linear
-spatially invariant filters transform images. There are also important
-to understand modern representations such as positional encoding
-popularized by transformers @vaswani2017attention.
+::: aside
+Fourier transforms are important to understand modern representations such as positional encoding
+popularized by transformers.
+:::
 
-## Image Transforms
-
-Sometimes it is useful to transform the image pixels into another
-representation that might reveal image properties that can be useful for
-solving vision tasks. Before we saw that linear filtering is a useful
-way of transforming an image. Linear image transforms with the form
-$\mathbf{x} =  \mathbf{H} \boldsymbol\ell_{\texttt{in}}$ can be thought
-of as a way of changing the initial pixels representation of
-$\boldsymbol\ell_{\texttt{in}}$ into a different representation in
-$\mathbf{x}$.
+## Fourier transform
 
 :::{.callout-tip icon=false}
-## Intermediate representation
-We use $\mathbf{x}$ to denote an intermediate representation. The representation might not be an image.
+## Linear filtering re-cap
+Linear image transforms with the form
+$$
+\mathbf{x} =  \mathbf{H} \boldsymbol\ell_{\texttt{in}}
+$$
+can be thought of as a way of changing the initial pixels representation of
+$\boldsymbol\ell_{\texttt{in}}$ into a different representation in $\mathbf{x}$.
+:::
+
+:::{.callout-note}
+We use $\mathbf{x}$ to denote an intermediate representation.
+
+- the representation might not be an image.
+- a useful representation $\mathbf{x}$ should have a number of interesting
+properties not immediately available in the original pixels of
+$\boldsymbol\ell_{\texttt{in}}$.
 :::
 
 ## Image Transforms
 :::{.callout-tip icon=false}
 ## Inversion
 This representation is specially interesting when it can
-be inverted so that the original pixels can be recovered as
-$\boldsymbol\ell_{\texttt{in}}=  \mathbf{H}^{-1} \mathbf{x}$. The
-Fourier transform is one of those representations. A useful
-representation $\mathbf{x}$ should have a number of interesting
-properties not immediately available in the original pixels of
-$\boldsymbol\ell_{\texttt{in}}$.
+be inverted so that the original pixels can be recovered:
+
+$$
+\boldsymbol\ell_{\texttt{in}}=  \mathbf{H}^{-1} \mathbf{x}.
+$$
+
+The Fourier transform is **invertible**.
 :::
 
 ## Fourier Series
@@ -97,57 +108,66 @@ $\boldsymbol\ell_{\texttt{in}}$.
 In 1822, French mathematician and engineer Joseph Fourier, as part of
 his work on the study on heat propagation, showed that any periodic
 signal could be written as an infinite sum of trigonometric functions
-(cosine and sine functions). His ideas were published in his famous book
-*Theorie de la Chaleur* @Fourier09, and the **Fourier series** has
-become one of the most important mathematical tools in science and
-engineering.
+(cosine and sine functions). 
 :::
 
+![](img/Image_processing_fourier/Theorie_de_la_chaleur.png)
+
+## Fourier Series
+![Fourier's birthplace](img/Image_processing_fourier/Auxerre.jpg)
+
+## Fourier Series
 :::{.callout-tip icon=false}
 ## Fourier representation
-Fourier showed that any function, $\ell(t)$ defined in the interval
-$t \in (0,\pi)$, could be expressed as an infinite linear combination of
-harmonically related sinusoids,
-$$\ell(t) = a_1 \sin (t) + a_2 \sin (2t) + a_3 \sin (3t) + ...$$ andthat the value of the coefficients $a_n$ could be computed as the area
-of the curve $\ell(t) \sin (nt)$. Precisely,
-$$a_n = \frac{2}{\pi} \int_0^\pi  \ell(t) \sin (nt) dt$$ However, the
-sum is only guaranteed to converge to the function $\ell(t)$ within the
-interval $t \in (0,\pi)$. In fact, the resulting sum, for any values
+1. Any function, $\ell(t)$ defined in the interval
+   $t \in (0,\pi)$, could be expressed as:
+$$
+\ell(t) = a_1 \sin (t) + a_2 \sin (2t) + a_3 \sin (3t) + ...$$
+
+2. The value of the coefficients $a_n$ is computed as:
+$$
+a_n = \frac{2}{\pi} \int_0^\pi  \ell(t) \sin (nt) dt.
+$$
+
+3. The sum is only guaranteed to converge to the function $\ell(t)$ for $t \in (0,\pi)$.
+:::
+
+:::{.callout-note icon=false}
+## Properties
+The resulting sum, for any values
 $a_n$, is a **periodic function** with period $2\pi$ and is
 anti-symmetric with respect to the origin, $t=0$.
 :::
 
 
 ## Fourier Series
-
+:::{.callout-tip icon=false}
+## Ramp signal expansion
 One of Fourier's original examples of **sine series** is the expansion
-of the ramp signal $\ell(t)=t/2$. This series was first introduced by
+of the ramp signal 
+$$
+\ell(t)=t/2.
+$$
+This series was first introduced by
 Euler. Fourier showed that his theory explained why a ramp could be
 written as the following infinite sum:
-$$\frac{1}{2} t =  \sin (t) - \frac{1}{2}  \sin (2t) + \frac{1}{3} \sin (3t) - \frac{1}{4}  \sin (4t) + ...$$
-The result of this series approximates the ramp with increasing accuracy
-as we add more terms. The plots in @fig-FourierSeries6 show each of the
-weighted sine functions (on top) and the resulting partial sum (bottom
-graphs). We can see how adding **higher frequency** sines adds more
-details to the resulting function making it closer to the ramp. These
-plots show the signal in the interval $t \in (-4 \pi, 4 \pi)$ to reveal
-the periodic nature of the result of the sine series.
+$$
+\frac{1}{2} t =  \sin (t) - \frac{1}{2}  \sin (2t) + \frac{1}{3} \sin (3t) - \frac{1}{4}  \sin (4t) + ...
+$$
+:::
 
-
+## Fourier Series
 ![Reconstruction of a ramp with the first five sine functions.](img/Image_processing_fourier/FourierSeries6.png){#fig-FourierSeries6}
 
 ## Fourier Series
+
+
+:::{.callout-tip icon=false}
+## Fourier series as a change of representation
 It is useful to think of the **Fourier series** of a signal as a
-**change of representation** as shown in
-@fig-FourierSeries5_representation. Instead of representing the signal
-by the sequence of values specified by the original function $\ell(t)$,
-the same function can be represented by the infinite sequence of
-coefficients $a_n$. The coefficients $a_n$ give us an alternative
-description of the function $\ell(t)$ and the rest of this chapter will
-be devoted to understand what this **transformation** has to offer.
-
+**change of representation**. 
 ![Two representations for the ramp function. (left) Time domain. (right) Fourier domain with coefficients of the sine series.](img/Image_processing_fourier/FourierSeries5_representation.png){width="90%" #fig-FourierSeries5_representation}
-
+:::
 
 ## Fourier Series
 :::{.callout-tip icon=false}
@@ -159,49 +179,59 @@ $$\frac{1}{2} t =  \frac{\pi}{4}  - \frac{2}{\pi} \cos (t) - \frac{2}{3^2 \pi}  
 The cosine and sine series of the same function are only equal in the
 interval $t \in (0, \pi)$, and result in different periodic extensions
 outside that interval.
-
-The fields of signal and image processing have introduced different
-types of Fourier series. In the next sections we will study how these
-series are applied to describe discrete images using discrete sine and
-cosine functions and then we will focus on using complex exponentials.
-The representation using Fourier series is important for studying linear systems and convolutions.
 :::
 
 ## Continuous and Discrete Waves
 
-Now that we have seen the importance of sine waves as a tool to
-represent signals, let's describe them in a bit more detail.
-
 :::{.callout-tip icon=false}
-## Continuous wave
-The **continuous time sine wave** is
-$$s\left(t\right) = A \sin\left(w ~t - \theta \right)$$ where $A$ is the
-**amplitude**, $w$ is the **frequency**, and $\theta$ is the **phase**.
-The wave signal is periodic with a period $T=2 \pi / w$.
+## Continuous time sine wave
+$$
+s\left(t\right) = A \sin\left(w ~t - \theta \right)
+$$
 
-![](img/Image_processing_fourier/amplitudeandperiod.png){width="70%"}
+- $A$ is the **amplitude**
+- $w$ is the **frequency**
+- $\theta$ is the **phase**.
+
+![](img/Image_processing_fourier/amplitudeandperiod.png){height=300}
 :::
 
 
+## Continuous and Discrete Waves
 :::{.callout-tip icon=false}
-## Discrete wave
-In discrete time, the **discrete time sine wave** is as follows
-$$s\left[n\right] = A \sin\left(w ~n  - \theta \right)$$ Note that the
-discrete sine wave will not be periodic for any arbitrary value of $w$.
-A discrete signal $\ell\left[n\right]$ is periodic, if there exists
-$T \in \mathbb{N}$ such that
-$\ell\left[n\right] = \ell\left[n+mT\right]$ for all $m \in \mathbb{Z}$.
-For the discrete sine (and cosine) wave to be periodic the frequency has
-to be $w = 2 \pi K / N$ for $K,N \in \mathbb{N}$. If $K/N$ is an
-irreducible fraction, then the period of the wave will be $T = N$
-samples. Although $\theta$ can have any value, here we will consider
+## Discrete time sine wave
+$$
+s\left[n\right] = A \sin\left(w ~n  - \theta \right)
+$$
+:::
+
+::: aside
+Although $\theta$ can have any value, here we will consider
 only the values $\theta=0$ and $\theta = \pi/2$, which correspond to the
 sine and cosine waves, respectively.
 :::
 
-## Fourier Series
-:::{.callout-tip icon=false}
+## Continuous and Discrete Waves
+:::{.callout-note}
 ## Periodicity
+The discrete sine wave will not be periodic for any arbitrary value of $w$.
+
+A discrete signal $\ell\left[n\right]$ is periodic, if there exists
+$T \in \mathbb{N}$ such that
+$\ell\left[n\right] = \ell\left[n+mT\right]$ for all $m \in \mathbb{Z}$.
+
+For the discrete sine (and cosine) wave to be periodic the frequency has
+to be $w = 2 \pi K / N$ for $K,N \in \mathbb{N}$.
+
+If $K/N$ is an irreducible fraction, then the period of the wave will be $T = N$
+samples.
+:::
+
+
+## Continuous and Discrete Waves
+
+:::{.callout-tip icon=false}
+## Alternative notation
 In general, to make explicit the periodicity of the wave we will use the
 form:
 $$s_k\left[n\right] = \sin\left( \frac{2 \pi}{N} \, k \, n \right)$$
@@ -210,78 +240,89 @@ The same applies for the cosine:
 $$
 c_k\left[n\right] = \cos\left(\frac{2 \pi}{N} \,k\,n \right)
 $$
-This particular notation makes sense when considering the set of periodic
-signals with period $N$, or the set of signals with finite support
-signals of length $N$ with $n \in \left[0, N-1\right]$. In such a case,
-$k \in \left[1, N/2\right]$ denotes the frequency (i.e., the number of
-wave cycles that will occur within the region of support). Note that if
-$k=0$ then $s\left[n\right]$ = 0 and $c\left[n\right]=1$ for all $n$.
-One can also verify that $c_{N-k} = c_k$, and $s_{N-k} = -s_k$.
-Therefore, for frequencies $k>N/2$ we find the same set of waves as the
-ones in the interval $s \in \left[1, N/2\right]$. @fig-contsignal shows
-some examples.
+When considering the set of periodic signals with period $N$, or the set of signals with finite support
+signals of length $N$ with $n \in \left[0, N-1\right]$,
+$k \in \left[1, N/2\right]$ denotes the **frequency** (i.e., the number of
+wave cycles that will occur within the region of support).
 :::
 
-## Fourier Series
+## Continuous and Discrete Waves
 
-![Sine and cosine waves with $A=1$ and $N=20$. Each row corresponds to $k=1$, $k=2$ and $k=3$. Note that for $k=3$ the waves oscillates three times in the interval $\left[0,N-1\right]$, but the samples in each oscillation are not identical, and it is only truly periodic once every $N$ samples. This is because $3/20$ is an irreducible fraction.](img/Image_processing_fourier/contsignal.png){width="80%" #fig-contsignal}
+![$A=1$ and $N=20$, rows corresponding to $k=1,2,3$. For $k=3$ the samples for each oscillation are not identical, because $3/20$ is an irreducible fraction.](img/Image_processing_fourier/contsignal.png){width="80%" #fig-contsignal}
 
-## Fourier Series
+## Continuous and Discrete Waves
 :::{.callout-tip icon=false}
 ## Sines and Cosines in 2D
 
-The same analysis can be extended to two dimensions (2D). In 2D, the
-discrete sine and cosine waves are as follows:
-$$s_{u,v}\left[n,m\right] = A \sin \left(2 \pi \left( \frac{u\,n}{N}  + \frac{v\,m}{M}  \right) \right)$$
-$$c_{u,v}\left[n,m\right] = A \cos \left(2 \pi \left( \frac{u\,n}{N}  + \frac{v\,m}{M}  \right) \right)$$
+$$
+s_{u,v}\left[n,m\right] = A \sin \left(2 \pi \left( \frac{u\,n}{N}  + \frac{v\,m}{M}  \right) \right)
+$$
+$$
+c_{u,v}\left[n,m\right] = A \cos \left(2 \pi \left( \frac{u\,n}{N}  + \frac{v\,m}{M}  \right) \right)
+$$
 where $A$ is the amplitude and $u$ and $v$ are the two spatial
 frequencies and define how fast or slow the waves change along the
-spatial dimensions $n$ and $m$. @fig-disc2Dsignal shows some examples.
-
-
-![2D sine waves with $N=M=20$. The frequency values are (a) $u=2, v=0$; (b) $u=3, v=1$; (c) $u=7,v=-5$.](img/Image_processing_fourier/disc2Dsignal.png){#fig-disc2Dsignal}
+spatial dimensions $n$ and $m$.
 :::
 
+## Continuous and Discrete Waves
+![2D sine waves with $N=M=20$. The frequency values are (a) $u=2, v=0$; (b) $u=3, v=1$; (c) $u=7,v=-5$.](img/Image_processing_fourier/disc2Dsignal.png){#fig-disc2Dsignal}
 
-## Fourier Series
+
+## Continuous and Discrete Waves
 :::{.callout-tip icon=false}
-## Complex Exponentials
+## Complex exponential waves
 
-Another important signal is the complex exponential wave:
-$$e_{u}\left[n\right] = \exp \left(2 \pi j   \frac{u\, n}{N}   \right)$$
+$$
+e_{u}\left[n\right] = \exp \left(2 \pi j   \frac{u\, n}{N}   \right)
+$$
 
 Complex exponentials are related to cosine and sine waves by Euler's
-formula: $$
-\exp \left(j a\right) = \cos (a) + j \sin (a)$${#eq-euler} @fig-complexexponential
-shows the one dimensional (1D) discrete complex exponential function
-(for $v=0$). As the values are complex, the plot shows in the $x$-axis
-the real component and in the $y$-axis the imaginary component. As $n$
-goes from 0 to $N-1$ the function rotates along the complex circle of
-unit magnitude.
-
-
-![Complex exponential wave with (a) $N=40$, $k=1$, $A=1$; and (b) $N=40$, $k=3$, $A=1$. The red and green curves show the real and imaginary waves. The black line is the complex exponential. The dots correspond to the discrete samples.](img/Image_processing_fourier/complexexponential.png){width="80%" #fig-complexexponential}
+formula:
+$$
+\exp \left(j a\right) = \cos (a) + j \sin (a)
+$${#eq-euler} 
 :::
 
+## Continuous and Discrete Waves
+![Complex exponential wave with (a) $N=40$, $k=1$, $A=1$; and (b) $N=40$, $k=3$, $A=1$. The red and green curves show the real and imaginary waves. The black line is the complex exponential. The dots correspond to the discrete samples.](img/Image_processing_fourier/complexexponential.png){width="80%" #fig-complexexponential}
 
-## Fourier Series
-In 2D, the complex exponential wave is
-$$e_{u,v}\left[n,m\right] = \exp \left(2 \pi j \left(  \frac{u\, n}{N}  + \frac{v\,m}{M}  \right) \right)$$where $u$ and $v$ are the two spatial frequencies. Note that complex
-exponentials in 2D are separable. This means they can be written as the
+
+## Continuous and Discrete Waves
+:::{.callout-note icon=false}
+## Complex wave in 2D
+$$
+e_{u,v}\left[n,m\right] = \exp \left(2 \pi j \left(  \frac{u\, n}{N}  + \frac{v\,m}{M}  \right) \right)
+$$
+where $u$ and $v$ are the two spatial frequencies.
+:::
+
+:::{.callout-note icon=false}
+## Separability
+Complex exponentials can be written as the
 product of two 1D signals:
-$$e_{u,v}\left[n,m\right]   = e_{u}\left[n\right] e_{v}\left[m\right]$$
+$$
+e_{u,v}\left[n,m\right]   = e_{u}\left[n\right] e_{v}\left[m\right]
+$$
+:::
 
-A remarkable property is that the complex exponentials form an
+## Continuous and Discrete Waves
+:::{.callout-warning icon=false}
+## Orthogonal basis
+Complex exponentials form an
 orthogonal basis for discrete signals and images of finite length. For
 images of size $N \times M$,
-$$\left<e_{u,v}, e_{u',v'} \right> = \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} e_{u,v}\left[n,m\right] e^*_{u',v'}\left[n,m\right] = MN \delta \left[u-u'\right]\delta \left[v-v'\right]$$
+$$
+\left<e_{u,v}, e_{u',v'} \right> = \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} e_{u,v}\left[n,m\right] e^*_{u',v'}\left[n,m\right] = MN \delta \left[u-u'\right]\delta \left[v-v'\right]
+$$
 Therefore, any finite length discrete image can be decomposed as a
 linear combination of complex exponentials.
+:::
 
 ## The Discrete Fourier Transform
 
-### Discrete Fourier Transform and Inverse Transform
-
+:::{.callout-tip icon=false}
+## Discrete Fourier Transform
 The **Discrete Fourier Transform** (DFT) transforms an image
 $\ell\left[n,m \right]$, of finite size $N \times M$, into the complex
 image Fourier transform $\mathscr{L}\left[u,v \right]$ as:
@@ -293,13 +334,20 @@ $$
 \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} \, \ell\left[n,m \right] 
 \exp{ \left( -2\pi j \left( \frac{u\, n}{N} + \frac{v\, m}{M} \right) \right)}
 $$ {#eq-fourier}
+:::
 
-## The Discrete Fourier Transform
-
+:::{.callout-note icon=false}
+## Relationship
 We will call $\mathscr{L}\left[u,v \right]$ the Fourier
 transform of $\ell\left[m,n \right]$. We will often represent the
 relationship between the signal as its transform as:
-$$\ell\left[n,m \right] \xrightarrow{\mathscr{F}} \mathscr{L}\left[u,v \right]$$By applying $\frac{1}{MN} \sum_{u=0}^{M-1} \sum_{v=0}^{N-1}$ to both
+$$\ell\left[n,m \right] \xrightarrow{\mathscr{F}} \mathscr{L}\left[u,v \right]$$
+:::
+
+## The Discrete Fourier Transform
+:::{.callout-note icon=false}
+## Inverse transform
+By applying $\frac{1}{MN} \sum\limits_{u=0}^{M-1} \sum\limits_{v=0}^{N-1}$ to both
 sides of equation (@eq-fourier) and exploiting the orthogonality between
 distinct Fourier basis elements, we find the **inverse Fourier
 transform** relation
@@ -311,25 +359,42 @@ $$
 \frac{1}{NM} \sum_{u=0}^{N-1} \sum_{v=0}^{M-1} \mathscr{L}\left[u,v \right] 
 \exp{ \left(+2\pi j \left(\frac{u\, n}{N} + \frac{v\, m}{M} \right) \right) }
 $$ {#eq-inversefourier}
+:::
 
 ## The Discrete Fourier Transform
-As we can see from the inverse transform equation, we rewrite the image,
-instead of as a sum of offset pixel values, as a sum of complex
-exponentials, each at a different frequency, called a spatial frequency
+:::{.callout-tip icon=false}
+## Image rewrite
+
+- we rewrite the image, instead of as a sum of offset pixel values, as a sum of complex
+exponentials, each at a different frequency, called a **spatial frequency**
 for images because they describe how quickly things vary across space.
-From the inverse transform formula, we see that to construct an image
+- from the inverse transform formula, we see that to construct an image
 from a Fourier transform, $\mathscr{L}\left[u,v \right]$, we just add in
 the corresponding amount of that particular complex exponential
 (conjugated).
+:::
 
+
+## The Discrete Fourier Transform
+:::{.callout-tip icon=false}
+## Periodicity
 As $\mathscr{L}\left[u,v \right]$ is obtained as a sum of complex
 exponential with a common period of $N,M$ samples, the function
 $\mathscr{L}\left[u,v \right]$ is also periodic:
-$\mathscr{L}\left[u+aN,v+bM \right] = \mathscr{L}\left[u,v \right]$ for
-any $a,b \in \mathbb{Z}$. Also the result of the inverse DFT is a
+$$
+\mathscr{L}\left[u+aN,v+bM \right] = \mathscr{L}\left[u,v \right]
+$$
+for any $a,b \in \mathbb{Z}$.
+
+Also the result of the inverse DFT is a
 periodic image. Indeed you can verify from equation (@eq-inversefourier)
-that $\ell\left[n+aN,m+bM \right] = \ell\left[n,m \right]$ for any
-$a,b \in \mathbb{Z}$.
+that 
+$$
+\ell\left[n+aN,m+bM \right] = \ell\left[n,m \right]
+$$
+for any $a,b \in \mathbb{Z}$.
+:::
+
 
 ## The Discrete Fourier Transform
 :::{.callout-tip icon=false}
@@ -338,31 +403,29 @@ Using the fact that $e_{N-u, M-v} = e_{-u,-v}$, another equivalent way
 to write for the Fourier transform is to sum over the frequency interval
 $\left[-N/2, N/2\right]$ and $\left[-M/2, M/2\right]$. This is
 especially useful for the inverse that can be written as:
-$$\ell\left[n,m \right] = \frac{1}{NM} \sum_{u=-N/2}^{N/2} \sum_{v=-M/2}^{M/2} \mathscr{L}\left[u,v \right]\exp{ \left(+2\pi j \left(\frac{u\, n}{N} + \frac{v\, m}{M} \right) \right) }
+$$
+\ell\left[n,m \right] = \frac{1}{NM} \sum_{u=-N/2}^{N/2} \sum_{v=-M/2}^{M/2} \mathscr{L}\left[u,v \right]\exp{ \left(+2\pi j \left(\frac{u\, n}{N} + \frac{v\, m}{M} \right) \right) }
 $${#eq-inversefourier2}
-
-This formulation allows us to arrange the coefficients in the complex
-plane so that the zero frequency, or DC, coefficient is at the center.
-Slow, large variations correspond to complex exponentials of frequencies
-near the origin. If the amplitudes of the complex conjugate exponentials
-are the same, then their sum will represent a cosine wave; if their
-amplitudes are opposite, it will be a sine wave. Frequencies further
-away from the origin represent faster variation with movement across
-space. The DFT and its inverse in 1D are defined in the same way as
-shown in @tbl-tableFamilyFT.
 :::
 
 ## The Discrete Fourier Transform
+:::{.callout-note icon=false}
+## Properties
+
+- this formulation allows us to arrange the coefficients in the complex
+plane so that the zero frequency, or DC, coefficient is at the center.
+- slow, large variations correspond to complex exponentials of frequencies
+near the origin
+- frequencies further away from the origin represent faster variation with movement across space
+- if the amplitudes of the complex conjugate exponentials
+are the same, then their sum will represent a cosine wave; otherwise, a sine wave
+:::
+
 :::{.callout-important icon=false}
 ## Uniqueness
 One very important property is that the decomposition of a signal into a
 sum of complex exponentials is unique: there is a unique linear
 combination of the exponentials that will result in a given signal.
-:::
-
-
-::: aside
-The DFT became very popular thanks to the **Fast Fourier Transform** (FFT) algorithm. The most common FFT algorithm is the Cooley–Tukey algorithm @Cooley1965 that reduces the computation cost from $O(N^2)$ to $O(N \log N)$.
 :::
 
 ## The Discrete Fourier Transform
@@ -383,66 +446,35 @@ $$\mathbf{F} = \begin{bmatrix}1 & 1 & 1 & \dots & 1\\ %u=0
 
 
 ## The Discrete Fourier Transform
-Each entry in the matrix is
-$\mathbf{F}_{u,n} = \exp{ \left(-2\pi j \frac{u\, n}{N} \right)}$, with
-$u$ indexing rows and $n$ indexing columns. Note that $\mathbf{F}$ is a
-symmetric matrix. The inverse of the DFT is the complex conjugate:
-$\mathbf{F}^{-1} = \mathbf{F}^{*}$.
-
-Working in 1D, as we did before, allows us to visualize the
-transformation matrix. @fig-colorDFT shows a color visualization of the
-complex-value matrix for the 1D DFT, which when used as a multiplicand
-yields the Fourier transform of 1D vectors. Many Fourier transform
-properties and symmetries can be observed from inspecting that matrix.
-
-![Visualization of the discrete Fourier transform as a matrix.  The signal to be
- transformed forms the entries of the column vector at right.  The
- complex values of the Fourier transform matrix are indicated by the color,
- with the key in the bottom left.  In the vector at the right, black
- values indicate zero.
-](img/Image_processing_fourier/visualization_DFT_color.png){width="100%" #fig-colorDFT}
-
-## The Discrete Fourier Transform
 :::{.callout-tip icon=false}
-## Visualizing the Fourier Transform
+## Matrix Form
 
-When computing the DFT of a real image, we will not be able to write the
-analytic form of the result, but there are a number of properties that
-will help us to interpret the result. @fig-DFT_a shows the Fourier
-transform of a $64 \times 64$ resolution image of a cube. As the DFT
-results in a complex representation, there are two possible ways of
-writing the result. Using the real and imaginary components:
-$$\mathscr{L}\left[u,v \right] = Re \left\{\mathscr{L}\left[u,v \right] \right\}  + j \, Imag \left\{\mathscr{L}\left[u,v \right] \right\}$$
-where $Re$ and $Imag$ denote the real and imaginary part of each Fourier
-coefficient. Or using a polar decomposition:
-$$\mathscr{L}\left[u,v \right]  = A \left[u,v \right] \, \exp{\left( j \, \theta\left[u,v \right]  \right)}$$
-where $A \left[u,v \right] \in \mathbb{R}^+$ is the amplitude and
-$\theta \left[u,v \right] \in \left[-\pi, \pi \right]$ is the phase.
-@fig-DFT_a shows both decompositions of the Fourier transform.
-
-
-![DFT of an image and visualization of (top) the real and imaginary components, and (bottom) the amplitude and phase  of the Fourier transform.](img/Image_processing_fourier/dft_a.png){width="100%" #fig-DFT_a}
+- $\mathbf{F}$ is a symmetric matrix
+- the inverse of the DFT is the complex conjugate: $\mathbf{F}^{-1} = \mathbf{F}^{*}$.
 :::
 
 ## The Discrete Fourier Transform
-Upon first learning about Fourier transforms, it may be a surprise for
-readers to learn that one can synthesize any image as a sum of complex
-exponentials (i.e., sines and cosines). To help gain insight into how
-that works, it is informative to show examples of partial sums of
-complex exponentials. @fig-DFT_b shows partial sums of the Fourier
-components of an image. In each partial sum of $N$ components, we use
-the largest N components of the Fourier transform. Using the fact that
-the Fourier basis functions are orthonormal, it is straightforward to
-show that this is the best least-squares reconstruction possible from
-each given number of Fourier basis components. This first image shows
-what is reconstructed from the largest Fourier component which turns out
-to be $\mathscr{L}\left[0,0 \right]$. This component encodes the DC
-value of the image, therefore the resulting image is just a constant.
-The next two components correspond to two complex conjugates of a very
-slow varying wave. And so on. As more components get added, the figure
-slowly emerges. In this example, the first 127 coefficients are
-sufficient for recognizing this $64 \times 64$ resolution
-image.
+![Visualization of the discrete Fourier transform as a matrix. The signal to be
+ transformed forms the entries of the column vector at right.](img/Image_processing_fourier/visualization_DFT_color.png){width="100%" #fig-colorDFT}
+
+## The Discrete Fourier Transform
+:::{.callout-tip icon=false}
+## DFT Decomposition
+
+- using the real and imaginary components:
+$$
+\mathscr{L}\left[u,v \right] = Re \left\{\mathscr{L}\left[u,v \right] \right\}  + j \, Imag \left\{\mathscr{L}\left[u,v \right] \right\}
+$$
+- using a polar decomposition:
+$$
+\mathscr{L}\left[u,v \right]  = A \left[u,v \right] \, \exp{\left( j \, \theta\left[u,v \right]  \right)}
+$$
+:::
+
+## The Discrete Fourier Transform
+![DFT of an image and visualization of (top) the real and imaginary components, and (bottom) the amplitude and phase  of the Fourier transform.](img/Image_processing_fourier/dft_a.png){width="100%" #fig-DFT_a}
+
+## The Discrete Fourier Transform
 
 ![Reconstructing an image from the $N$ Fourier coefficients of the largest amplitude.  The right frame shows the location, in the Fourier domain, of the $N$ Fourier coefficients, which when inverted, give the image at the left.](img/Image_processing_fourier/dft_b.png){width="100%" #fig-DFT_b}
 
@@ -452,17 +484,30 @@ image.
 ## Delta Distribution
 
 The Fourier transform of the delta function $\delta \left[n,m \right]$
-is $$\mathcal{F} \left\{ \delta \left[n,m \right] \right\} = 
+is
+$$
+\mathcal{F} \left\{ \delta \left[n,m \right] \right\} = 
 \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} \, \delta \left[n,m \right] 
-\exp{ \left( -2\pi j \left( \frac{u\, n}{N} + \frac{v\, m}{M} \right) \right)} = 1$$
-where the Fourier transform of the delta signal is 1.
-$$\delta \left[n,m \right] \xrightarrow{\mathscr{F}} 1$$ If we think in
+\exp{ \left( -2\pi j \left( \frac{u\, n}{N} + \frac{v\, m}{M} \right) \right)} = 1
+$$
+where the Fourier transform of the delta signal is 1:
+$$
+\delta \left[n,m \right] \xrightarrow{\mathscr{F}} 1.
+$$
+:::
+
+## Useful Transforms
+:::{.callout-tip icon=false}
+## Inverse for delta
+If we think in
 terms of the inverse Fourier transform, this means that if we sum all
 the complex exponentials with a coefficient of 1, then all the values
 will cancel but the one at the origin, which results in a delta
 function:
-$$\delta \left[n,m \right] = \frac{1}{NM} \sum_{u=-N/2}^{N/2} \sum_{v=-M/2}^{M/2}  
-\exp{ \left(2\pi j \left(\frac{u\, n}{N} + \frac{v\, m}{M} \right) \right) }$$
+$$
+\delta \left[n,m \right] = \frac{1}{NM} \sum_{u=-N/2}^{N/2} \sum_{v=-M/2}^{M/2}  
+\exp{ \left(2\pi j \left(\frac{u\, n}{N} + \frac{v\, m}{M} \right) \right) }
+$$
 :::
 
 
@@ -473,55 +518,46 @@ $$\delta \left[n,m \right] = \frac{1}{NM} \sum_{u=-N/2}^{N/2} \sum_{v=-M/2}^{M/2
 
 The Fourier transform of the cosine wave,
 $\cos{ \left( 2\pi \left( \frac{u_0\, n}{N} + \frac{v_0\, m}{M} \right) \right) }$,
-is: $$\begin{aligned}
+is: 
+$$
+\begin{aligned}
 \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} \, \cos{ \left( 2\pi \left( \frac{u_0 \, n}{N} + \frac{v_0 \, m}{M} \right) \right) }
 \exp{ \left( -2\pi j \left( \frac{u\, n}{N} + \frac{v\, m}{M} \right) \right)} = \\ 
 =\frac{1}{2} \left( \delta \left[u-u_0, v-v_0 \right] +  \delta \left[u+u_0, v+v_0 \right] \right)
-\end{aligned}$$ This can be easily proven using Euler's equation
-(@eq-euler) and the orthogonality between complex exponentials. This
-results in the Fourier transform relationship:
-$$\cos{ \left( 2\pi \left( \frac{u_0\, n}{N} + \frac{v_0\, m}{M} \right) \right) } 
+\end{aligned}
+$$
+:::
+
+## Useful Transforms
+:::{.callout-note icon=false}
+## Fourier transform relationship
+$$
+\cos{ \left( 2\pi \left( \frac{u_0\, n}{N} + \frac{v_0\, m}{M} \right) \right) } 
 \xrightarrow{\mathscr{F}} 
-\frac{1}{2} \left( \delta \left[u-u_0, v-v_0 \right] +  \delta \left[u+u_0, v+v_0 \right] \right)$$
+\frac{1}{2} \left( \delta \left[u-u_0, v-v_0 \right] +  \delta \left[u+u_0, v+v_0 \right] \right)
+$$
 
-And for the sine wave,
-$\sin{ \left( 2\pi \left( \frac{u_0\, n}{N} + \frac{v_0 m}{M} \right) \right) }$,
-we have a similar relationship:
-
-$$\sin{ \left( 2\pi \left( \frac{u_0\, n}{N} + \frac{v_0 m}{M} \right) \right) } 
+And for the sine wave: $\sin{ \left( 2\pi \left( \frac{u_0\, n}{N} + \frac{v_0 m}{M} \right) \right) }$:
+$$
+\sin{ \left( 2\pi \left( \frac{u_0\, n}{N} + \frac{v_0 m}{M} \right) \right) } 
 \xrightarrow{\mathscr{F}} 
-\frac{1}{2j} \left( \delta \left[u-u_0, v-v_0 \right] - \delta \left[u+u_0, v+v_0 \right]\right)$$
-
-@fig-2ddftexampleswaves shows the DFT of several waves with different
-frequencies and orientations.
-
-
-![Some 2D Fourier transform pairs. Images are $64 \times 64$ pixels. The waves are cosine with frequencies $(1,2)$, $(5,0)$, $(10,7)$, $(11,-15)$. The last two examples show the sum of two waves and the product.](img/Image_processing_fourier/DFT_examples_waves.png){width="100%" #fig-2ddftexampleswaves}
+\frac{1}{2j} \left( \delta \left[u-u_0, v-v_0 \right] - \delta \left[u+u_0, v+v_0 \right]\right)
+$$
 :::
 
 
 ## Useful Transforms
-:::{.callout-tip icon=false}
-## More examples
-@fig-2ddftexamples shows the 2D Fourier transforms of some periodic
-signals. The depicted signals all happen to be symmetric about the
-spatial origin. From the Fourier transform equation, one can show that
-real and even input signals transform to real and even outputs. So for
-the examples of @fig-2ddftexamples, we only show the magnitude of the
-Fourier transform, which in this case is the absolute value of the real
-component of the transform, and the imaginary component happens to be
-zero for the signals we'll examine. Also, all these images but the last
-one are separable (they can be written as the product of two 1D
-signals). Therefore, their DFT is also the product of 1D DFTs.
+![Some 2D Fourier transform pairs. Images are $64 \times 64$ pixels. The waves are cosine with frequencies $(1,2)$, $(5,0)$, $(10,7)$, $(11,-15)$. The last two examples show the sum of two waves and the product.](img/Image_processing_fourier/DFT_examples_waves.png){width="100%" #fig-2ddftexampleswaves}
 
 
+## Useful Transforms
 ![Some two-dimensional Fourier transform pairs.
   Note the trends visible in the collection of transform pairs:  As
   the support of the image in one domain gets larger, the magnitude in
   the other domain becomes more localized.  A line transforms to a
   line oriented perpendicularly to the first. Images are $64 \times 64$ pixels, origin is in the center.
+  Depicted signals are symmetric. All these images except for the last are separable.
 ](img/Image_processing_fourier/DFT_toy_examples.png){width="100%" #fig-2ddftexamples}
-:::
 
 
 ## Useful Transforms
@@ -535,30 +571,16 @@ $$
     0       & \quad \text{otherwise.} 
   \end{cases}
 $$
-
-The box function takes values of 1 inside the interval
-$\left[ -L,L \right]$ and it is 0 outside. The duration of the box is
-$2L+1$.
-
-It is useful to think of the box function as a finite length signal of
-length $N$ and to visualize its periodic extension outside of that
-interval. The following plot shows the box function for $L=5$ and
-$N=32$. In this plot, the box signal is defined between $-N/2=-16$ and
-$N/2-1=15$ and the rest is its periodic extension.
-
-
-![Box function for $L=5$ and $N=32$.](img/Image_processing_fourier/box_fun.png){width="80%"}
+The duration of the box is $2L+1$.
 :::
 
+![Box function for $L=5$ and $N=32$.](img/Image_processing_fourier/box_fun.png){width="80%"}
 
 
-## Useful Transforms
+
+## Useful Transforms {.smaller}
 :::{.callout-tip icon=false}
 ## DFT for finite length box function
-We will compute here the DFT of the finite length box function, with a
-length $N$. To compute the DFT we use the DFT definition and change the
-interval of the sum making use of the periodic nature of the terms
-inside the sum: 
 $$
 \begin{aligned}
 \mathcal{F} \left\{ \text{box}_{L} \left[n \right] \right\} &=& 
@@ -590,6 +612,16 @@ $$ {#eq-discrete_sinc_function}
 
 ## Useful Transforms
 :::{.callout-tip icon=false}
+## DFT for finite length box function
+
+$$
+\text{box}_{L} \left[n \right]\xrightarrow{\mathscr{F}} 
+\frac{\sin \pi u (2L+1)/N}{\sin \pi u/N}
+$$ 
+:::
+
+:::{.callout-note icon=false}
+## Discrete sinc function
 The discrete sinc function **sincd** is defined as follows:
 $$
 \text{sincd}(x;a) = \frac{\sin(\pi x)}{a \sin (\pi x/a)}
@@ -597,43 +629,23 @@ $$
 Where $a$ is a constant. This is a symmetrical periodic function with a maximum value of 1.
 :::
 
-
-In summary, we get that The DFT of the box function is the discrete sinc
-function: 
-$$\text{box}_{L} \left[n \right]\xrightarrow{\mathscr{F}} 
-\frac{\sin \pi u (2L+1)/N}{\sin \pi u/N}
-$$ 
-
-We will denote the DFT of the box function, $\text{box}_{L} \left[n \right]$, capitalizing the first
-letter, $\text{Box}_{L} \left[u \right]$. This function has its maximum
-value at $u=0$. The DFT, $\text{Box}_{L} \left[u \right]$, is a
-symmetric real function. The following plot (@fig-boxfilterdft) shows
-the DFT of the box with $L=5$, and $N=32$. One period of the DFT is
-contained in the interval $\left[ -16, 15 \right]$ and the rest is a
-periodic extension.
-
+## Useful Transforms
 ![DFT of the box filter with $L=5$, and $N=32$.](img/Image_processing_fourier/boxfilterdft.png){width="100%" #fig-boxfilterdft}
-
-
 
 ## Useful Transforms
 :::{.callout-tip icon=false}
 ## 2D case
-Now that we know how to compute the DFT of the 1D box, we can easily
-extend it to the 2D case. A 2D box is a separable function and can be
-written as the product of two box functions,
-$\text{box}_{L_n, L_m} \left[n,m\right] = \text{box}_{L_n} \left[n\right] \text{box}_{L_m}\left[m\right]$.
-The DFT is the product of the two DFTs,
-$$\text{Box}_{L_n, L_m} \left[ u,v \right] = \text{Box}_{L_n} \left[ u\right] \text{Box}_{L_m} \left[ v\right].$$
+A 2D box is a separable function:
+$$\text{box}_{L_n, L_m} \left[n,m\right] = \text{box}_{L_n} \left[n\right] \text{box}_{L_m}\left[m\right]
+$$
+The DFT is the product of the two DFTs:
+$$
+\text{Box}_{L_n, L_m} \left[ u,v \right] = \text{Box}_{L_n} \left[ u\right] \text{Box}_{L_m} \left[ v\right].
+$$
 
-@fig-2ddftexamples shows several DFTs of 2D boxes of different sizes
-and aspect ratios.
 :::
 
-## Discrete Fourier Transform Properties {#sec-DFTproperties}
-
-It is important to be familiar with the properties for the DFT. @tbl-dft summarizes some important transforms and
-properties.
+## DFT Properties {#sec-DFTproperties .smaller}
 
 | $\ell[n]$ | $\mathscr{L}[u]$ |
 | :---: | :---: |
@@ -651,83 +663,68 @@ properties.
 :::{.callout-tip icon=false}
 ## Linearity
 The Fourier transform and its inverse are linear transformations:
-$$\alpha \ell_1 \left[n,m \right] + \beta \ell_2 \left[ n,m \right]  
+$$
+\alpha \ell_1 \left[n,m \right] + \beta \ell_2 \left[ n,m \right]  
 \xrightarrow{\mathscr{F}} 
-\alpha \mathscr{L}_1 \left[u,v \right] + \beta \mathscr{L}_2 \left[ u,v \right]$$
-where $\alpha$ and $\beta$ are complex numbers. This property can be
-easily proven from the definition of the DFT. @fig-colorDFT shows a
-color visualization of the complex-value matrix for the 1D DFT.
+\alpha \mathscr{L}_1 \left[u,v \right] + \beta \mathscr{L}_2 \left[ u,v \right]
+$$
+where $\alpha$ and $\beta$ are complex numbers. 
 :::
 
-
-## Discrete Fourier Transform Properties
-:::{.callout-tip icon=false}
+:::{.callout-note icon=false}
 ## Separability
 
 An image is separable if it can be written as the product of two 1D
 signals,
-$\ell\left[n,m \right] = \ell_1\left[n \right] \ell_2\left[m \right]$.
+$$
+\ell\left[n,m \right] = \ell_1\left[n \right] \ell_2\left[m \right].
+$$
 If an image is separable, then its Fourier transform is separable:
-$\mathscr{L}\left[u,v \right] = \mathscr{L}_1 \left[u \right] \mathscr{L}_2 \left[v \right]$
-
-**Separability**. 
-
-Although almost all images are not separable, some can be approximated by a separable image. Here is one example:
-
-![](img/Image_processing_fourier/facade1.jpg){width="100%"}
-
-We can use the SVD decomposition to find a separable approximation to this image. The result is:
-
-![](img/Image_processing_fourier/facade1aprox.jpg){width="100%"}
-
-This last image can be written as the product of two 1D signals.
+$$
+\mathscr{L}\left[u,v \right] = \mathscr{L}_1 \left[u \right] \mathscr{L}_2 \left[v \right].
+$$
 :::
 
 
-## Discrete Fourier Transform Properties
+## DFT Properties
+
+:::: {.columns}
+::: {.column width="50%"}
+![Original image](img/Image_processing_fourier/facade1.jpg){width="100%"}
+:::
+::: {.column width="50%"}
+
+![Separable approximation](img/Image_processing_fourier/facade1aprox.jpg){width="100%"}
+:::
+::::
+
+## DFT Properties
 :::{.callout-tip icon=false}
 ## Parseval's Theorem
 
-As the DFT is a change of basis, the dot product between two signals and
-the norm of a vector is preserved (up to a constant factor) after the
-basis change. This is stated by Parseval's theorem:
+Preservation of the dot product between two signals and the norm of a vector 
+after the basis change (up to a constant factor):
 $$\sum_{n=0}^{N-1} \sum_{m=0}^{M-1} \,  \ell_1 \left[n,m \right] \ell_2^* \left[n,m \right] = \frac{1}{NM}\sum_{u=0}^{N-1} \sum_{v=0}^{M-1} \,  \mathscr{L}_1 \left[u,v \right] \mathscr{L}_2^* \left[u,v \right]$$
-In particular, if $\ell_1=\ell_2$ this reduces to the **Plancherel
-theorem**:
-$$\sum_{n=0}^{N-1} \sum_{m=0}^{M-1} \,  \| \ell\left[n,m \right] \|^2 = \frac{1}{NM}\sum_{u=0}^{N-1} \sum_{v=0}^{M-1} \,  \| \mathscr{L}\left[u,v \right] \|^2$$
-This relationship is important because it tells us that the energy of a
-signal can be computed as the sum of the squared magnitude of the values
-of its Fourier transform.
+:::
+
+:::{.callout-note icon=false}
+## Plancherel theorem
+If $\ell_1=\ell_2$, this reduces to:
+$$
+\sum_{n=0}^{N-1} \sum_{m=0}^{M-1} \,  \| \ell\left[n,m \right] \|^2 = \frac{1}{NM}\sum_{u=0}^{N-1} \sum_{v=0}^{M-1} \,  \| \mathscr{L}\left[u,v \right] \|^2
+$$
 :::
 
 
-## Discrete Fourier Transform Properties
+## DFT Properties
 :::{.callout-tip icon=false}
 ## Convolution
 
-Consider a signal $\ell_{\texttt{out}}$ that is the result of applying
-(circular) convolution of two signals, $\ell_1$ and $\ell_2$, both of
-size $N \times M$: $$\ell_{\texttt{out}}= \ell_1 \circ \ell_2$$
+Consider:
+$$
+\ell_{\texttt{out}}= \ell_1 \circ \ell_2
+$$
 
-The question is; how does the Fourier transform of the signal
-$\ell_{\texttt{out}}$ relates to the Fourier transforms of the two
-signals $\ell_1$ and $\ell_2$?
-:::
-
-
-::: aside
-The relationship between the convolution and the
-Fourier transform is probably the most important property of the Fourier
-transform and you should be familiar with it.
-:::
-
-
-## Discrete Fourier Transform Properties
-
-:::{.callout-tip icon=false}
-## Convolution
-If we take the Fourier transform of both sides, and use the definition
-of the Fourier transform, we obtain 
 $$
 \begin{split}
 \mathscr{L}_{\texttt{out}}\left[u,v \right] & =  \mathcal{F}  \left\{ \ell_1 \circ_{N,M} \ell_2 \right\} \\
@@ -740,44 +737,44 @@ $$
 \exp \left(-2 \pi j \left(\frac{nu}{N} + \frac{mv}{M} \right) \right)
 \end{split}
 $$
-:::
-
-
-## Discrete Fourier Transform Properties
-
-:::{.callout-tip icon=false}
-## Convolution
-In these sums, the finite signal
-$\ell_1 \left[n, m \right]$ of size $N \times M$ is extended
-periodically infinitely. The periodic extension allows us to drop the
-modulo operators. Changing the dummy variables in the sums (introducing
-$n' = n - k$ and $m' = m - l$), we have
-$$\mathscr{L}_{\texttt{out}}\left[u,v \right] =
+Introducing $n' = n - k$ and $m' = m - l$, we have:
+$$
+\mathscr{L}_{\texttt{out}}\left[u,v \right] =
 \sum_{k=0}^{N-1} \sum_{l=0}^{M-1} 
 \ell_2 \left[k,l \right]
 \sum_{n'=-k}^{N-k-1}  \sum_{m'=-l}^{M-l-1} 
-\ell_1 \left[n', m' \right] 
-\exp{ \left(-2 \pi j \left(\frac{(n'+k)u}{N} + \frac{(m'+l)v}{M} \right) \right)}$$
+\ell_1 \left[n', m' \right]\times \\ 
+\times \exp{ \left(-2 \pi j \left(\frac{(n'+k)u}{N} + \frac{(m'+l)v}{M} \right) \right)}
+$$
+:::
+
+## DFT Properties
+:::{.callout-tip icon=false}
+## Convolution
 Recognizing that the last two summations give the DFT of
 $x\left[n,m\right]$, using circular boundary conditions, gives
-$$\mathscr{L}_{\texttt{out}}\left[u,v \right] = \sum_{k=0}^{N-1} \sum_{l=0}^{M-1}  \mathscr{L}_1 \left[u,v\right] \exp{ \left(-2 \pi j \left(\frac{ku}{N}+\frac{lv}{M} \right ) \right)} \ell_2 \left[k,l\right]$$
-Performing the DFT indicated by the second two summations gives the
-desired result:
-$$\mathscr{L}_{\texttt{out}}\left[u,v\right] = \mathscr{L}_1 \left[u,v\right] \mathscr{L}_2 \left[u,v\right]$$
+$$
+\mathscr{L}_{\texttt{out}}\left[u,v \right] = \sum_{k=0}^{N-1} \sum_{l=0}^{M-1}  \mathscr{L}_1 \left[u,v\right] \exp{ \left(-2 \pi j \left(\frac{ku}{N}+\frac{lv}{M} \right ) \right)} \ell_2 \left[k,l\right].
+$$
+Performing the DFT indicated by the second two summations gives:
+$$
+\mathscr{L}_{\texttt{out}}\left[u,v\right] = \mathscr{L}_1 \left[u,v\right] \mathscr{L}_2 \left[u,v\right]
+$$
 
-Thus, the operation of a convolution, in the Fourier domain, is just a
-multiplication of the Fourier transform of each term in the Fourier
-domain: $$\ell_1 \left[n,m\right] \circ_{N,M} \ell_2 \left[n,m\right]
+Therefore:
+$$
+\ell_1 \left[n,m\right] \circ_{N,M} \ell_2 \left[n,m\right]
 \xrightarrow{\mathscr{F}} 
-\mathscr{L}_1 \left[u,v\right] \mathscr{L}_2 \left[u,v\right]$$
+\mathscr{L}_1 \left[u,v\right] \mathscr{L}_2 \left[u,v\right]
+$$
 :::
 
 ## Discrete Fourier Transform Properties
+:::{.callout-tip icon=false}
+## Convolution
 
-The Fourier transform lets us characterize images by their spatial
-frequency content. It's also the natural domain in which to analyze
-space invariant linear processes, because the Fourier bases are the
-eigenfunctions of all space invariant linear operators. In other words,
+Because the Fourier bases are the
+eigenfunctions of all space invariant linear operators,
 if you start with a complex exponential, and apply any linear, space
 invariant operator to it, you always come out with a complex exponential
 of that same frequency, but, in general, with some different amplitude
@@ -785,7 +782,7 @@ and phase.
 
 This property lets us examine the operation of a filter on any image by
 examining how it modulates the Fourier coefficients of any image.
-
+:::
 
 ::: aside
 Note that the autocorrelation function does not have
@@ -796,163 +793,109 @@ this property.
 :::{.callout-tip icon=false}
 ## Dual Convolution {#sec-dualconv}
 
-Another common operation with working with images is to do products
-between images. For instance, this might happen if we are applying a
-mask to an image (which corresponds to multiplying the image by a mask
-that has 0 in the pixels that we want to mask out).
-
-It turns out that the Fourier transform of the product of two images is
+The Fourier transform of the product of two images is
 the (circular) convolution of their DFTs:
 
-$$\ell_1 \left[n,m\right] \ell_2 \left[n,m\right]
+$$
+\ell_1 \left[n,m\right] \ell_2 \left[n,m\right]
 \xrightarrow{\mathscr{F}} 
-\frac{1}{NM} \mathscr{L}_1 \left[u,v\right] \circ \mathscr{L}_2 \left[u,v\right]$$
-We leave the proof of this property to the reader.
+\frac{1}{NM} \mathscr{L}_1 \left[u,v\right] \circ \mathscr{L}_2 \left[u,v\right]
+$$
 :::
 
 
 ## Discrete Fourier Transform Properties
 :::{.callout-tip icon=false}
-## Shift Property, Translation in Space
-
-A shift corresponds to a translation in space. This is a very common
-operation that has a very particular influence on the Fourier transform
-of the signal. It turns out that translating a signal in the spatial
-domain, results in multiplying its Fourier transform by a complex
-exponential.
-
-To show this, consider an image $\ell\left[n,m \right]$, with Fourier
-transform $\mathscr{L}\left[u,v \right]$ and period $N,M$. When
-displacing the image by $(n_0, m_0)$ pixels, we get
+## Shift (Translation in space)
+When displacing the image by $(n_0, m_0)$ pixels, we get
 $\ell\left[n-n_0,m-m_0 \right]$ and its Fourier transform is:
 $$
 \begin{split}
-\mathcal{F} \left\{ \ell\left[n-n_0,m-m_0 \right] \right\}
-&= \\
- & = \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} \, \ell\left[n-n_0,m-m_0 \right] \exp{ \left( -2\pi j \left( \frac{u\, n}{N} + \frac{v\, m}{M} \right) \right)} = \\
+\mathcal{F} \left\{ \ell\left[n-n_0,m-m_0 \right] \right\} &=  \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} \, \ell\left[n-n_0,m-m_0 \right] \exp{ \left( -2\pi j \left( \frac{u\, n}{N} + \frac{v\, m}{M} \right) \right)} = \\
 & =  \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} \, \ell\left[n,m \right] \exp{ \left( -2\pi j \left( \frac{u\, (n+n_0)}{N} + \frac{v\, (m+m_0)}{M} \right) \right)}  = \\
 & =   \mathscr{L}\left[u,v \right]  \exp{ \left( -2\pi j \left( \frac{u\, n_0}{N} + \frac{v\, m_0}{M} \right) \right)}
-   \end{split}$${#eq-shift} Note that as the signal $\ell$ and the complex
-exponentials have the period $N,M$, we can change the sum indices over
-any range of size $N \times M$ samples.
-
-In practice, if we have an image and we apply a translation there will
-be some boundary artifacts. So, in general, this property is only true
-if we apply a **circular shift**, i.e., pixels that disappear on the
-boundary due to the translation reappear on the other side. This is a
-consequence of the periodic structure of the signal $\ell$ assumed by
-the DFT. In practice, when the translation is due to the motion of the
-camera, the shift will not be circular and new pixels will appear on the
-image boundary. Therefore, the shift property will be only an
-approximation.
-
-To see how good of an approximation it is, let's look at one example of
-a shift due to camera motion. @fig-shiftFT shows two images that
-correspond to a translation with $n_0=16$ and $m_0=-4$. Note that at the
-image boundaries, new pixels appear in (c) not visible in (a). As this
-is not a pure circular translation, the result from equation (@eq-shift)
-will not apply exactly. To verify equation (@eq-shift) let's look at the
-real part of the DFT of each image shown in @fig-shiftFT (b) and (d). If
-equation (@eq-shift) holds true, then the real part of the ratio between
-the DFTs of the two translated images should be
-$\cos{ \left( -2\pi j \left( \frac{u\, n_0}{N} + \frac{v\, m_0}{M} \right) \right)}$
-with $N=M=128$ and $[n_0,m_0]=[16,-4]$. @fig-shiftFT (f) shows that the
-real part of the ratio is indeed very close to a cosine, despite of the
-boundary pixels which are responsible of the noise (the same is true for
-the imaginary part). In fact, @fig-shiftFT (e) shows the inverse DFT of
-the ratio between DFTs, considering both real and imaginary components,
-which is very close to an impulse at $[16,-4]$.
-
-![Translation in space. Image (c) corresponds to image (a) after a translation of 16 pixels to the right and four pixels down. Images (b) and (d) show the real parts of their corresponding DFTs (with $N=128$). Image (f) shows the real part of the ratio between the two DFTs, and (e) is the inverse transform of the ratio between DFTs. The inverse is very close to an impulse located at the coordinates of the displacement vector between the two images.](img/Image_processing_fourier/shiftFT2.png){width="100%" #fig-shiftFT}
-
-Locating the maximum on @fig-shiftFT (f) can be used to estimate the
-displacement between two images when the translation corresponds to a
-global translation. However, this method is not very robust and it is
-rarely used in practice.
+\end{split}$${#eq-shift} 
 :::
 
-## Discrete Fourier Transform Properties
+::: aside
+In practice, if we have an image and we apply a translation there will
+be some boundary artifacts. So, in general, this property is only true
+if we apply a **circular shift**.
+:::
+
+## DFT Properties
 :::{.callout-tip icon=false}
-## Modulation, Translation in Frequency
+## Shift (Translation in space)
+![Translation in space. Image (c) corresponds to image (a) after a translation of 16 pixels to the right and four pixels down. Images (b) and (d) show the real parts of their corresponding DFTs (with $N=128$). Image (f) shows the real part of the ratio between the two DFTs, and (e) is the inverse transform of the ratio between DFTs.](img/Image_processing_fourier/shiftFT2.png){#fig-shiftFT height=400}
+:::
 
-If we multiply an image with a complex exponential, its Fourier
-transform is translated, a property related to the previous one:
+## DFT Properties
+:::{.callout-tip icon=false}
+## Modulation (Translation in frequency)
 
-$$\ell\left[n,m \right]  \exp{ \left( -2\pi j \left( \frac{u_0\, n}{N} + \frac{v_0\, m}{M} \right) \right)}\xrightarrow{\mathscr{F}}\mathscr{L}\left[u-u_0,v-v_0 \right]
-$${#eq-modulation_exp} This can be proven using the dual convolution
-property from section -sec-dualconv. Note that now the result in equation
-(@eq-modulation_exp) is not a real signal, and for this reason its
-Fourier Transform does not have symmetries around $u,v=0$.
+If we multiply an image with a complex exponential, its FT is translated:
+
+$$
+\ell\left[n,m \right]  \exp{ \left( -2\pi j \left( \frac{u_0\, n}{N} + \frac{v_0\, m}{M} \right) \right)}\xrightarrow{\mathscr{F}}\mathscr{L}\left[u-u_0,v-v_0 \right]
+$${#eq-modulation_exp}
 
 A related relationship is as follows:
 
-$$\ell\left[n,m \right]  \cos{ \left( 2\pi j \left( \frac{u_0\, n}{N} + \frac{v_0\, m}{M} \right) \right)}\xrightarrow{\mathscr{F}} 
-\mathscr{L}\left[u-u_0,v-v_0 \right] + \mathscr{L}\left[u+u_0,v+v_0 \right]$$
-
-Multiplying a signal by a wave is called signal modulation and it is one
-of the basic operations in communications. It is also an important
-property in image analysis and we will see its use later.
-
-@fig-modulation shows an example of modulating an image of a stop sign
-by multiplying by diagonal wave. The bottom row shows the corresponding
-Fourier transforms.
-
-![Modulation in space. Multiplying an image by a cosine wave results in a new image with a Fourier transform with two copies of the Fourier transform of the original image. Only the magnitude of the Fourier transforms are shown.](img/Image_processing_fourier/modulation.png){width="100%" #fig-modulation}
-
-Note that a shift and a modulation are equivalent operations in
-different domains. A shift in space is a modulation in the frequency
-domain and that a shift in frequency is a modulation in the spatial
-domain.
+$$
+\ell\left[n,m \right]  \cos{ \left( 2\pi j \left( \frac{u_0\, n}{N} + \frac{v_0\, m}{M} \right) \right)}\xrightarrow{\mathscr{F}} 
+\mathscr{L}\left[u-u_0,v-v_0 \right] + \mathscr{L}\left[u+u_0,v+v_0 \right]
+$$
 :::
 
-# A Family of Fourier Transforms
+## DFT Properties
 
-## A Family of Fourier Transforms
+:::{.callout-tip icon=false}
+## Modulation (Translation in frequency)
+
+![Modulation in space. Multiplying an image by a cosine wave results in a new image with a Fourier transform with two copies of the Fourier transform of the original image. Only the magnitude of the Fourier transforms are shown.](img/Image_processing_fourier/modulation.png){#fig-modulation height=450}
+
+:::
+
 
 ## A Family of Fourier Transforms
 :::{.callout-tip icon=false}
 ## Fourier Transform for Continuous Signals
+$$
+\mathscr{L}(w) =  \int_{-\infty}^{\infty} \ell(t) \exp{ \left( - j w t \right)} \, dt 
+$${#eq-contfourier}
+:::
 
-The continuous domain is convenient when working with functions and
-operations that are not defined in the discrete domain. For instance,
-the derivative operator is well defined in the continuous domain but we
-can only approximate it in the discrete domain. Another example is when
-using the Gaussian distribution, which is defined as a continuous
-function. For this reason, sometimes some formulation is easier when
-done in the continuous domain.
+:::{.callout-warning icon=false}
+## Inverse Fourier Transform for Continuous Signals
+$$
+\ell(t) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} \mathscr{L}(w) \exp{ \left( j w t \right) } \, dw
+$${#eq-invcontfourier}
+:::
 
-For infinite length signals defined on the continuous domain, the
-Fourier transform is defined as:
-
-$$\mathscr{L}(w) =  \int_{-\infty}^{\infty} \ell(t) \exp{ \left( - j w t \right)} \, dt 
-$${#eq-contfourier} where $\mathscr{L}(w)$ is a continuous function on the
-frequency $w$ (in radians). As before, this transform also has an
-inverse. The inverse Fourier transform is as follows:
-
-$$\ell(t) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} \mathscr{L}(w) \exp{ \left( j w t \right) } \, dw$${#eq-invcontfourier} Most of the properties that we have seen for the
-DFT also apply to the continuous domain, replacing sums with integrals.
-
-The convolution between two continuous signals is defined as
-$$\ell_{\texttt{out}}(t) =  \ell_1 \circ \ell_2 = \int_{-\infty}^{\infty} \ell_1 (t-t') \ell_2(t') \, d t'$${#eq-contconv} Those definitions can be extended to 2D dimensions by
-making all the integrals double and integrating across the spatial
-variables $x$ and $y$. Although, in practice, images and filters will be
-discrete signals, many times it is convenient to think of them as
-continuous signals.
+:::{.callout-note icon=false}
+## Convolution between Continuous Signals
+$$
+\ell_{\texttt{out}}(t) =  \ell_1 \circ \ell_2 = \int_{-\infty}^{\infty} \ell_1 (t-t') \ell_2(t') \, d t'
+$${#eq-contconv}
 :::
 
 
 ## A Family of Fourier Transforms
 :::{.callout-tip icon=false}
 ## Fourier Transform for Infinite Length Discrete Signals
-
-Another useful tool is the Fourier transform for discrete signals with
-infinite length. In this case, the sum becomes infinite, and by
-replacing $w = 2 \pi u / N$ in equation (@eq-fourier), we can write:
-$$\mathscr{L}(w) = \sum_{n=-\infty}^{\infty} \ell\left[n \right] \exp{(- j w n)}$$The frequency $w$ is now a continuous variable. The Fourier transform
+By replacing $w = 2 \pi u / N$ in equation (@eq-fourier), we can write:
+$$
+\mathscr{L}(w) = \sum_{n=-\infty}^{\infty} \ell\left[n \right] \exp{(- j w n)}
+$$
+The frequency $w$ is now a continuous variable. The Fourier transform
 $\mathscr{L}(w)$ is a periodic function with period $2 \pi$.
+:::
 
-The inverse Fourier transform is
-$$\ell\left[n \right] = \frac{1}{2\pi} \int_{2 \pi} \mathscr{L}(w) \exp{(j w n)} d w$$
+:::{.callout-tip icon=false}
+## Inverse Fourier Transform for Infinite Length Discrete Signals
+$$
+\ell\left[n \right] = \frac{1}{2\pi} \int_{2 \pi} \mathscr{L}(w) \exp{(j w n)} d w
+$$
 where the integral is done only in one of the periods.
 :::
 
@@ -965,195 +908,107 @@ where the integral is done only in one of the periods.
 | Discrete time, Finite length ($N$) | $\mathscr{L} \left[u \right] = \sum_{n=0}^{N-1} \ell \left[n \right] e^{-2 \pi j \frac{un}{N}}$  | $\ell \left[n \right] = \frac{1}{N} \sum_{u=0}^{N-1} \mathscr{L} \left[u \right] e^{2 \pi j \frac{un}{N} }$ | Discrete frequency, Finite length ($N$) |
 | Continuous time, Infinite length  | $\mathscr{L} (w) = \int_{- \infty}^{\infty} \ell (t) e^{- j w t} dt$                              | $\ell (t) = \frac{1}{2\pi} \int_{- \infty}^{\infty} \mathscr{L} (w) e^{j w t} d w$                | Continuous frequency, Infinite length    |
 | Discrete time, Infinite length    | $\mathscr{L} (w) = \sum_{n=-\infty}^{\infty} \ell \left[n \right] e^{- j w n}$                    | $\ell \left[n \right] = \frac{1}{2\pi} \int_{2 \pi} \mathscr{L} (w) e^{j w n} d w$                | Continuous frequency, Finite length ($2 \pi$) |
-: Fourier transforms. There are many variants of the Fourier transform. Here we describe the ones we will use in this book. {#tbl-tableFamilyFT .bordered}
+: Fourier transforms. {#tbl-tableFamilyFT .bordered}
 
 
-# Fourier Analysis as an Image Representation
-
-## Fourier Analysis as an Image Representation
+## FT as an Image Representation
 
 :::{.callout-tip icon=false}
 ## Representation
-The Fourier transform has been extensively used as an image
-representation. In this section we will discuss the information about
-the picture that is made explicit by this representation.
-
-As we discussed before, the Fourier transform of an image can be written
+The Fourier transform of an image can be written
 in polar form:
 $$\mathscr{L}\left[u,v \right]  = A \left[u,v \right] \, \exp{\left( j\, \theta\left[u,v \right]  \right)}$$
 where
 $A \left[u,v \right] = \left| \mathscr{L}\left[u,v \right]  \right|$ and
 $\theta \left[u,v \right] = \angle  \mathscr{L}\left[u,v \right]$.
 
-:::
 
-::: aside
-Decomposing the Fourier transform of a signal in its
-amplitude and phase can be very useful. It has been a popular image
-representation during the early days of computer vision and image
-processing.
-:::
-
-## Fourier Analysis as an Image Representation
-:::{.callout-tip icon=false}
-## Magnitude
-If we think in terms of the inverse of the
-Fourier transform, $A \left[u,v \right]$ gives the strength of the
-weight for each complex exponential and the phase
-$\theta \left[u,v \right]$ translates the complex exponential. The phase
-carries the information of where the image contours are by specifying
-how the phases of the sinusoids must line up in order to create the
-observed contours and edges. In fact, as shown in @sec-DFTproperties, translating the image in space only
-modifies the phase of its Fourier transform. In short, one can think
-that location information goes into the phase while intensity scaling
-goes into the magnitude.
+- $A \left[u,v \right]$ gives the strength of the weight for each complex exponential: **intensity scaling**. 
+- the phase $\theta \left[u,v \right]$ translates the complex exponential: **location information**.
 :::
 
 
-## Fourier Analysis as an Image Representation
-One might ask which is more important in determining the appearance of
-the image, the magnitude of the Fourier transform, or its phase.
-@fig-phaseoramp shows the result of a classical experiment that
-consists of computing the Fourier transform for two images and building
-two new images by swapping their phases @Oppenheim1981.
-
+## FT as an Image Representation
 ![Swapping the amplitude and the phase of the Fourier Transform of two images. Each color channel is processed in the same way.](img/Image_processing_fourier/amp_phase_swap_color.png){width="100%" #fig-phaseoramp}
 
-The first output image is the inverse Fourier transform of the amplitude
-of the first input image and the phase of the DFT of the second input
-image. The second output image contains the other two terms. The figure
-shows that the appearance of the resulting images is mostly dominated by
-the phase of the image they come from. The image built with the phase of
-the stop sign looks like the stop sign even if the amplitude comes from
-a different image. @fig-phaseoramp shows the result in color by doing
-the same operation over each color channel (red, green, and blue)
-independently. The phase signal determines where the edges and colors
-are located in the resulting image. The final colors are altered as the
-amplitudes have changed.
-
-
-
-::: aside
-A remarkable property of natural images: the
-magnitude of their DFT generally has its maximum at the origin and
-decays inversely proportional to the radial frequency.
+## FT as an Image Representation
+:::{.callout-important}
+Magnitude of the DFT of
+natural images is quite similar and can be approximated by
+$$
+A \left[u,v \right] = a/ (u^2+v^2)^b
+$$
+with $a$ and $b$ being two
+constants. 
 :::
 
-## Fourier Analysis as an Image Representation
-One remarkable property of real images is that the magnitude of the DFT of
-natural images is quite similar and can be approximated by
-$A \left[u,v \right] = a/ (u^2+v^2)^b$ with $a$ and $b$ being two
-constants. This typical structure of the
-DFT magnitude of natural images has been used as a prior for many tasks
-such as image denoising.
 
-![The relative importance of phase and amplitude depends on the image. Each row shows one image, its Fourier transform (amplitude and phase), and the resulting images obtained by applying the inverse Fourier transform to a signal with the original amplitude and randomized phase, and a signal with the original phase and a generic fixed $1/f$ amplitude. Note that for the first image, the phase seems to be the most important component. 
-%However, as we move down, the relative importance between the two components changes. And for the bottom image (showing a pseudo-periodic threat texture) the amplitude is the most important component.](img/Image_processing_fourier/dft_random_phaseandamplitude.png){width="100%" #fig-phasevsamp}
+## FT as an Image Representation
+:::{.callout-tip icon=false}
+## Amplitude intuition
+The amplitude is great for capturing images that contain strong periodic patterns.
+Experiment:
 
-## Fourier Analysis as an Image Representation
-However, this does not mean that all the information of the image is
-contained inside the phase only. The amplitude contains very useful
-information as shown in @fig-phasevsamp. To get an intuition of the
-information available on the amplitude and phase let's do the following
-experiment: let's take an image, compute the Fourier transform, and
-create two images by applying the inverse Fourier transform when
+- compute the Fourier transform of an image
+- create two images by applying the inverse FT when
 removing one of the components while keeping the other original
-component. For the amplitude image, we will randomize the phase. For the
-phase image, we will replace the amplitude by a noninformative
-$A \left[u,v \right] = 1/(u^2+v^2)^{1/2}$ for all images. This amplitude
-is better than a random amplitude because a random amplitude produces a
-very noisy image hiding the information available, while this generic
-form for the amplitude will produce a smoother image, revealing its
-structure while still removing any information available on the original
-amplitude. @fig-phasevsamp shows different types of images and how the
-DFT amplitude and phase contribute to defining the image content. The
-top image is inline with the observation from @fig-phaseoramp where
-phase seems to be carrying most of the image information. However, the
-rest of the images do not show the same pattern. As we move down along
-the examples in the figure, the relative importance between the two
-components changes. And for the bottom image (showing a pseudo-periodic
-thread texture) the amplitude is the most important component.
+component
+- for the amplitude image, we will randomize the phase
+- for the phase image, we will replace the amplitude by a noninformative
+$A \left[u,v \right] = 1/(u^2+v^2)^{1/2}$ for all images (better than random). 
+:::
 
-## Fourier Analysis as an Image Representation
-The amplitude is great for capturing images that contain strong periodic
-patterns. In such cases, the amplitude can be better than the phase.
-This observation has been the basis for many image descriptors
-@Gorkani94, @oliva01. The amplitude is somewhat invariant to location
-(although it is not invariant to the relative location between different
-elements in the scene). However the phase is a complex signal that does
-not seem to make explicit any information about the image.
+## FT as an Image Representation
 
+![The relative importance of phase and amplitude depends on the image.](img/Image_processing_fourier/dft_random_phaseandamplitude.png){width="100%" #fig-phasevsamp}
+
+
+## FT as an Image Representation
 ![The Fourier transform matching game: Match each image (a-h) with its corresponding Fourier transform magnitude (1-8).](img/Image_processing_fourier/FTgame.png){width="100%" #fig-quiz}
 
 ## Fourier Analysis of Linear Filters {#sec-transfer_function}
 
-Linear convolutions, despite their simplicity, are surprisingly useful
-for processing and interpreting images. It's often very useful to blur
-images, in preparation for subsampling or to remove noise, for example.
-Other useful processing includes edge enhancement and motion analysis.
-From the previous section we know that we can write linear filters as
-convolutions:
-
-
-
+:::{.callout-tip icon=false}
+## Linear filters as convolutions:
 ![Convolutional linear filter.](img/Image_processing_fourier/con1.png){width="60%"}
 
 
 where $h \left[n,m \right]$ is the impulse response of the system, or
-convolution kernel. We can also write this as a product in the Fourier
-domain:
+convolution kernel.
+:::
+
+:::{.callout-tip icon=false}
+## Linear filters as products in Fourier domain
 
 ![Transfer function of a linear filter.](img/Image_processing_fourier/con2.png){width="60%"}
 
 The function $H \left[u, v \right]$ is called the **transfer function**
 of the filter. 
-
-::: aside
-The transfer function of a filter is
-the Fourier transform of the convolution kernel.
 :::
 
 ## Fourier Analysis of Linear Filters
-The transfer function will allow us interpret filters by how they modify the spectral
-content of the input signal. As the Fourier transform of the output is
-just a product between the Fourier transform of the input and the
-transfer function, a linear filter simply reweights the spectral content
-of the signal. It does not create new content, it can only enhance or
-decrease the spectral components already present in the input.
+:::{.callout-tip icon=false}
+## Polar form
+$$
+H \left[u,v \right] = \left|H \left[u, v \right] \right| \exp \left( {j \, \angle H \left[u, v \right]} \right)
+$${#eq-polar-lin}
 
-
-::: aside
-A convolution between two signals does not create new
-spectral content. To create new spectral components not present in the
-input we need to apply nonlinearities.
+- the magnitude $\left| H \left[u, v \right] \right|$ is the **amplitude gain**
+- the phase $\angle H \left[u, v \right]$ is the **phase shift**
+- the magnitude at the origin, $\left| H \left[0, 0 \right] \right|$, is the **DC gain** of the filter
+- the average value of the output signal is equal to the average value of the input times the DC gain.
 :::
 
-
-
 ## Fourier Analysis of Linear Filters
-If we use the polar form:
-$$H \left[u,v \right] = \left|H \left[u, v \right] \right| \exp \left( {j \, \angle H \left[u, v \right]} \right)
-$${#eq-polar-lin} The magnitude $\left| H \left[u, v \right] \right|$ is
-the **amplitude gain**, and the phase $\angle H \left[u, v \right]$ is
-the **phase shift**. The magnitude at the origin,
-$\left| H \left[0, 0 \right] \right|$, is the **DC gain** of the filter
-(the average value of the output signal is equal to the average value of
-the input times the DC gain).
-
-The Fourier domain shows that, in many cases, what a filter does is to
-block or let pass certain frequencies. Filters are many times classified
-according to the frequencies that they let pass through the filter (low,
-medium, or high frequencies) as shown in @fig-typestypes.
+:::{.callout-tip icon=false}
+## Filters as frequency blockers
+Filters are many times classified
+according to the frequencies that they let pass through the filter.
 
 ![Sketch of the frequency responses of low-pass, band-pass, and high-pass filters.](img/Image_processing_fourier/filter-types.png){width="90%" #fig-typestypes}
+:::
 
 ## Fourier Analysis of Linear Filters
-When filtering images, low-pass filters will output a blurry picture
-encoding the **coarse** elements of the image. A band-pass filter will
-highlight middle size elements, while the output of a high-pass filter
-will show the **fine** details of the image. The three images in
-@fig-sketchresponses show the output image processed by three filters
-corresponding to the frequency responses of @fig-typestypes.
 
 :::{layout-ncol="3" #fig-sketchresponses}
 
@@ -1166,85 +1021,33 @@ corresponding to the frequency responses of @fig-typestypes.
 An image filtered by (left) low-pass, (middle) band-pass, and (right) high-pass filters.
 :::
 
-There are many other properties of a filter that can be used to classify
-linear systems (e.g., causality, stability, phase-changes). Some filters
-have their main effect over the phase of the signal and they are better
-understood in the spatial domain. In general, filters affect both the
-magnitude and the phase of the input signal.
-
-Let's now look at two examples of the application of the Fourier
-analysis of linear filters.
-
 ## Fourier Analysis of Linear Filters
 :::{.callout-tip icon=false}
 ## Example 1: Removing the Columns from the MIT Building
 
-fig-filteringFT (a) shows a picture of the main MIT building. The columns
-produce a quasiperiodic pattern. fig-filteringFT (b) shows the magnitude
-of the DFT of the MIT picture. One can see picks in the horizontal
-frequency axis, those picks are due to the columns.
-
-To check this we can verify first that the location of the picks is
-related to the separation of the columns. The image in
-@fig-filteringFT (a) has a size of $256\times256$ pixels, and the columns
-are repeated every 14 pixels. Therefore, the DFT, with $N=256$, will
-have picks at the horizontal frequencies: $256/14=18.2$, which is indeed
-what we observe in @fig-filteringFT (b). As the repeated pattern is not a
-pure sinusoidal function, there will be picks at all the harmonic
-frequencies $k\frac{256}{14}$, where $k$ is an integer. Note also that
-the picks seem to produce vertical bands with decreasing amplitude with
-increasing vertical frequency $v$. These bands occur because the columns
-only occupy a small vertical segment of the image. Also, as the columns
-only exist in a portion of the horizontal region of the image, the picks
-also have some horizontal width.
-
-We can now also check the effect of suppressing those frequencies by
-zeroing the magnitude of the DFT around each pick (here we zero 7 pixels
-in the horizontal dimension and all the pixels along the vertical
-dimension) as shown @fig-filteringFT (d). @fig-filteringFT (c) shows the
-resulting image where the columns are almost gone while the rest of the
-image is little affected. @fig-filteringFT (e) shows the complementary
-image (in fact, $a=c+e$) and its DFT in @fig-filteringFT (f).
-
 ![Simple filtering in the Fourier domain.  (a) The repeated columns of the
   building of the MIT dome generate harmonics along a horizontal line
   in the Fourier domain shown in (b). By zeroing out those Fourier
-  components, as done in (d), the columns of the building are substantially removed (c). We can also the complementary operation keeping only those harmonics, shown in (f), which results in keeping only the columns (e).](img/Image_processing_fourier/mit_columns.png){width="100%" #fig-filteringFT}
+  components, as done in (d), the columns of the building are substantially removed (c). We can also the complementary operation keeping only those harmonics, shown in (f), which results in keeping only the columns (e).](img/Image_processing_fourier/mit_columns.png){height=450 #fig-filteringFT}
 :::
 
 ## Fourier Analysis of Linear Filters
 
 :::{.callout-tip icon=false}
 ## Example 2: The Human Visual System and the Contrast Sensitivity Function
-
-Before we start describing different types of linear filters in the next
-chapters, let's start by gaining some subjective experience by playing
-with one: our own visual system. Although our visual system is clearly a
-nonlinear system, linear filter theory can explain some aspects of our
-perception. Indeed, under certain conditions, the first stages of visual
-computation perform of the visual system can be approximated by a linear
-filter.
-
-
-::: aside
-The concept of **psychophysics was introduced by Gustav Theodor Fechner (1801--1887).
-![](img/Image_processing_fourier/experimental_setup.jpg){width="90%"}
-:::
-
-Fourier analysis and the use of sine waves became very popular in the
-field of visual psychophysics. **Visual psychophysics** is an
+**Visual psychophysics** is an
 experimental science that studies the relationship between real world
 stimuli and our perception. 
-
 :::
+
+![The concept of psychophysics was introduced by Gustav Theodor Fechner (1801--1887).](img/Image_processing_fourier/experimental_setup.jpg){width="90%"}
 
 
 ## Fourier Analysis of Linear Filters
 
 :::{.callout-tip icon=false}
 ## Example 2: The Human Visual System and the Contrast Sensitivity Function
-Using the theory we have studied in this chapter, we can show that when
-the input to a linear system is a wave of frequency $u_0$ and amplitude
+When the input to a linear system is a wave of frequency $u_0$ and amplitude
 1, the output is another wave of the same frequency as the input but
 with an amplitude equal to $|H \left[ u_0 \right]|$:
 
@@ -1255,28 +1058,25 @@ is by using as input a wave and measuring the output amplitude as a
 function of the input frequency $u_0$. This inspired a generation of
 psychophysicists to study how the human visual system behaved when
 presented with periodic signals.
+:::
 
+## Fourier Analysis of Linear Filters
+
+:::{.callout-tip icon=false}
+## Example 2: The Human Visual System and the Contrast Sensitivity Function
 To experience the transfer function of our own visual system, let's
 build the following $N \times M$ image:
-$$\ell\left[n,m\right] = A\left[m\right] \sin(2 \pi f\left[n\right] n/N)$$
+$$
+\ell\left[n,m\right] = A\left[m\right] \sin(2 \pi f\left[n\right] n/N)
+$$
 with
-$$A\left[m\right] = A_{min} \left(\frac{A_{max}}{A_{min}}\right)^{m/M}$$
+$$
+A\left[m\right] = A_{min} \left(\frac{A_{max}}{A_{min}}\right)^{m/M}
+$$
 and
-$$f\left[n\right] = f_{min} \left(\frac{f_{max}}{f_{min}}\right)^{n/N}$$
-This image is separable and it is composed of two factors: an amplitude,
-$A\left[m\right]$, that varies only along the vertical dimension, $m$,
-and a wave with a frequency, $f\left[n\right]$, that varies along the
-horizontal component, $n$. The amplitude, $A\left[m\right]$, goes from
-$A_{max}$ to $A_{min}$ on a logarithmic scale. The frequency function,
-$f\left[n\right]$, is defined as an increasing function that starts from
-$f_{min}=1$ and grows up to $f_{max}=60$ (with $N=2,048$ being the
-number of horizontal pixels in the image). This image is shown in
-@fig-csfchart and it is also called the **Campbell and Robson chart**.
-It appears to an observer as a signal with a wave that oscillates slow
-at the left and faster toward the right and that has high contrast a the
-bottom and loses contrast towards the top becoming invisible.
-
-![Contrast sensitivity function shown by the Campbell and Robson chart. The image shows a sine wave of increasing frequency from left to right, and increasing amplitude from top to bottom. Can you trace a curve over the chart to indicate where the sine wave becomes invisible?](img/spatial_filters/csf.jpg){width="100%" #fig-csfchart}
+$$
+f\left[n\right] = f_{min} \left(\frac{f_{max}}{f_{min}}\right)^{n/N}
+$$
 :::
 
 ## Fourier Analysis of Linear Filters
@@ -1284,62 +1084,39 @@ bottom and loses contrast towards the top becoming invisible.
 :::{.callout-tip icon=false}
 ## Example 2: The Human Visual System and the Contrast Sensitivity Function
 
-The first sign that our visual system is nonlinear is that we do not
-perceive the amplitude as changing exponentially fast from top to
-bottom. It feels more linear. This is because our photo-receptors
-compute the $\log$ of the incoming intensity (approximately).
+- an amplitude $A\left[m\right]$, varies along the vertical dimension $m$;
+- a wave with a frequency, $f\left[n\right]$, that varies along the horizontal component, $n$;
+- the frequency function $f\left[n\right]$, is defined as an increasing function that starts from
+$f_{min}=1$ and grows up to $f_{max}=60$.
 
-What is interesting is that @fig-csfchart is not perceived as being
-separable. If you trace the region where the sine wave seems to
-disappears you will trace a curve. In fact, your visual system acts like
-a band-pass filter: you are sensitive to middle spatial frequencies
+![Contrast sensitivity function shown by the Campbell and Robson chart.](img/spatial_filters/csf.jpg){height=300 #fig-csfchart}
+:::
+
+## Fourier Analysis of Linear Filters
+
+:::{.callout-tip icon=false}
+## Example 2: The Human Visual System and the Contrast Sensitivity Function
+
+- our visual system is nonlinear: photo-receptors
+compute the $\log$ of the incoming intensity (approximately).
+- acts like a band-pass filter: you are sensitive to middle spatial frequencies
 (peaking around 6 cycles/degree) and less sensitive to very low spatial
 frequencies (on the left of the image) and high spatial frequencies (on
-the right of the image). This curve, known as the contrast sensitivity
-function (CSF) in psychophysics literature, closely resembles the
-magnitude of the transfer function of the filter,
-$H \left[ u,v \right]$, which approximates the human visual system
-@de1988spatial.
+the right of the image). 
 
-The CSF is not a simple linear function but it can be approximated by
-one under certain conditions. However, the CSF changes depending of many
-factors such as overall intensity (the pick moves toward the left under
-low illumination.), adaptation (long exposure to one frequency reduces
-the sensitivity for that frequency), age, and so on.
+![CSF (contrast sensitify function) example](img/spatial_filters/my_CST.png){height=200}
+
 :::
-
-::: aside
-Here is my own CSF, traced by hand, with and without eyeglasses. Can you guess which one is with eyeglasses? 
-
-![](img/spatial_filters/my_CST.png){width="90%"}
-
-(Answer: the red curve is my CSF wearing eyeglasses.)
-:::
-
 
 ## Concluding Remarks
 
-The Fourier transform is an indispensable tool for linear systems
-analysis, image analysis, and for efficient filter output computation.
-Among the benefits of the Fourier transform representation are that it's
-easy to analyze images according to spatial frequency, and this
-represents some progress in interpreting the image over merely a pixel
-representation. But the Fourier transform has a major drawback as an
-image representation: it's too global! Every sinusoidal component covers
-the entire image. The Fourier transform tells us a little about **what**
-is happening in the image (based on the spatial frequency content), but
-it tells us nothing about **where** it is happening.
+:::{.callout-tip icon=false}
+## Features
 
-Conversely, a pixel representation gives great spatial localization, but
-a pixel value by itself doesn't help us learn much about what's going on
-in the image. A Fourier representation tells us a bit about what's going
-on, but nothing about where it happens. We seek a representation that's
-somewhere in between those two extremes.
-
-In the next chapters we will analyze several important linear filters.
-We will study spatial filters first, and then temporal filters. The
-filters we will study provide a foundation to understand many basic
-image processing operations, and to interpret learned filters by neural
-networks.
-
-
+- easy to analyze images according to spatial frequency
+representation
+- FT is too global! Every sinusoidal component covers
+the entire image. 
+- FT tells us a little about **what** is happening in the image (based on the spatial frequency content)
+- FT tells us nothing about **where** it is happening.
+:::
