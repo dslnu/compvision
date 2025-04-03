@@ -1,0 +1,10 @@
+---
+title: "Lab 3: filtering with convolutions"
+---
+
+# Exercises
+Work through the [notebook](https://colab.research.google.com/drive/1bKnHP0ALcR0uL3OyyC0R55tJycfk5Lbh?usp=sharing#scrollTo=8DaCsYeNfAMj).
+ 
+# Recommended reading
+
+1. <https://learnopencv.com/image-filtering-using-convolution-in-opencv/>

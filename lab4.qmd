@@ -1,0 +1,13 @@
+---
+title: "Lab 4: hybrid images"
+---
+
+# Exercises
+
+Implement the code in this [article](https://www.geeksforgeeks.org/creating-hybrid-images-using-opencv-library-python/).
+
+# Recommended reading
+
+1. Example images <https://github.com/ahmedwael19/Image-Filtering-and-Hybrid-Images->
+2. More examples <http://olivalab.mit.edu/hybrid_gallery/gallery.html>
+3. Original paper <http://olivalab.mit.edu/publications/OlivaTorralb_Hybrid_Siggraph06.pdf>

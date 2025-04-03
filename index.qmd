@@ -16,6 +16,8 @@ title: "Computer vision course"
 ### Lec 4: Fourier filtering
 [Slides](./lec4.qmd)
 
+### Lec 5: Filters and image derivatives
+[Slides](./lec5.qmd)
 
 
 ### Lab1
@@ -23,3 +25,9 @@ title: "Computer vision course"
 
 ### Lab2
 [Lab2](./lab2.qmd)
+
+### Lab3
+[Lab3](./lab3.qmd)
+
+### Lab4
+[Lab4](./lab4.qmd)
