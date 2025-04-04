@@ -20,14 +20,19 @@ title: "Computer vision course"
 [Slides](./lec5.qmd)
 
 
-### Lab1
+## Labs
+
+### Lab1: Getting started with images; basic manipulation
 [Lab1](./lab1.qmd)
 
-### Lab2
+### Lab2: Image annotation/enhancement
 [Lab2](./lab2.qmd)
 
-### Lab3
+### Lab3: Filtering with convolutions
 [Lab3](./lab3.qmd)
 
-### Lab4
+### Lab4: hybrid images
 [Lab4](./lab4.qmd)
+
+### Lab5: Filters and image derivatives
+[Lab5](./lab5.qmd)

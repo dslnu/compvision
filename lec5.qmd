@@ -30,8 +30,8 @@ format:
     theme: default
     multiplex:
       url: 'https://mplex.vitv.ly'
-      secret: '701983790cb49f0305d621abfd1c06bf'
-      id: '0623eaeb78cd62d74a293dd87ad65affd248201173509008578f7fd7bfa7ad87'
+      secret: '45a3fc3fd7bd6e12fb2ee330f2a2bb5b'
+      id: '0eeddbfb642a8eb99f1980947a12ab30c31c6520ca4b825ef73a04eeaa411db9'
 ---
 
 # Blur Filters {#sec-blur_filters}
