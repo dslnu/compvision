@@ -35,25 +35,60 @@
     "text": "Populate edge variables\n\nNconstraints = nrows*ncols*20\nAij = np.zeros((3, 3, Nconstraints))\nb = np.zeros((Nconstraints, 1))\n\n#Indices and counters\nii = np.zeros((Nconstraints, 1))\njj = np.zeros((Nconstraints, 1))\nglobal c\nc = 0\n\n# These will always be updated with the current indices\ndef update_indices():\n  global c\n  ii[c] = i\n  jj[c] = j\n  c += 1\n\n# Create linear contraints\nfor i in range(1, nrows-1):\n  for j in range(1, ncols-1):\n    # Y = 0\n    if ground[i,j]:\n      Aij[:,:,c] = np.array([[0, 0, 0], [0, 1, 0], [0, 0, 0]])\n      b[c]       = 0\n      update_indices()\n    else:\n      # Check if current neighborhood touches an edge\n      edgesum = np.sum(edges[i-1:i+2,j-1:j+2])\n      # Check if current neighborhood touches ground pixels\n      groundsum = np.sum(ground[i-1:i+2,j-1:j+2])\n      # Check if current neighborhood touches vertical pixels\n      verticalsum = np.sum(vertical_edges[i-1:i+2,j-1:j+2])\n      # Check if current neighborhood touches horizontal pixels\n      horizontalsum = np.sum(horizontal_edges[i-1:i+2,j-1:j+2])\n\n      ####################################################################\n      ### COMPLETE THE CODE BELOW (TODOs) AND COPY IT INTO YOUR REPORT ###\n      ####################################################################\n\n      # TODO: edge orientation (average of edge pixels in current neighborhood)\n      # Populate Aij, ii, jj, b, and c using theta, edge_orientation, and\n      # the constraint/transform matrices you derived in the written segment\n\n      # Contact edge: Y = 0\n      # Requires: a transform matrix\n      # TODO: Complete the code\n      if contact_edges[i, j]:\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n      # Vertical edge: dY/dy = 1/cos(theta)\n      # Requires: a transform matrix, theta\n      # The 1/8 is for normalization\n      # TODO: Complete the code\n      if verticalsum &gt; 0 and groundsum == 0:\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n      # Horizontal edge: dY/dt = 0\n      # Note: You'll have to express t using other variables\n      # Requires: a transform matrix, i, j, edge_orientation\n      # TODO: Complete the code\n      if horizontalsum &gt; 0 and groundsum == 0 and verticalsum == 0:\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n      # Second derivative = 0 (weighted by 0.1 to reduce constraint strength)\n      # Requires: multiple transform matrices\n      # TODO: Complete the code\n      if groundsum == 0:\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n        Aij[:,:,c] =\n        b[c]       =\n        update_indices()\n\n      ####################################################################\n      ###################### STOP COPYING HERE ###########################\n      ####################################################################\n\n# Solve for constraints\nii = ii[:c]\njj = jj[:c]\nAij = Aij[:,:,:c]\nb = b[:c]\nA = sparseMatrix(ii, jj, Aij, nrows)\nY = sparseqr.solve( A, b)\n\n# Transform vector into image\nY = np.reshape(Y, [nrows, ncols], order='F')\n\n# Recover 3D world coordinates\nx, y = np.meshgrid(np.arange(ncols), np.arange(nrows))\nx = x.astype(np.float32)\ny = y.astype(np.float32)\nx -= nrows/2\ny -= ncols/2\n\n# Final coordinates\nX = x\nZ = Y*np.cos(theta)/np.sin(theta) - y/np.sin(theta)\nY = -Y\nY = np.maximum(Y, 0);\n\nE = occlusion_edges.astype(np.float32);\nE[E &gt; 0] = np.nan;\nZ = Z+E; #  remove occluded edges\n\n# Visualize solution\nplt.figure()\nplt.subplot(2,2,1)\nplt.imshow(img[1:-1, 1:-1].astype(np.uint8))\nplt.axis('off')\nplt.title('Edges')\n\nplt.subplot(2,2,2)\nplt.imshow(Z[1:-1, 1:-1], cmap='gray')\nplt.axis('off')\nplt.title('Z')\n\n\nplt.subplot(2,2,3)\nplt.imshow(Y[1:-1, 1:-1], cmap='gray', vmin=0, vmax=175)\nplt.axis('off')\nplt.title('Y')\n\nplt.subplot(2,2,4)\nplt.imshow(X[1:-1, 1:-1], cmap='gray')\nplt.axis('off')\nplt.title('X')\n\n# 3D projection\nimport matplotlib.pyplot as plt\nfrom mpl_toolkits.mplot3d import Axes3D\nfig = plt.figure()\nax = fig.add_subplot(111, projection='3d')\nax.set_zlim(0, 175)\n\n# TODO for Problem 5\n# Rerun the script with at least two more of the provided images and for each\n# image try at least two different view angles.\n# Include the generated plots in your report (under Problem 5).\n# Note that we expect results to be quite brittle -- in answering Problem 6,\n# think about the strong assumptions that this approach makes.\n# We'll see more robust methods for similar problems later in the course\n\n# Specify here the angle you want to see\nax.view_init(20, -120)\nax.plot_surface(X,Z,Y, facecolors=img/255., shade=False)\n\n\nReference solution\nYours should render on a white background (note that the outline on Z is transparency) but be identical otherwise\nUploading the reference will be considered an honor code violation\n\nplt.imshow(cv2.cvtColor(cv2.imread('pset_1_reference.png'), cv2.COLOR_BGR2RGB))\nplt.show()"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "nb/Untitled.html",
+    "href": "nb/Untitled.html",
+    "title": "Computer Vision",
     "section": "",
-    "text": "Computer vision course"
+    "text": "import cv2\n# Load images\n# Make sure to choose the same image format for both images (Ex- .png)\nA = cv2.imread('cat.png',cv2.IMREAD_COLOR) # high picture\nB = cv2.imread('panda.png',cv2.IMREAD_COLOR) # low picture\n\n\n\n# Convert both images to Grayscale to avoid any Color Channel Issue\nA_grayscale = cv2.cvtColor(A, cv2.COLOR_BGR2GRAY)\nB_grayscale = cv2.cvtColor(B, cv2.COLOR_BGR2GRAY)\n\n\nplt.imshow(A)\n\n\n\n\n\n\n\n\n\nimport matplotlib.pyplot as plt \n\n\n!ls\n\n1_intro_2024.pdf     cat.png              hybrid_image.jpg\nDolphinCarHybrid.jpg cv24_pset1           panda.png\nUntitled.ipynb       demo_simple_sys      pset2_2024"
+  },
+  {
+    "objectID": "lab4.html",
+    "href": "lab4.html",
+    "title": "Lab 4: hybrid images",
+    "section": "",
+    "text": "Exercises\nImplement the code in this article.\n\n\nRecommended reading\n\nExample images https://github.com/ahmedwael19/Image-Filtering-and-Hybrid-Images-\nMore examples http://olivalab.mit.edu/hybrid_gallery/gallery.html\nOriginal paper http://olivalab.mit.edu/publications/OlivaTorralb_Hybrid_Siggraph06.pdf"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Computer vision course",
     "section": "",
-    "text": "Slides\n\n\n\nSlides\n\n\n\nSlides\n\n\n\nSlides\n\n\n\nLab1\n\n\n\nLab2"
+    "text": "Slides\n\n\n\nSlides\n\n\n\nSlides\n\n\n\nSlides\n\n\n\nSlides"
   },
   {
     "objectID": "index.html#lectures",
     "href": "index.html#lectures",
     "title": "Computer vision course",
     "section": "",
-    "text": "Slides\n\n\n\nSlides\n\n\n\nSlides\n\n\n\nSlides\n\n\n\nLab1\n\n\n\nLab2"
+    "text": "Slides\n\n\n\nSlides\n\n\n\nSlides\n\n\n\nSlides\n\n\n\nSlides"
+  },
+  {
+    "objectID": "index.html#labs",
+    "href": "index.html#labs",
+    "title": "Computer vision course",
+    "section": "Labs",
+    "text": "Labs\n\nLab1: Getting started with images; basic manipulation\nLab1\n\n\nLab2: Image annotation/enhancement\nLab2\n\n\nLab3: Filtering with convolutions\nLab3\n\n\nLab4: hybrid images\nLab4\n\n\nLab5: Filters and image derivatives\nLab5"
+  },
+  {
+    "objectID": "lab5.html",
+    "href": "lab5.html",
+    "title": "Lab 5: Image derivatives",
+    "section": "",
+    "text": "Smoothing (blur) is a low-pass filter:\n\nit filters out the “high frequency” part of the image\nhelps in removing noise\n\n\n\n\nimport cv2 as cv\nimport numpy as np\nfrom matplotlib import pyplot as plt\n \nimg = cv.imread('img/cybertruck.png')\nassert img is not None, \"file could not be read, check with os.path.exists()\"\n \nblur = cv.blur(img,(15,15))\n \nplt.subplot(121),plt.imshow(img),plt.title('Original')\nplt.xticks([]), plt.yticks([])\nplt.subplot(122),plt.imshow(blur),plt.title('Blurred')\nplt.xticks([]), plt.yticks([])\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\n\nBoth width and height of the kernel should be odd\n\n\n\ngblur = cv.GaussianBlur(img,(15,15),0)\nplt.subplot(121),plt.imshow(img),plt.title('Original')\nplt.xticks([]), plt.yticks([])\nplt.subplot(122),plt.imshow(gblur),plt.title('Gaussian-blurred')\nplt.xticks([]), plt.yticks([])\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nUsed for noise reduction.\n\nnoisy_img = cv.imread('img/noisy_image.png')\nmedian = cv.medianBlur(noisy_img,15)\n\nplt.subplot(121),plt.imshow(noisy_img),plt.title('Original')\nplt.xticks([]), plt.yticks([])\nplt.subplot(122),plt.imshow(median),plt.title('Median-blurred')\nplt.xticks([]), plt.yticks([])\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nWhere d is Diameter of each pixel neighborhood that is used during filtering. If it is non-positive, it is computed from sigmaSpace. - used for noise removal - keeps edges sharp\nParameters:\n\nd: diameter of each pixel neighborhood\nsigmaColor is used to filter sigma in the color space.\nsigmaSpace is used to Filter sigma in the coordinate space\n\nMore info here and here.\n\nbilateral_blur = cv.bilateralFilter(img,90,75,75)\n\nplt.subplot(121),plt.imshow(img),plt.title('Original')\nplt.xticks([]), plt.yticks([])\nplt.subplot(122),plt.imshow(bilateral_blur),plt.title('Bilateral-blurred')\nplt.xticks([]), plt.yticks([])\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n\nImage gradient is “high-pass filter”:\n\nit filters out the low frequency part of the image in order to highlight the abrupt parts of the image\nused for edge detection\n\n\n\n\nthe image should be first converted to a single channel (grayscale)\nas Sobel kernels are susceptible to noise, we should blur the image\nthen apply a sharpening kernel\n\n\n\n\n\n\n\nKernel for Sobel\n\n\n\nSobel uses one-dimensional derivatives. It combines Gaussian smoothing and differentiation.\n\\[\nG_x =  \\begin{bmatrix}\n  1 & 0 & -1 \\\\\n\\end{bmatrix} \\circ \\begin{bmatrix}\n  1 \\\\\n  2 \\\\\n  1\n\\end{bmatrix} =\n\\begin{bmatrix}\n  1 & 0 & -1 \\\\\n  2 & 0 & -2 \\\\\n  1 & 0 & -1\n\\end{bmatrix}\n\\]\n\\[\nG_y =  \\begin{bmatrix}\n  -1 & -2 & -1 \\\\\n  0 & 0 & 0 \\\\\n  1 & 2 & 1\n\\end{bmatrix}\n\\tag{1}\\]\nAnd the overall gradient is: \\[\nG = \\sqrt{G_x^2 + G_y^2}\n\\]\n\n\nLaplacian uses two-dimensional derivatives. It calls internally the Sobel operator to perform its computation\n\n\n\n\n\n\nKernel for Laplacian (2D-approximation)\n\n\n\n\\[\n\\nabla_5^2 = \\begin{bmatrix}\n  0 & 1 & 0 \\\\\n  1 & -4 & 1\\\\\n  0 & 1 & 0\n\\end{bmatrix}\n\\]\n\n\n\n\n\n\nimport cv2\nimport numpy as np\nfrom matplotlib import pyplot as plt\n\n# loading image\nimg0 = cv2.imread('img/cybertruck.png',)\n\n# converting to gray scale\ngray = cv2.cvtColor(img0, cv2.COLOR_BGR2GRAY)\n\n# remove noise\nimg = cv2.GaussianBlur(gray,(3,3),0)\n\n# convolute with proper kernels\nlaplacian = cv2.Laplacian(img,cv2.CV_64F)\nsobelx = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)  # x\nsobely = cv2.Sobel(img,cv2.CV_64F,0,1,ksize=5)  # y\n\nplt.subplot(2,2,1),plt.imshow(img,cmap = 'gray')\nplt.title('Original'), plt.xticks([]), plt.yticks([])\nplt.subplot(2,2,2),plt.imshow(laplacian,cmap = 'gray')\nplt.title('Laplacian'), plt.xticks([]), plt.yticks([])\nplt.subplot(2,2,3),plt.imshow(sobelx,cmap = 'gray')\nplt.title('Sobel X'), plt.xticks([]), plt.yticks([])\nplt.subplot(2,2,4),plt.imshow(sobely,cmap = 'gray')\nplt.title('Sobel Y'), plt.xticks([]), plt.yticks([])\n\nplt.show()"
+  },
+  {
+    "objectID": "lab5.html#blur",
+    "href": "lab5.html#blur",
+    "title": "Lab 5: Image derivatives",
+    "section": "",
+    "text": "Smoothing (blur) is a low-pass filter:\n\nit filters out the “high frequency” part of the image\nhelps in removing noise\n\n\n\n\nimport cv2 as cv\nimport numpy as np\nfrom matplotlib import pyplot as plt\n \nimg = cv.imread('img/cybertruck.png')\nassert img is not None, \"file could not be read, check with os.path.exists()\"\n \nblur = cv.blur(img,(15,15))\n \nplt.subplot(121),plt.imshow(img),plt.title('Original')\nplt.xticks([]), plt.yticks([])\nplt.subplot(122),plt.imshow(blur),plt.title('Blurred')\nplt.xticks([]), plt.yticks([])\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\n\nBoth width and height of the kernel should be odd\n\n\n\ngblur = cv.GaussianBlur(img,(15,15),0)\nplt.subplot(121),plt.imshow(img),plt.title('Original')\nplt.xticks([]), plt.yticks([])\nplt.subplot(122),plt.imshow(gblur),plt.title('Gaussian-blurred')\nplt.xticks([]), plt.yticks([])\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nUsed for noise reduction.\n\nnoisy_img = cv.imread('img/noisy_image.png')\nmedian = cv.medianBlur(noisy_img,15)\n\nplt.subplot(121),plt.imshow(noisy_img),plt.title('Original')\nplt.xticks([]), plt.yticks([])\nplt.subplot(122),plt.imshow(median),plt.title('Median-blurred')\nplt.xticks([]), plt.yticks([])\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nWhere d is Diameter of each pixel neighborhood that is used during filtering. If it is non-positive, it is computed from sigmaSpace. - used for noise removal - keeps edges sharp\nParameters:\n\nd: diameter of each pixel neighborhood\nsigmaColor is used to filter sigma in the color space.\nsigmaSpace is used to Filter sigma in the coordinate space\n\nMore info here and here.\n\nbilateral_blur = cv.bilateralFilter(img,90,75,75)\n\nplt.subplot(121),plt.imshow(img),plt.title('Original')\nplt.xticks([]), plt.yticks([])\nplt.subplot(122),plt.imshow(bilateral_blur),plt.title('Bilateral-blurred')\nplt.xticks([]), plt.yticks([])\nplt.show()"
+  },
+  {
+    "objectID": "lab5.html#sharpening",
+    "href": "lab5.html#sharpening",
+    "title": "Lab 5: Image derivatives",
+    "section": "",
+    "text": "Image gradient is “high-pass filter”:\n\nit filters out the low frequency part of the image in order to highlight the abrupt parts of the image\nused for edge detection\n\n\n\n\nthe image should be first converted to a single channel (grayscale)\nas Sobel kernels are susceptible to noise, we should blur the image\nthen apply a sharpening kernel\n\n\n\n\n\n\n\nKernel for Sobel\n\n\n\nSobel uses one-dimensional derivatives. It combines Gaussian smoothing and differentiation.\n\\[\nG_x =  \\begin{bmatrix}\n  1 & 0 & -1 \\\\\n\\end{bmatrix} \\circ \\begin{bmatrix}\n  1 \\\\\n  2 \\\\\n  1\n\\end{bmatrix} =\n\\begin{bmatrix}\n  1 & 0 & -1 \\\\\n  2 & 0 & -2 \\\\\n  1 & 0 & -1\n\\end{bmatrix}\n\\]\n\\[\nG_y =  \\begin{bmatrix}\n  -1 & -2 & -1 \\\\\n  0 & 0 & 0 \\\\\n  1 & 2 & 1\n\\end{bmatrix}\n\\tag{1}\\]\nAnd the overall gradient is: \\[\nG = \\sqrt{G_x^2 + G_y^2}\n\\]\n\n\nLaplacian uses two-dimensional derivatives. It calls internally the Sobel operator to perform its computation\n\n\n\n\n\n\nKernel for Laplacian (2D-approximation)\n\n\n\n\\[\n\\nabla_5^2 = \\begin{bmatrix}\n  0 & 1 & 0 \\\\\n  1 & -4 & 1\\\\\n  0 & 1 & 0\n\\end{bmatrix}\n\\]\n\n\n\n\n\n\nimport cv2\nimport numpy as np\nfrom matplotlib import pyplot as plt\n\n# loading image\nimg0 = cv2.imread('img/cybertruck.png',)\n\n# converting to gray scale\ngray = cv2.cvtColor(img0, cv2.COLOR_BGR2GRAY)\n\n# remove noise\nimg = cv2.GaussianBlur(gray,(3,3),0)\n\n# convolute with proper kernels\nlaplacian = cv2.Laplacian(img,cv2.CV_64F)\nsobelx = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)  # x\nsobely = cv2.Sobel(img,cv2.CV_64F,0,1,ksize=5)  # y\n\nplt.subplot(2,2,1),plt.imshow(img,cmap = 'gray')\nplt.title('Original'), plt.xticks([]), plt.yticks([])\nplt.subplot(2,2,2),plt.imshow(laplacian,cmap = 'gray')\nplt.title('Laplacian'), plt.xticks([]), plt.yticks([])\nplt.subplot(2,2,3),plt.imshow(sobelx,cmap = 'gray')\nplt.title('Sobel X'), plt.xticks([]), plt.yticks([])\nplt.subplot(2,2,4),plt.imshow(sobely,cmap = 'gray')\nplt.title('Sobel Y'), plt.xticks([]), plt.yticks([])\n\nplt.show()"
   },
   {
     "objectID": "lec2.html#goal",
@@ -581,11 +616,11 @@
     "text": "Concluding Remarks\n\n\n\nA different approach: model-based\n\n\nWe could have a set of predefined models of the objects that can be present in the scene and the system can try to decide if they are present or not in the image, and recover their parameters (i.e., pose, color).\nRecognition allows indexing properties that are not directly available in the image."
   },
   {
-    "objectID": "lab1.html",
-    "href": "lab1.html",
-    "title": "Lab 1",
+    "objectID": "lab3.html",
+    "href": "lab3.html",
+    "title": "Lab 3: filtering with convolutions",
     "section": "",
-    "text": "Please enroll at OpenCV intro course.\nComplete the following items in the course:\n2.1. Getting Started with Images.\n2.2. Basic Image Manipulation.\nPractice cropping/resizing on a couple of images downloaded from the net."
+    "text": "Exercises\nWork through the notebook.\n\n\nRecommended reading\n\nhttps://learnopencv.com/image-filtering-using-convolution-in-opencv/"
   },
   {
     "objectID": "lec1.html#euclid",
@@ -1141,6 +1176,13 @@
     "text": "Thank you"
   },
   {
+    "objectID": "lab1.html",
+    "href": "lab1.html",
+    "title": "Lab 1",
+    "section": "",
+    "text": "Please enroll at OpenCV intro course.\nComplete the following items in the course:\n2.1. Getting Started with Images.\n2.2. Basic Image Manipulation.\nPractice cropping/resizing on a couple of images downloaded from the net."
+  },
+  {
     "objectID": "lec3.html#introduction",
     "href": "lec3.html#introduction",
     "title": "Filtering",
@@ -1601,6 +1643,573 @@
     "title": "Lab 2",
     "section": "",
     "text": "Complete the following items in the course:\n\nImage Annotation.\nImage Enhancement."
+  },
+  {
+    "objectID": "lec5.html#introduction",
+    "href": "lec5.html#introduction",
+    "title": "Filters and image derivatives",
+    "section": "Introduction",
+    "text": "Introduction\n\n\n\nBlur filters\n\n\nBlur filters are low-pass filters\n\nremove the high spatial-frequency content\nleave only the low-frequency spatial components.\n\nThe result is an image that has lost details and that looks blurry.\n\n\n\n\n\n\nBlur applications\n\n\n\nit can be used to reduce noise\nto reveal image structures at different scales\nupsampling and downsampling images."
+  },
+  {
+    "objectID": "lec5.html#blur-filters-1",
+    "href": "lec5.html#blur-filters-1",
+    "title": "Filters and image derivatives",
+    "section": "Blur filters",
+    "text": "Blur filters\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Original noisy image.\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Blurred image."
+  },
+  {
+    "objectID": "lec5.html#blur-filters-2",
+    "href": "lec5.html#blur-filters-2",
+    "title": "Filters and image derivatives",
+    "section": "Blur filters",
+    "text": "Blur filters\n\n\n\nImplementation\n\n\nBlurring is implemented by computing local averages over small neighborhoods of input pixel values. This can be done by:\n\nconvolution (linear)\nanisotropic diffusion (non-linear)\nbilateral filtering (non-linear)"
+  },
+  {
+    "objectID": "lec5.html#box-filter",
+    "href": "lec5.html#box-filter",
+    "title": "Filters and image derivatives",
+    "section": "Box Filter",
+    "text": "Box Filter\n\n\n\nBox filter - definition\n\n\nLet’s start with a very simple low-pass filter, the box filter. The box filter uses a box function as the convolution kernel. The box convolution kernel can be written as:\n\\[\n\\text{box}_{N,M} \\left[n,m \\right] =\n\\begin{cases}\n    1       & \\quad \\text{if } -N \\leq n \\leq N  \\; \\text{and} \\;   -M \\leq m \\leq M\\\\\n    0       & \\quad \\text{otherwise.}\n\\end{cases}\n\\]\nFiltering an input image, \\(\\ell_{\\text{in}}\\), with a box filter results in the following: \\[\\begin{aligned}\n\\ell_{\\text{out}} \\left[n,m\\right] &=\n\\text{box}_{N,M} \\left[n,m\\right] \\circ \\ell_{\\text{in}} \\left[n,m\\right]  \\\\\n&= \\sum_{k,l} \\ell_{\\text{in}} \\left[n-k,m-l \\right] \\text{box}_{N,M} \\left[k,l \\right] \\\\\n&= \\sum_{k=-N}^N \\sum_{l=-M}^M \\ell_{\\text{in}} \\left[n-k,m-l \\right]\n\\end{aligned}\\]"
+  },
+  {
+    "objectID": "lec5.html#box-filter-1",
+    "href": "lec5.html#box-filter-1",
+    "title": "Filters and image derivatives",
+    "section": "Box Filter",
+    "text": "Box Filter\n\n\n\nNote\n\n\nThe box filter with \\(N=M=1\\) is:"
+  },
+  {
+    "objectID": "lec5.html#box-filter-2",
+    "href": "lec5.html#box-filter-2",
+    "title": "Filters and image derivatives",
+    "section": "Box Filter",
+    "text": "Box Filter\n\n\n\nVisual examples\n\n\n\n\n\n\n\n\nFigure 3: Fig (a) Input image. (b) Blurring with a square, (c) a horizontal, and (d) a vertical line. Each color channel is filtered independently."
+  },
+  {
+    "objectID": "lec5.html#box-filter-3",
+    "href": "lec5.html#box-filter-3",
+    "title": "Filters and image derivatives",
+    "section": "Box Filter",
+    "text": "Box Filter\n\n\n\nProperties\n\n\n\nLow-pass: it attenuates the high spatial-frequency content of the input image.\n2D box filter is separable and can be written as the convolution of two 1D kernels: \\[\n\\text{box}_{N,M} \\left[n,m \\right]  = \\text{box}_{N,0} \\circ \\text{box}_{0,M}.\n\\]\nDC gain: the gain it has for a constant value input (i.e., the lowest possible input frequency). If the input signal is a constant, i.e., \\(\\ell[n,m] = a\\), where \\(a\\) is a real number, the result of convolving the image with the box filter \\(h_{N,M}\\) is also a constant:\n\n\\[\n\\ell_{\\text{out}} \\left[n,m\\right] = \\sum_{k,l} a \\text{box}_{N,M} \\left[k,l \\right] = a \\sum_{k,l} \\text{box}_{N,M} \\left[k,l \\right]  = a (2N+1)(2M+1)\n\\]"
+  },
+  {
+    "objectID": "lec5.html#box-filter-4",
+    "href": "lec5.html#box-filter-4",
+    "title": "Filters and image derivatives",
+    "section": "Box Filter",
+    "text": "Box Filter\n\n\n\n\n\n\nTip\n\n\nRemember that the DC value of a signal is its mean value. DC is an old name derived from Direct Current.\nIn general, the DC gain of an arbitrary filter \\(h [n,m]\\) is the sum of its kernel values:\n\\[\n\\text{DC gain} = \\sum_{n,m} h [n,m]\n\\] In the example of the box filter with \\(N=1\\), the DC gain is 3.\nIn the frequency domain, the DC gain of a filter refers to its gain at a frequency of 0, represented by the value \\(H[0,0]\\). The value of \\(\\left| \\text{Box}_1[0] \\right|\\) is \\(3\\). The DC gain of a filter will change the mean value of the input signal."
+  },
+  {
+    "objectID": "lec5.html#box-filter-5",
+    "href": "lec5.html#box-filter-5",
+    "title": "Filters and image derivatives",
+    "section": "Box Filter",
+    "text": "Box Filter\n\n\n\nExamples\n\n\n\n\n\n\n\n\n\n\nFigure 4: 1D Box Filter.\n\n\n\n\n\n\n\n\n\n\nFigure 5: Fourier transform of Box Filter.\n\n\n\n\nFig (a) A one-dimensional (1D) box filter (\\(\\left[1,1,1\\right]\\)), and (b) its Fourier transform over 20 samples. Note that the frequency gain is not monotonically decreasing with spatial frequency."
+  },
+  {
+    "objectID": "lec5.html#box-filter-6",
+    "href": "lec5.html#box-filter-6",
+    "title": "Filters and image derivatives",
+    "section": "Box Filter",
+    "text": "Box Filter\n\n\n\nDC gain: normalization\n\n\n\nwe generally want to have a DC gain of 1\nthe reason is that if we have an image with grayscale levels in the range of 0 to 256 and with an average around 128, we will want to preserve the same mean value in the output.\nFor this reason, in most applications, we will normalize the kernel values so that they sum 1.\nIn the case of the box filter, this means dividing the kernel values by \\((2N+1)(2M+1)\\)."
+  },
+  {
+    "objectID": "lec5.html#box-filter-7",
+    "href": "lec5.html#box-filter-7",
+    "title": "Filters and image derivatives",
+    "section": "Box Filter",
+    "text": "Box Filter\n\n\n\nLimitations\n\n\n\nThe box filter is not a perfect blurring filter.\n\n\n\n\n\n\n\n\n\n\nOscillating signal\n\n\n\n\n\n\n\nConvolved with \\([1,1,1]\\)\n\n\n\n\n\n\nIf you convolve two boxes, you get a triangle. For \\(N=1, M=0\\):\n\n\\[\n\\text{box}_{1,0} \\circ \\text{box}_{1,0} = \\left[1, 1, 1\\right] \\circ \\left[1, 1, 1\\right] = \\left[1,2,3,2,1\\right]\n\\]"
+  },
+  {
+    "objectID": "lec5.html#sec-spt_gaussian",
+    "href": "lec5.html#sec-spt_gaussian",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Filter",
+    "text": "Gaussian Filter\n\n\n\nDefinition\n\n\nThe Gaussian distribution is defined in continuous variables. In one dimension:\n\\[\ng(x; \\sigma) = \\frac{1}{\\sqrt{2 \\pi \\sigma^2}} \\exp{ \\left( -\\frac{x^2}{2 \\sigma^2} \\right) }\n\\qquad(1)\\]\nand in two dimensions:\n\\[\ng(x,y; \\sigma) = \\frac{1}{2 \\pi \\sigma^2} \\exp{ \\left(-\\frac{x^2 + y^2}{2 \\sigma^2} \\right) }\n\\qquad(2)\\]\nThe parameter \\(\\sigma\\) adjusts the spatial extent of the Gaussian. The normalization constant is set so that the function integrates to 1. The Gaussian kernel is positive and symmetric (a zero-phase filter)."
+  },
+  {
+    "objectID": "lec5.html#gaussian-filter",
+    "href": "lec5.html#gaussian-filter",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Filter",
+    "text": "Gaussian Filter\n\n\n\nDiscretization\n\n\nWe only need to consider samples within three standard deviations \\(x \\in (-3\\sigma, 3\\sigma)\\).\nFor a given \\(\\sigma\\):\n\\[\ng \\left[ n,m; \\sigma \\right] = \\exp{ \\left( -\\frac{n^2 + m^2}{2 \\sigma^2} \\right) }\n\\qquad(3)\\]\n\n\n\n\n\n1D Gaussian with \\(\\sigma=1\\) and its discretized version"
+  },
+  {
+    "objectID": "lec5.html#gaussian-filter-1",
+    "href": "lec5.html#gaussian-filter-1",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Filter",
+    "text": "Gaussian Filter\n\n\n\n\n\n\n\n\n\n\n\n(a) Gaussian filter with \\(\\sigma=2\\).\n\n\n\n\n\n\n\n\n\n\n\n(b) Gaussian filter with \\(\\sigma=4\\).\n\n\n\n\n\n\n\n\n\n\n\n(c) Gaussian filter with \\(\\sigma=8\\).\n\n\n\n\n\n\n\nFigure 6"
+  },
+  {
+    "objectID": "lec5.html#gaussian-filter-2",
+    "href": "lec5.html#gaussian-filter-2",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Filter",
+    "text": "Gaussian Filter\n\n\n\nMultiple dimensions\n\n\nRecall: \\[\n\\ell_{\\texttt{out}}\\left[n,m\\right] = h \\left[n,m\\right] \\circ \\ell_{\\texttt{in}}\\left[n,m\\right] =  \\sum_{k,l}h \\left[n-k,m-l \\right] \\ell_{\\texttt{in}}\\left[k,l \\right]\n\\qquad(4)\\] \nLetting \\(g^x [n]=g[n,0]\\), and \\(g^y[m]=g[0,m]\\)), we have:\n\\[\ng \\left[n,m \\right] \\circ \\ell \\left[n,m\\right]\n= \\sum_{k,l} g \\left[n-k,m-l \\right] \\ell \\left[k,l \\right]\n= \\sum_{k,l} \\exp{ \\left( -\\frac{(n-k)^2 + (m-l)^2}{2 \\sigma^2} \\right) } \\circ \\ell \\left[n,m \\right]\n\\]\n\\[\n= \\sum_{k} \\exp{ \\left( -\\frac{(n-k)^2}{2 \\sigma^2} \\right) }\n\\left( \\sum_{l} \\exp{ \\left( -\\frac{(m-l)^2}{2 \\sigma^2} \\right) } \\ell \\left[k,l \\right] \\right)\n= g^x \\circ (g^y \\circ \\ell \\left[n,m \\right])\n\\qquad(5)\\]"
+  },
+  {
+    "objectID": "lec5.html#gaussian-filter-3",
+    "href": "lec5.html#gaussian-filter-3",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Filter",
+    "text": "Gaussian Filter\n\n\n\nRemoving distractions\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Original Image.\n\n\n\n\n\n\n\n\n\n\n\n(b) Blurred Image.\n\n\n\n\n\n\n\nFigure 7"
+  },
+  {
+    "objectID": "lec5.html#gaussian-filter-4",
+    "href": "lec5.html#gaussian-filter-4",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Filter",
+    "text": "Gaussian Filter\n\n\n\nProperties of the Continuous Gaussian\n\n\n\nThe \\(n\\)-dimensional Gaussian is the only completely circularly symmetric operator that is separable.\nThe continuous Fourier transform (FT) of a Gaussian is also a Gaussian. For a 1D Gaussian, its Fourier transform is:\n\n\\[\nG (w; \\sigma) = \\exp{ \\left( -\\frac{w^2 \\sigma^2} {2} \\right) }\n\\]\nand in 2D the Fourier transform is:\n\\[\nG (w_x, w_y; \\sigma) = \\exp{ \\left(- \\frac{(w_x^2+w_y^2) \\sigma^2} {2} \\right) }\n\\qquad(6)\\]\nNote that this function is monotonically decreasing in magnitude for increasing frequencies, and it is also radially symmetric."
+  },
+  {
+    "objectID": "lec5.html#gaussian-filter-5",
+    "href": "lec5.html#gaussian-filter-5",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Filter",
+    "text": "Gaussian Filter\n\n\n\nProperties of the Continuous Gaussian\n\n\n\nThe width of the Gaussian Fourier transform decreases with \\(\\sigma\\) (this is the opposite behavior to the Gaussian in the spatial domain).\nThe convolution of two \\(n\\)-dimensional Gaussians is an \\(n\\)-dimensional Gaussian.\n\n\\[\ng (x,y; \\sigma_1 ) \\circ g (x,y; \\sigma_2)  = g (x,y; \\sigma_3)\n\\]\nwhere the variance of the result is the sum \\(\\sigma_3^2 = \\sigma_1^2 + \\sigma_2^2\\).\n\nThe Gaussian is the solution to the heat equation.\nRepeated convolutions of any function concentrated in the origin result in a Gaussian (central limit theorem).\nIn the limit \\(\\sigma \\rightarrow 0\\) the Gaussian becomes an impulse. This property is shared by many other functions, but it is a useful thing to know."
+  },
+  {
+    "objectID": "lec5.html#gaussian-filter-6",
+    "href": "lec5.html#gaussian-filter-6",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Filter",
+    "text": "Gaussian Filter\n\n\n\n\n\n\nLimitations\n\n\nThe convolution of discretized Gaussians is not a Gaussian anymore.\nLet’s consider a Gaussian with variance \\(\\sigma^2=1/2\\). It can be approximated by five samples. We will call this approximation \\(g_5\\) and it takes the values:\n\\[\ng_5\\left[ n \\right] = \\left[0.0183, \\,    0.3679, \\,    1.0000, \\,    0.3679, \\,    0.0183 \\right]\n\\]\nIf we compute the approximation for \\(\\sigma^2=1\\) by discretizing the Gaussian, the result obtained is not equal to doing \\(g_5 \\circ g_5\\): therefore, errors will accumulate."
+  },
+  {
+    "objectID": "lec5.html#binomial-filters",
+    "href": "lec5.html#binomial-filters",
+    "title": "Filters and image derivatives",
+    "section": "Binomial Filters",
+    "text": "Binomial Filters\n\n\n\nDefinition\n\n\nBinomial coefficients: a common approximation of the Gaussian filter, obtained by successive convolutions of the box filter \\(\\left[1,1\\right]\\).\nThe binomial coefficients use the central limit theorem to approximate a Gaussian as successive convolutions of a very simple function. The binomial coefficients form the Pascal’s triangle as shown in figure.\n\\[\n\\begin{array}{*{20}{&gt;{\\centering\\arraybackslash}p{.2cm}}{&gt;{\\arraybackslash}p{1.5cm}}}\nb_0 &   ~ &  ~ & ~ & ~ & ~ & ~ & ~ & ~ & ~ & 1 & ~ & ~ & ~ & ~ & ~ & ~ & ~ & ~  & ~ & \\sigma_0^2=0\\\\\nb_1 &    ~ &  ~ & ~ & ~ & ~ & ~ & ~ & ~ & 1 & ~ & 1 & ~ & ~ & ~ & ~ & ~ & ~ & ~ & ~ & \\sigma_1^2=1/4\\\\\nb_2 &   ~ &  ~ & ~ & ~ & ~ & ~ & ~ & 1 & ~ & 2 & ~ & 1 & ~ & ~ & ~ & ~ & ~ & ~ & ~ & \\sigma_2^2=1/2\\\\\nb_3 &  ~ &  ~ & ~ & ~ & ~ & ~ & 1 & ~ & 3 & ~ & 3 & ~ & 1 & ~ & ~ & ~ & ~ & ~ & ~ & \\sigma_3^2=3/4\\\\\nb_4 &  ~ &  ~ & ~ & ~ & ~ & 1 & ~ & 4 & ~ &  6 & ~  & 4 & ~ & 1 & ~ & ~ & ~ & ~ & ~ & \\sigma_4^2=1\\\\\nb_5 &  ~ &  ~ & ~  & ~ & 1 & ~   & 5   & ~   &10  &  ~  & 10 & ~   & 5   & ~   & 1 & ~ & ~ & ~ & ~ & \\sigma_5^2=5/4\\\\\nb_6 &  ~ &  ~ & ~  & 1 & ~ & 6   & ~   & 15 & ~   & 20 & ~   & 15 & ~   & 6   & ~ & 1 & ~ & ~ & ~ & \\sigma_6^2=3/2\\\\\nb_7 &  ~ &  ~ &  1 & ~ & 7 & ~   & 21 & ~   & 35 & ~   & 35 & ~   & 21 & ~   & 7 & ~ & 1 & ~ & ~ & \\sigma_7^2=7/4\\\\\nb_8 &  ~ &  1 & ~  & 8 & ~ & 28 & ~   & 56 & ~   & 70 & ~   & 56 & ~   & 28 & ~ & 8 & ~ & 1 & ~ & \\sigma_8^2=2\n\\end{array}\n\\]\nBinomial coefficients. To build the Pascal’s triangle, each number is the sum of the number above to the left and the one above to the right."
+  },
+  {
+    "objectID": "lec5.html#binomial-filters-1",
+    "href": "lec5.html#binomial-filters-1",
+    "title": "Filters and image derivatives",
+    "section": "Binomial Filters",
+    "text": "Binomial Filters\n\n\n\nProperties\n\n\n\nBinomial coefficients provide a compact approximation of the Gaussian coefficients using only integers. Note that the values of \\(b_2\\) are different from \\(g_5\\) despite that both will be used as approximations to a Gaussian with the same variance \\(\\sigma^2 = 1/2\\). The thing to note is that the variance of \\(g_5\\) is not really \\(\\sigma^2 = 1/2\\) despite being obtained by discretizing a Gaussian with that variance.\nThe sum of all the coefficients (DC gain) for each binomial filter \\(b_n\\) is \\(2^n\\), and their spatial variance is \\(\\sigma^2 = n/4\\).\nOne remarkable property of the binomial filters is that \\(b_n \\circ b_m = b_{n+m}\\), and, therefore, \\(\\sigma_n^2 + \\sigma_m^2  = \\sigma_{n+m}^2\\), which is analogous to the Gaussian property in the continuous domain. That is, the convolution of two binomial filters is another binomial filter."
+  },
+  {
+    "objectID": "lec5.html#binomial-filters-2",
+    "href": "lec5.html#binomial-filters-2",
+    "title": "Filters and image derivatives",
+    "section": "Binomial Filters",
+    "text": "Binomial Filters\n\n\n\nProperties\n\n\n\nThe simplest approximation to the Gaussian filter is the 3-tap binomial kernel:\n\n\\[\nb_2 = \\left[1, 2, 1\\right]\n\\]\nIts DFT is:\n\\[\nB_2 \\left[u\\right] = 2+2 \\cos (2 \\pi u/N)\n\\]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) 1D Binomial Filter.\n\n\n\n\n\n\n\n\n\n\n\n(b) Fourier Transform of Binomial Filter.\n\n\n\n\n\n\n\nFigure 8: Fig (a) A one-dimensional three-tap approximation to the Gaussian filter (\\(\\left[1,2,1\\right]\\)) and, (b) its Fourier transform for \\(N=20\\) samples."
+  },
+  {
+    "objectID": "lec5.html#binomial-filters-3",
+    "href": "lec5.html#binomial-filters-3",
+    "title": "Filters and image derivatives",
+    "section": "Binomial Filters",
+    "text": "Binomial Filters\n\n\n\nProperties\n\n\n\nAll the even binomial filters can be written as successive convolutions with the kernel \\(\\left[1,2,1\\right]\\). Therefore, their Fourier transform is a power of the Fourier transform of the filter \\(\\left[1,2,1\\right]\\) and therefore they are also monotonic:\n\n\\[\nB_{2n} \\left[u\\right] = (2+2 \\cos (2 \\pi u/N))^n\n\\]\nThe filter transfer function, \\(B_{2n}\\), is real and positive. It is a zero-phase filter. \n\nFor all the binomial filters \\(b_n\\), when they are convolved with the wave \\(\\left[1,-1,1,-1,...\\right]\\), the result is the zero signal \\(\\left[0,0,0,0,...\\right]\\). This is a very nice property of binomial filters and will become very useful later when talking about downsampling an image."
+  },
+  {
+    "objectID": "lec5.html#binomial-filters-4",
+    "href": "lec5.html#binomial-filters-4",
+    "title": "Filters and image derivatives",
+    "section": "Binomial Filters",
+    "text": "Binomial Filters\n\n\n\n2D Binomial Filters\n\n\nThe Gaussian in 2D can be approximated, as the convolution of two binomial filters:\n\\[\nb_{2,2} = b_{2,0} \\circ b_{0,2} =  \\begin{bmatrix}\n  1 & 2 & 1 \\\\\n\\end{bmatrix}\\circ \\begin{bmatrix}\n  1 \\\\\n  2 \\\\\n  1\n\\end{bmatrix}=\n\\begin{bmatrix}\n  1 & 2 & 1 \\\\\n  2 & 4 & 2\\\\\n  1 & 2 & 1\n\\end{bmatrix}\n\\]"
+  },
+  {
+    "objectID": "lec5.html#binomial-filters-5",
+    "href": "lec5.html#binomial-filters-5",
+    "title": "Filters and image derivatives",
+    "section": "Binomial Filters",
+    "text": "Binomial Filters\n\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nFigure 9: Noisy Image.\n\n\n\n\n\n\n\n\n\n\nFigure 10: Box Filtered Image.\n\n\n\n\n\n\n\n\n\n\nFigure 11: Binomial Filtered Image.\n\n\n\n\nImage corrupted by a checkerboard-pattern noise (right) and its output to two different blur kernels: (middle) \\(3 \\times 3\\) box filter. (right) Binomial filter \\(b_{2,2}\\)."
+  },
+  {
+    "objectID": "lec5.html#concluding-remarks",
+    "href": "lec5.html#concluding-remarks",
+    "title": "Filters and image derivatives",
+    "section": "Concluding Remarks",
+    "text": "Concluding Remarks\n\n\n\n\n\n\nNote\n\n\n\nthe Gaussian and the binomial filters are widely used in computer vision.\nthe binomial filter \\([1,2,1]/4\\) (here normalized so that its DC gain is 1), and its 2D extension, are very useful kernels that you can use in many situations like when you need to remove high-frequency noise, or downsample an image by a factor of 2.\nBlur kernels are useful when building image pyramids, or in neural networks when performing different pooling operations or when resizing feature maps."
+  },
+  {
+    "objectID": "lec5.html#introduction-1",
+    "href": "lec5.html#introduction-1",
+    "title": "Filters and image derivatives",
+    "section": "Introduction",
+    "text": "Introduction\n\n\n\nDerivatives\n\n\nComputing image derivatives is an essential operator for extracting useful information from images:\n\nboundaries computation\nfiguring out where changes are happening in the image.\n\nThe derivative operator is linear and translation invariant \\(\\Rightarrow\\) can be written as a convolution.\n\n\n\n\n\nFigure 12: Computing image derivatives along \\(x\\)- and \\(y\\)-dimensions."
+  },
+  {
+    "objectID": "lec5.html#image-derivatives",
+    "href": "lec5.html#image-derivatives",
+    "title": "Filters and image derivatives",
+    "section": "Image Derivatives",
+    "text": "Image Derivatives\n\n\n\n\n\n\n\n\n\n\n\n(a)\n\n\n\n\n\n\n\n\n\n\n\n(b)\n\n\n\n\n\n\n\n\n\n\n\n(c)\n\n\n\n\n\n\n\nFigure 13: (left) Input image, (middle) its \\(x\\)-derivative, and (right) its \\(y\\)-derivative."
+  },
+  {
+    "objectID": "lec5.html#image-derivatives-1",
+    "href": "lec5.html#image-derivatives-1",
+    "title": "Filters and image derivatives",
+    "section": "Image Derivatives",
+    "text": "Image Derivatives\n\n\n\nDiscretizing\n\n\nIf we had access to the continuous image, then image derivatives could be computed as: \\(\\partial \\ell (x,y) / \\partial x\\), which is defined as:\n\\[\n\\frac{\\partial \\ell(x,y)} {\\partial x} = \\lim_{\\epsilon \\to 0} \\frac{ \\ell(x+\\epsilon,y) -\\ell(x,y)} {\\epsilon}\n\\]\nHowever, there are several reasons why we might not be able to apply this definition:\n\nWe only have access to a sampled version of the input image, \\(\\ell \\left[n,m\\right]\\), and we cannot compute the limit when \\(\\epsilon\\) goes to zero.\nThe image could contain many non-derivable points, and the gradient would not be defined. We will see how to address this issue later when we study Gaussian derivatives.\nIn the presence of noise, the image derivative might not be meaningful as it might just be dominated by the noise and not by the image content."
+  },
+  {
+    "objectID": "lec5.html#image-derivatives-2",
+    "href": "lec5.html#image-derivatives-2",
+    "title": "Filters and image derivatives",
+    "section": "Image Derivatives",
+    "text": "Image Derivatives\n\n\n\nApproximation\n\n\nAs the derivative is a linear operator, it can be approximated by a discrete linear filter.\nLet’s start with \\(d_0  = \\left[1, -1 \\right]\\). In 1D, convolving a signal \\(\\ell \\left[n \\right]\\) with this filter results in: \\[\n\\ell \\circ d_0 = \\ell \\left[n \\right] - \\ell \\left[n-1 \\right]\n\\] This is due to the fact that \\(d_0 \\left[n\\right]\\) is not centered around the origin.\nThis can be addressed with a different approximation to the spatial derivative \\(d_1  = \\left[1, 0, -1 \\right]/2\\). In one dimension, convolving a signal \\(\\ell \\left[n \\right]\\) with \\(d_1 \\left[n\\right]\\) results in: \\[\n\\ell \\circ d_1 = \\frac{\\ell \\left[n+1 \\right] - \\ell \\left[n-1 \\right]}{2}\n\\]"
+  },
+  {
+    "objectID": "lec5.html#image-derivatives-3",
+    "href": "lec5.html#image-derivatives-3",
+    "title": "Filters and image derivatives",
+    "section": "Image Derivatives",
+    "text": "Image Derivatives\n\n\nFigure 14: (a) Input signal, \\(\\ell [n]\\). (b) Convolutional kernel \\(d_0 [n]\\), defined as \\(d_0 [0]=1\\) and \\(d_0 [1]=-1\\) and zero everywhere else. (c) Output of the convolution between \\(\\ell [n]\\) and \\(d_0 [n]\\). (d) Kernel \\(d_1 [n]\\), defined as \\(d_1 [-1]=1\\) and \\(d_1 [1]=-1\\) and zero everywhere else. (e) Output of the convolution between \\(\\ell [n]\\) and \\(d_1 [n]\\)."
+  },
+  {
+    "objectID": "lec5.html#image-derivatives-4",
+    "href": "lec5.html#image-derivatives-4",
+    "title": "Filters and image derivatives",
+    "section": "Image Derivatives",
+    "text": "Image Derivatives\n\n\n\nApproximation: continuous Fourier domain\n\n\nIn the continuous domain, the relationship between the Fourier transform on a function and the Fourier transform of its derivative is: \\[\n\\frac{\\partial \\ell (x)}{\\partial x}  \n\\xrightarrow{\\mathscr{F}}\nj w \\mathscr{L} (w)\n\\] In the continuous Fourier domain, derivation is equivalent to multiplying by \\(jw\\)."
+  },
+  {
+    "objectID": "lec5.html#image-derivatives-5",
+    "href": "lec5.html#image-derivatives-5",
+    "title": "Filters and image derivatives",
+    "section": "Image Derivatives",
+    "text": "Image Derivatives\n\n\n\nApproximation: discrete Fourier domain\n\n\nThe DFT of \\(d_0 \\left[n\\right]\\) is: \\[\n\\begin{split}\nD_0 \\left[u \\right] & = 1 - \\exp \\left( -2 \\pi j \\frac{u}{N} \\right)  \\\\\n& = \\exp \\left( - \\pi j \\frac{u}{N} \\right) \\left(  \\exp \\left( \\pi j \\frac{u}{N} \\right) - \\exp \\left( -\\pi j \\frac{u}{N} \\right)  \\right) \\\\\n& = \\exp \\left( - \\pi j \\frac{u}{N} \\right) 2 j \\sin (\\pi u /N)\n\\end{split}\n\\] The first term is a pure phase shift, the second term is the amplitude gain.\nThe DFT of \\(d_1 \\left[n\\right]\\) is: \\[\n\\begin{split}\nD_1 \\left[u \\right] & =  1/2\\exp \\left( 2 \\pi j \\frac{u}{N} \\right) - 1/2 \\exp \\left( -2 \\pi j \\frac{u}{N} \\right)  \\\\\n& =  j \\sin (2 \\pi u /N)\n\\end{split}\n\\]"
+  },
+  {
+    "objectID": "lec5.html#image-derivatives-6",
+    "href": "lec5.html#image-derivatives-6",
+    "title": "Filters and image derivatives",
+    "section": "Image Derivatives",
+    "text": "Image Derivatives\n\n\n\nFigure 15: Magnitude of (a) \\(D_0\\left[u \\right]\\) and (b) \\(D_1\\left[u \\right]\\) and comparison with \\(\\left| 2 \\pi u/N \\right|\\), shown as a thin black line. Both DFTs are computed over 20 samples."
+  },
+  {
+    "objectID": "lec5.html#image-derivatives-7",
+    "href": "lec5.html#image-derivatives-7",
+    "title": "Filters and image derivatives",
+    "section": "Image Derivatives",
+    "text": "Image Derivatives\n\n\n\nApproximation in 2D\n\n\n\nWe can compute derivatives along the \\(n\\) and \\(m\\) components:\n\n\\[\\begin{bmatrix}\n  1 \\\\\n  -1\n\\end{bmatrix}\\]\n\\[\\begin{bmatrix}\n  1 & -1\n\\end{bmatrix}\\]\nProblem: outputs are spatially misaligned because a filter of length 2 shifts the output image by half a pixel as we discussed earlier.\n\nWe can use a rotated reference frame as it is done in the Roberts cross operator (1963):\n\n\\[\\begin{bmatrix}\n  1 & ~0\\\\\n  0 & -1\n\\end{bmatrix}\\]\n\\[\\begin{bmatrix}\n  ~0 & 1 \\\\\n  -1 & 0\n\\end{bmatrix}\\]\nNow, both outputs are spatially aligned because they are shifted in the same way."
+  },
+  {
+    "objectID": "lec5.html#gradient-based-image-representation",
+    "href": "lec5.html#gradient-based-image-representation",
+    "title": "Filters and image derivatives",
+    "section": "Gradient-Based Image Representation",
+    "text": "Gradient-Based Image Representation\n\n\n\nRecovering original image\n\n\nPerhaps by integrating?\nThis is the matrix that corresponds to the convolution with the kernel \\(\\left[1, -1 \\right]\\) that we will call \\(\\mathbf{D_0}\\). The next two matrices show the matrix \\(\\mathbf{D_0}\\) and its inverse \\(\\mathbf{D_0}^{-1}\\) for a 1D image of length five pixels using zero boundary conditions:\n\\[\n\\mathbf{D_0} =\n\\begin{bmatrix}\n  1 ~& 0 ~& 0 ~& 0~& 0 \\\\\n  -1 ~& 1 ~& 0 ~& 0~& 0 \\\\\n  0 ~& -1 ~& 1 ~& 0 ~& 0\\\\\n  0~& 0 ~& -1 ~& 1 ~& 0\\\\\n  0~& 0 ~& 0 ~& -1 ~& 1\n\\end{bmatrix}\n\\]\n\\[\n\\mathbf{D_0}^{-1} =\n\\begin{bmatrix}\n  1 ~&~ 0 ~&~ 0 ~&~ 0~&~ 0 \\\\\n  1 ~&~ 1 ~&~ 0 ~&~ 0~&~ 0 \\\\\n  1 ~&~ 1 ~&~ 1 ~&~ 0 ~&~ 0\\\\\n  1~&~ 1 ~&~ 1 ~&~ 1 ~&~ 0\\\\\n  1~&~ 1 ~&~ 1 ~&~ 1 ~&~ 1\n\\end{bmatrix}\n\\] First sample of the derivative gets to see the actual value of the input signal, and then we can integrate back the entire signal."
+  },
+  {
+    "objectID": "lec5.html#gradient-based-image-representation-1",
+    "href": "lec5.html#gradient-based-image-representation-1",
+    "title": "Filters and image derivatives",
+    "section": "Gradient-Based Image Representation",
+    "text": "Gradient-Based Image Representation\n\n\n\nRecovering original image\n\n\nBut what happens if you only get to see valid differences and you remove any pixel that was affected by the boundary? In this case, the derivative operator in matrix form is:\n\\[\n\\mathbf{D_0} =\n\\begin{bmatrix}\n  -1 ~& 1 ~& 0 ~& 0~& 0 \\\\\n  0 ~& -1 ~& 1 ~& 0 ~& 0\\\\\n  0~& 0 ~& -1 ~& 1 ~& 0\\\\\n  0~& 0 ~& 0 ~& -1 ~& 1\n\\end{bmatrix}\n\\]"
+  },
+  {
+    "objectID": "lec5.html#gradient-based-image-representation-2",
+    "href": "lec5.html#gradient-based-image-representation-2",
+    "title": "Filters and image derivatives",
+    "section": "Gradient-Based Image Representation",
+    "text": "Gradient-Based Image Representation\n\n\n\nRecovering original image\n\n\nLet’s consider the next 1D input signal:\n\\[\n\\boldsymbol\\ell = \\left[1, 1, 2, 2, 0\\right]\n\\]\nThen, the output of the derivative operator is:\n\\[\n\\mathbf{r}=\\mathbf{D_0} \\boldsymbol\\ell=\\left[0, -1, 0, 2\\right]\n\\]\n\\[\n\\mathbf{D_0}^{+} = \\frac{1}{5}\n\\begin{bmatrix}\n  -4 ~& -3 ~& -2~& -1 \\\\\n  1 ~& -3 ~& -2 ~&-1 \\\\\n  1~& 2 ~& -2 ~& -1\\\\\n  1~& 2 ~& 3 ~& -1\\\\\n  1~& 2 ~& 3 ~& 4\n\\end{bmatrix}\n\\]\nIn this example, the reconstructed input is:\n\\[\n\\hat{\\boldsymbol\\ell} = \\mathbf{D_0}^{+} \\mathbf{r} =\n\\left[-0.2, -0.2, 0.8, 0.8, -1.2 \\right]\n\\] Note that \\(\\hat{\\boldsymbol\\ell}\\) is a zero mean vector. In fact, the recovered input is a shifted version of the original input, \\(\\hat{\\boldsymbol\\ell} = \\boldsymbol\\ell - 1.2\\), where 1.2 is the mean value of samples on \\(\\boldsymbol\\ell\\)."
+  },
+  {
+    "objectID": "lec5.html#sec-editinggradientdomain",
+    "href": "lec5.html#sec-editinggradientdomain",
+    "title": "Filters and image derivatives",
+    "section": "Image Editing in the Gradient Domain",
+    "text": "Image Editing in the Gradient Domain\n\n\nFigure 16: Image inpainting: Using image derivatives, we delete the word “stop” by setting to zero the gradients indicated by the mask. The resulting decoded image propagates the red color inside the region that contained the word."
+  },
+  {
+    "objectID": "lec5.html#image-editing-in-the-gradient-domain",
+    "href": "lec5.html#image-editing-in-the-gradient-domain",
+    "title": "Filters and image derivatives",
+    "section": "Image Editing in the Gradient Domain",
+    "text": "Image Editing in the Gradient Domain\n\n\n\nEncoding/Decoding\n\n\n\nFirst, the image is encoded using derivatives along the \\(x\\) and \\(y\\) dimensions: \\[\n\\mathbf{r} =\n\\left[\n\\begin{array}{c}\n\\mathbf{D_x}  \\\\\n\\mathbf{D_y}\n\\end{array}\n\\right]\n\\boldsymbol\\ell\n\\]\nThe resulting representation, \\(\\mathbf{r}\\), contains the concatenation of the output of both derivative operators. \\(\\mathbf{r}\\) will have high values in the image regions that contain changes in pixel intensities and colors and will be near zero in regions with small variations.\nThis representation can be decoded back into the input image by using the pseudoinverse as we did in the 1D case. The pseudoinverse can be efficiently computed in the Fourier domain."
+  },
+  {
+    "objectID": "lec5.html#gaussian-derivatives",
+    "href": "lec5.html#gaussian-derivatives",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Derivatives",
+    "text": "Gaussian Derivatives\n\n\n\nNoise sensitivity\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a)\n\n\n\n\n\n\n\n\n\n\n\n(b)\n\n\n\n\n\n\n\n\n\n\n\n(c)\n\n\n\n\n\n\n\nFigure 17: Derivatives of a noisy image. (a) Input image with noise, (b) its \\(x\\)-derivative obtained by convolving with a kernel \\([1, -1]\\), and (c) its \\(x\\)-derivative obtained using a Gaussian derivative kernel."
+  },
+  {
+    "objectID": "lec5.html#gaussian-derivatives-1",
+    "href": "lec5.html#gaussian-derivatives-1",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Derivatives",
+    "text": "Gaussian Derivatives\n\n\n\nUndefined derivative\n\n\nConsider an image in the continuous domain with the form \\(\\ell (x,y) = 0\\) if \\(x&lt;0\\) and 1 otherwise.\n\nIf we try to compute \\(\\partial \\ell (x,y) / \\partial x\\), we will get 0 everywhere, but around \\(x=0\\) the value of the derivative is not defined.\nWe avoided this issue in the previous section because for discrete images the approximation of the derivative is always defined.\n\n\n\n\n\n\n\nSolution\n\n\nGaussian derivatives address these two issues. They were popularized by Koenderink and Van Doorm @Koenderink87 as a model of neurons in the visual system."
+  },
+  {
+    "objectID": "lec5.html#gaussian-derivatives-2",
+    "href": "lec5.html#gaussian-derivatives-2",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Derivatives",
+    "text": "Gaussian Derivatives\n\n\n\nObservation: commutativity\n\n\nLet’s start with the following observation. For two functions defined in the continuous domain \\(\\ell(x,y)\\) and \\(g(x,y)\\), the convolution and the derivative are commutative: \\[\n\\frac {\\partial \\ell(x,y)}{\\partial x} \\circ g(x,y) = \\ell(x,y) \\circ \\frac {\\partial g(x,y)}{\\partial x}\n\\]\nInstead of computing the derivative of the image we can compute the derivatives of the filter kernel and convolve it with the image."
+  },
+  {
+    "objectID": "lec5.html#gaussian-derivatives-3",
+    "href": "lec5.html#gaussian-derivatives-3",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Derivatives",
+    "text": "Gaussian Derivatives\n\n\n\nSmoothing\n\n\nIf \\(g(x,y)\\) is a blurring kernel, it will smooth the derivatives, reducing the output noise at the expense of a loss in spatial resolution. A common smoothing kernel for computing derivatives is the Gaussian kernel.\nIf \\(g\\) is a Gaussian, then the first-order derivative is \\[\n\\begin{split}\ng_x(x,y; \\sigma) & = \\frac {\\partial g(x,y; \\sigma)}{\\partial x} \\\\\n& = \\frac{-x}{2 \\pi \\sigma^4} \\exp{-\\frac{x^2 +\n   y^2}{2 \\sigma^2}} \\\\\n& = \\frac{-x}{\\sigma^2} g(x,y; \\sigma)\n\\end{split}\n\\qquad(7)\\]"
+  },
+  {
+    "objectID": "lec5.html#gaussian-derivatives-4",
+    "href": "lec5.html#gaussian-derivatives-4",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Derivatives",
+    "text": "Gaussian Derivatives\n\n\n\n\n\n\n\n\n\n\n\n(a)\n\n\n\n\n\n\n\n\n\n\n\n(b)\n\n\n\n\n\n\n\nFigure 18: Fig (a) 2D Gaussian with \\(\\sigma=1\\), and (b) its \\(x\\)-derivative."
+  },
+  {
+    "objectID": "lec5.html#gaussian-derivatives-5",
+    "href": "lec5.html#gaussian-derivatives-5",
+    "title": "Filters and image derivatives",
+    "section": "Gaussian Derivatives",
+    "text": "Gaussian Derivatives\n\n\n\n\n\n\n\n\n\n\n\n(a)\n\n\n\n\n\n\n\n\n\n\n\n(b)\n\n\n\n\n\n\n\n\n\n\n\n(c)\n\n\n\n\n\n\n\n\n\n\n\n\n\n(d)\n\n\n\n\n\n\n\n\n\n\n\n(e)\n\n\n\n\n\n\n\n\n\n\n\n(f)\n\n\n\n\n\n\n\nFigure 19: An image filtered with three Gaussian derivatives: Fig (a) \\(\\sigma=2\\); (b) \\(\\sigma=4\\); and (c) \\(\\sigma=8\\). Plots (d-f) show the three Gaussian derivatives over the same spatial support as the image. The discrete functions are approximated by sampling the continuous Gaussian derivatives. The convolutions are performed with mirror boundary extension."
+  },
+  {
+    "objectID": "lec5.html#high-order-gaussian-derivatives",
+    "href": "lec5.html#high-order-gaussian-derivatives",
+    "title": "Filters and image derivatives",
+    "section": "High-Order Gaussian Derivatives",
+    "text": "High-Order Gaussian Derivatives\n\n\n\nComputation\n\n\nThe second-order derivative of a Gaussian is: \\[\ng_{x^2}(x,y; \\sigma) = \\frac{x^2-\\sigma^2}{\\sigma^4} g(x,y; \\sigma)\n\\]\nThe general expression for the \\(n\\) derivative of a Gaussian is: \\[\ng_{x^n}(x; \\sigma) =  \\frac{\\partial^{n} g(x)}{\\partial x^n} =\n\\left( \\frac{-1}{\\sigma \\sqrt{2}} \\right)^n\nH_n\\left( \\frac{x}{\\sigma \\sqrt {2}} \\right)\ng(x; \\sigma)\n\\]\nThe first Hermite polynomial is \\(H_0(x)=1\\), the second is \\(H_1(x) = 2x\\), the third is \\(H_2(x)=4x^2-2\\), and they can be computed recursively as: \\[\nH_n(x) = 2x H_{n-1}(x) - 2(n-1)H_{n-2}(x)\n\\]"
+  },
+  {
+    "objectID": "lec5.html#high-order-gaussian-derivatives-1",
+    "href": "lec5.html#high-order-gaussian-derivatives-1",
+    "title": "Filters and image derivatives",
+    "section": "High-Order Gaussian Derivatives",
+    "text": "High-Order Gaussian Derivatives\n\n\nFigure 20: Fig (a) 1D Gaussian with \\(\\sigma=1\\). (b–d) Gaussian derivatives up to order 3."
+  },
+  {
+    "objectID": "lec5.html#high-order-gaussian-derivatives-2",
+    "href": "lec5.html#high-order-gaussian-derivatives-2",
+    "title": "Filters and image derivatives",
+    "section": "High-Order Gaussian Derivatives",
+    "text": "High-Order Gaussian Derivatives\n\n\n\nPartial derivatives\n\n\nIn two dimensions, as the Gaussian is separable, the partial derivatives result on the product of two Hermite polynomial, one for each spatial dimension:\n\\[\n\\begin{split}\ng_{x^n,y^m}(x,y; \\sigma) & =  \n\\frac{\\partial^{n+m} g(x,y)}{\\partial x^n \\partial y^m} \\\\\n& = \\left( \\frac{-1}{\\sigma \\sqrt{2}} \\right)^{n+m}\nH_n\\left( \\frac{x}{\\sigma \\sqrt {2}} \\right)\nH_m\\left( \\frac{y}{\\sigma \\sqrt {2}} \\right)\ng(x,y; \\sigma)\n\\end{split}\n\\qquad(8)\\]"
+  },
+  {
+    "objectID": "lec5.html#high-order-gaussian-derivatives-3",
+    "href": "lec5.html#high-order-gaussian-derivatives-3",
+    "title": "Filters and image derivatives",
+    "section": "High-Order Gaussian Derivatives",
+    "text": "High-Order Gaussian Derivatives\n\n\nFigure 21: Gaussian derivatives up to order 6. All the kernels are separable. They seem similar to Fourier basis multiplied with a Gaussian window.\nFigure 22 shows that they are different from sine and cosine waves; instead, they look more like products of cosine and sine waves."
+  },
+  {
+    "objectID": "lec5.html#high-order-gaussian-derivatives-4",
+    "href": "lec5.html#high-order-gaussian-derivatives-4",
+    "title": "Filters and image derivatives",
+    "section": "High-Order Gaussian Derivatives",
+    "text": "High-Order Gaussian Derivatives\n\n\nFigure 22: Fourier transform of the Gaussian derivatives shown in Figure 21."
+  },
+  {
+    "objectID": "lec5.html#high-order-gaussian-derivatives-5",
+    "href": "lec5.html#high-order-gaussian-derivatives-5",
+    "title": "Filters and image derivatives",
+    "section": "High-Order Gaussian Derivatives",
+    "text": "High-Order Gaussian Derivatives\n\nAn image containing a square and a circle and its output to the Gaussian derivatives up to order 3."
+  },
+  {
+    "objectID": "lec5.html#sec-derivatives_binomial_filters",
+    "href": "lec5.html#sec-derivatives_binomial_filters",
+    "title": "Filters and image derivatives",
+    "section": "Derivatives using Binomial Filters",
+    "text": "Derivatives using Binomial Filters\n\n\n\nDiscrete approximations\n\n\nWhen processing images we have to use discrete approximations for the Gaussian derivatives. After discretization, many of the properties of the continuous Gaussian will not hold exactly.\nThere are many discrete approximations. For instance, we can take samples of the continuous functions. In practice it is common to use the discrete approximation given by the binomial filters. Below is the result of convolving the binomial coefficients, \\(b_n\\), with \\(\\left[1, -1\\right]\\).\n\\[\\begin{array}{ccccccccccccccccccccl}\nd_0 &    ~ &  ~ & ~ & ~ & ~ & ~ & ~ & ~ & ~~1 & ~~~ & -1 & ~ & ~ & ~ & ~ & ~ & ~ & ~ & ~ &\\\\\nd_1 &    ~ &  ~ & ~ & ~ & ~ & ~ & ~ & ~~1 & ~ & ~~0 & ~ & -1 & ~ & ~ & ~ & ~ & ~ & ~ & ~ & \\\\\nd_2 &    ~ &  ~ & ~ & ~ & ~ & ~ & ~~~1 & ~ & ~~~1 & ~~~ & -1 & ~ & -1 & ~ & ~ & ~ & ~ & ~ & ~ & \\\\\nd_3 &    ~ &  ~ & ~ & ~ & ~ & ~~~1 & ~ & ~~~2 & ~ &  ~~0 & ~~~  & -2 & ~ & -1 & ~ & ~ & ~ & ~ & ~ &\\\\\nd_4 &    ~ &  ~ & ~  & ~ & ~~~1 & ~   & ~~~3   & ~   & ~~~2  &  ~~~  & -2 & ~   & -3   & ~   & -1 & ~ & ~ & ~ & ~ &\\\\\nd_5 &    ~ &  ~ & ~  & ~~~1 & ~ & ~~~4   & ~   & ~~~5 & ~   & ~~0 & ~   & -5 & ~   & -4   & ~ & -1 & ~ & ~ & ~ &\n\\end{array}\\]\nDerivative of binomial coefficients resulting from the convolution \\(b_n \\circ \\left[1, -1\\right]\\). The filters, \\(d_0\\) and \\(d_1\\), are the ones we have studied in the previous section."
+  },
+  {
+    "objectID": "lec5.html#derivatives-using-binomial-filters",
+    "href": "lec5.html#derivatives-using-binomial-filters",
+    "title": "Filters and image derivatives",
+    "section": "Derivatives using Binomial Filters",
+    "text": "Derivatives using Binomial Filters\n\n\n\nSobel operator\n\n\nIn two dimensions, we can use separable filters and build a partial derivative as:\n\\[\nSobel_x =  \\begin{bmatrix}\n  1 & 0 & -1 \\\\\n\\end{bmatrix} \\circ \\begin{bmatrix}\n  1 \\\\\n  2 \\\\\n  1\n\\end{bmatrix} =\n\\begin{bmatrix}\n  1 & 0 & -1 \\\\\n  2 & 0 & -2 \\\\\n  1 & 0 & -1\n\\end{bmatrix}\n\\]\n\\[\nSobel_y =  \\begin{bmatrix}\n  -1 & -2 & -1 \\\\\n  0 & 0 & 0 \\\\\n  1 & 2 & 1\n\\end{bmatrix}\n\\qquad(9)\\]\nThis particular filter is called the Sobel-Feldman operator.\nThe goal of this operator was to be compact and as isotropic as possible. The Sobel-Feldman operator can be implemented very efficiently as it can be written as the convolution with four small kernels, \\[Sobel_x = b_1 \\circ d_0 \\circ b_1^T \\circ b_1^T.\\]\n\n\n\n\n\nRemember that (b_1=[1, 1]), and (b_2=b_1 b_1 = [1,2,1])."
+  },
+  {
+    "objectID": "lec5.html#derivatives-using-binomial-filters-1",
+    "href": "lec5.html#derivatives-using-binomial-filters-1",
+    "title": "Filters and image derivatives",
+    "section": "Derivatives using Binomial Filters",
+    "text": "Derivatives using Binomial Filters\n\n\n\nDFT of the Sobel-Feldman operator\n\n\nThe DFT of the Sobel-Feldman operator is:\n\\[\nSobel_x \\left[u,v \\right] = D_1\\left[u\\right] B_2 \\left[v \\right] = j \\sin \\left( 2 \\pi u /N \\right) \\left( 2+2 \\cos \\left(2 \\pi v/N \\right) \\right)\n\\]\n\n\n\n\n\nFigure 23: Magnitude of the DFT of four different discretizations of Gaussian derivatives: (a) (d_0); (b) (d_1); (c) Robert cross operator; and (d) Sobel-Feldman operator."
+  },
+  {
+    "objectID": "lec5.html#derivatives-using-binomial-filters-2",
+    "href": "lec5.html#derivatives-using-binomial-filters-2",
+    "title": "Filters and image derivatives",
+    "section": "Derivatives using Binomial Filters",
+    "text": "Derivatives using Binomial Filters\n\n\nFigure 24: Derivatives of a circle along the directions \\(n\\), \\(m\\), and 45 degrees. The angle is shown only where the magnitude is \\(&gt;0\\). The derivative output along 45 degrees is obtained as a linear combination of the derivatives outputs along \\(n\\) and \\(m\\). Check the differences among the different kernels. The Sobel operator gives the most rotationally invariant gradient magnitude, but it is blurrier."
+  },
+  {
+    "objectID": "lec5.html#directional-derivatives",
+    "href": "lec5.html#directional-derivatives",
+    "title": "Filters and image derivatives",
+    "section": "Directional Derivatives",
+    "text": "Directional Derivatives\n\n\n\nImage gradient\n\n\nFrom the image derivatives, we can also define the image gradient as the vector: \\[\n\\nabla \\ell (x,y) = \\left( \\frac{\\partial \\ell(x,y)}{\\partial x}, \\frac{\\partial \\ell(x,y)}{\\partial y} \\right)\n\\] For each pixel, the output is a 2D vector. In the case of using Gaussian derivatives, we can write: \\[\n\\nabla \\ell \\circ g = \\nabla g \\circ \\ell = \\left( g_x(x,y), g_y(x,y) \\right) \\circ \\ell\n\\]\nAlthough we have mostly computed derivatives along the \\(x\\) and \\(y\\) variables, we can obtain the derivative in any orientation as a linear combination of the two derivatives along the main axes. With \\({\\bf t}=\\left( \\cos (\\theta), \\sin(\\theta) \\right)\\), we can write the directional derivative along the vector \\({\\bf t}\\) as: \\[\n\\frac{\\partial \\ell (x,y)}{\\partial {\\bf t}} =  \\nabla \\ell \\cdot {\\bf t} = \\cos(\\theta) \\frac{\\partial \\ell}{\\partial x} + \\sin(\\theta) \\frac{\\partial \\ell}{\\partial y}\n\\]"
+  },
+  {
+    "objectID": "lec5.html#directional-derivatives-1",
+    "href": "lec5.html#directional-derivatives-1",
+    "title": "Filters and image derivatives",
+    "section": "Directional Derivatives",
+    "text": "Directional Derivatives\n\n\n\nImage gradient\n\n\nIn the Gaussian case: \\[\n\\begin{split}\n\\frac{\\partial \\ell}{\\partial {\\bf t}} \\circ g & = \\left( \\cos(\\theta) g_x(x,y) + \\sin(\\theta) g_y(x,y) \\right) \\circ \\ell \\\\\n& = \\left( \\nabla g  \\cdot {\\bf t} \\right) \\circ \\ell \\\\\n& = g_{\\theta} (x,y)  \\circ \\ell(x,y)\n\\end{split}\n\\qquad(10)\\]\nwith \\(g_{\\theta} (x,y) = \\cos(\\theta) g_x(x,y) + \\sin(\\theta) g_y(x,y)\\).\nHowever, to compute the derivative along any arbitrary angle \\(\\theta\\) does not require doing new convolutions. Instead, we can compute any derivative as a linear combination of the output of convolving the image with \\(g_x(x,y)\\) and \\(g_y(x,y)\\): \\[\n\\frac{\\partial \\ell}{\\partial {\\bf t}} \\circ g =  \\cos(\\theta) g_x(x,y) \\circ \\ell + \\sin(\\theta) g_y(x,y) \\circ \\ell(x,y)\n\\]"
+  },
+  {
+    "objectID": "lec5.html#directional-derivatives-2",
+    "href": "lec5.html#directional-derivatives-2",
+    "title": "Filters and image derivatives",
+    "section": "Directional Derivatives",
+    "text": "Directional Derivatives\n\n\n\nImage gradient\n\n\nWhen using discrete convolutional kernels \\(d_n\\left[n,m\\right]\\) and \\(d_m\\left[n,m\\right]\\) to approximate the derivatives along \\(n\\) and \\(m\\), it can be written as: \\[\n\\nabla \\ell = \\left( d_n\\left[n,m\\right], d_m\\left[n,m\\right] \\right) \\circ \\ell \\left[n,m\\right]\n\\] and \\[\n\\frac{\\partial \\ell}{\\partial {\\bf t}} \\circ g = d_{\\theta} \\left[n,m\\right] \\circ \\ell \\left[n,m\\right]\n\\]\nwith \\(d_{\\theta} \\left[n,m\\right]  = \\cos(\\theta) d_n\\left[n,m\\right] + \\sin(\\theta) d_m\\left[n,m\\right]\\). We expect that the linear combination of these two kernels should approximate the derivative along the direction \\(\\theta\\)."
+  },
+  {
+    "objectID": "lec5.html#image-laplacian",
+    "href": "lec5.html#image-laplacian",
+    "title": "Filters and image derivatives",
+    "section": "Image Laplacian",
+    "text": "Image Laplacian\n\n\n\nDefinition\n\n\nThe Laplacian filter was made popular by Marr and Hildreth in 1980 in the search for operators that locate the boundaries between objects.\n\\[\n\\nabla^2 \\ell = \\frac{\\partial^2 \\ell}{\\partial x^2} + \\frac{\\partial^2 \\ell}{\\partial y^2}\n\\]\n\n\n\n\n\n\n\n\n\nImportant\n\n\nThe Laplacian is more sensitive to noise than the first order derivative.\n\n\n\n\n\nOne example of application of the Laplacian is in the paper Can One Hear the Shape of a Drum, where the Laplacian is used for modeling vibrations in a drum and the sounds it produces as a function of its shape."
+  },
+  {
+    "objectID": "lec5.html#image-laplacian-1",
+    "href": "lec5.html#image-laplacian-1",
+    "title": "Filters and image derivatives",
+    "section": "Image Laplacian",
+    "text": "Image Laplacian\n\n\n\nSmoothing\n\n\nIt is useful to smooth the output with a Gaussian kernel, \\(g(x,y)\\). We can write,\n\\[\n\\nabla^2 \\ell \\circ g = \\nabla^2 g \\circ \\ell\n\\]\nTherefore, the same result can be obtained if we first compute the Laplacian of the Gaussian kernel, \\(g(x,y)\\) and then convolve it with the input image. The Laplacian of the Gaussian is\n\\[\n\\nabla^2 g = \\frac{x^2 + y^2 -2\\sigma^2}{\\sigma^4} g(x,y)\n\\]"
+  },
+  {
+    "objectID": "lec5.html#image-laplacian-2",
+    "href": "lec5.html#image-laplacian-2",
+    "title": "Filters and image derivatives",
+    "section": "Image Laplacian",
+    "text": "Image Laplacian\n\n\nFigure 25: The Gaussian Laplacian (\\(\\sigma = 1\\)) is also called the inverted mexican hat wavelet. (a) 2D plot. (b) 1D section at \\(y=0\\)."
+  },
+  {
+    "objectID": "lec5.html#image-laplacian-3",
+    "href": "lec5.html#image-laplacian-3",
+    "title": "Filters and image derivatives",
+    "section": "Image Laplacian",
+    "text": "Image Laplacian\n\n\n\nDiscrete approximation\n\n\nIn one dimension, the Laplacian can be approximated by \\([1,-2,1]\\), which is the result of the convolution of two 2-tap discrete approximations of the derivative \\([1,-1] \\circ [1,-1]\\). In two dimensions, the most popular approximation is the five-point formula, which consists of convolving the image with the kernel:\n\\[\n\\nabla_5^2 =\n\\begin{bmatrix}\n  0 & 1 & 0 \\\\\n  1 & -4 & 1\\\\\n  0 & 1 & 0\n\\end{bmatrix}\n\\qquad(11)\\]\n\nThe Laplacian of the image, using the five-point formula, is: \\[\n\\begin{split}\n\\nabla_5^2 \\ell[n,m] = & - 4 \\ell[n,m] \\\\\n                     &  + \\ell[n+1,m] \\\\\n                     &  + \\ell[n-1,m] \\\\\n                     &  + \\ell[n,m+1] \\\\\n                     &  + \\ell[n,m-1]\n\\end{split}\n\\]"
+  },
+  {
+    "objectID": "lec5.html#image-laplacian-4",
+    "href": "lec5.html#image-laplacian-4",
+    "title": "Filters and image derivatives",
+    "section": "Image Laplacian",
+    "text": "Image Laplacian\n\n\nFigure 26: Magnitude of the DFT of the Gaussian Laplacian with (a) \\(\\sigma=1/2\\); (b) \\(\\sigma=1\\); (c) \\(\\sigma=2\\); and (d) DFT of the five-point discrete approximation, Equation 11."
+  },
+  {
+    "objectID": "lec5.html#image-laplacian-5",
+    "href": "lec5.html#image-laplacian-5",
+    "title": "Filters and image derivatives",
+    "section": "Image Laplacian",
+    "text": "Image Laplacian\n\n\n\n\n\n\n\n\n\n\n\n(a)\n\n\n\n\n\n\n\n\n\n\n\n(b)\n\n\n\n\n\n\n\n\n\n\n\n(c)\n\n\n\n\n\n\n\n\n\n\n\n(d)\n\n\n\n\n\n\n\nFigure 27: Fig (a) Input image. (b) Second order derivative along \\(x\\). (c) Second-order derivative along \\(y\\). (d) The sum of (b) + (c), which gives the Laplacian."
+  },
+  {
+    "objectID": "lec5.html#image-laplacian-6",
+    "href": "lec5.html#image-laplacian-6",
+    "title": "Filters and image derivatives",
+    "section": "Image Laplacian",
+    "text": "Image Laplacian\n\n\n\nAdvantages\n\n\n\nIt is rotationally invariant. It is a linear operator that responds equally to edges in any orientation (this is only approximate in the discrete case).\nIt measures curvature. If the image contains a linear trend the derivative will be non-zero despite having no boundaries, while the Laplacian will be zero.\nEdges can be located as the zero-crossings in the Laplacian output. However, this way of detecting edges is not very reliable.\nZero crossings of an image form closed contours."
+  },
+  {
+    "objectID": "lec5.html#image-laplacian-7",
+    "href": "lec5.html#image-laplacian-7",
+    "title": "Filters and image derivatives",
+    "section": "Image Laplacian",
+    "text": "Image Laplacian\n\n\nFigure 28: Comparison between the output of a first-order derivative and the Laplacian of 1D signal. (a) Input signal. (b) Kernel \\(d_1\\). (c) Output of the derivative, that is, convolution of (a) and (b). (d) Discrete approximation of the Laplacian. (e) Output of convolving the signal (a) with the Laplacian kernel."
+  },
+  {
+    "objectID": "lec5.html#early-visual-system-model",
+    "href": "lec5.html#early-visual-system-model",
+    "title": "Filters and image derivatives",
+    "section": "Early Visual System Model",
+    "text": "Early Visual System Model\n\n\n\nApproximation of the visual system\n\n\nWe can better approximate Campbell and Robson chart with\n\\[\nh = -\\nabla^2 g  + \\lambda g\n\\qquad(12)\\]\nThe kernel \\(h\\) is the approximate impulse response of the human visual system, \\(\\lambda\\) is a small constant that is equal to the DC gain of the visual filter (here \\(\\lambda = 2\\) and \\(\\sigma=5\\)).\n\n\n\n\n\n\nFigure 29: Kernel corresponding to Equation 12 with \\(\\lambda = 2\\) and \\(\\sigma=5\\)."
+  },
+  {
+    "objectID": "lec5.html#early-visual-system-model-1",
+    "href": "lec5.html#early-visual-system-model-1",
+    "title": "Filters and image derivatives",
+    "section": "Early Visual System Model",
+    "text": "Early Visual System Model\n\n\n\n\n\n\n\n\n\n\n\n(a)\n\n\n\n\n\n\n\n\n\n\nFigure 30: Campbell and Robson chart, and a radial section of the Fourier transform of \\(h\\) from Equation 12."
+  },
+  {
+    "objectID": "lec5.html#early-visual-system-model-2",
+    "href": "lec5.html#early-visual-system-model-2",
+    "title": "Filters and image derivatives",
+    "section": "Early Visual System Model",
+    "text": "Early Visual System Model\n\n\n\n\n\n\n\n\n\n\n\n(a)\n\n\n\n\n\n\n\n\n\n\n\n(b)\n\n\n\n\n\n\n\n\n\n\n\n(c)\n\n\n\n\n\n\n\n\n\n\n\n\n\n(d)\n\n\n\n\n\n\n\n\n\n\n\n(e)\n\n\n\n\n\n\n\n\n\n\n\n(f)\n\n\n\n\n\n\n\nFigure 31: Vasarely visual illusion. Images (a) and (d), formed by nested-squares, appear as having bright diagonals in (a) and dark in (d). Images (b) and (e) show the output of the human model given by the filter from Equation 12. Plot (c) displays the intensity profiles of images (a) and (b) as horizontal sections, with image (a) represented in red and image (b) in blue. Similarly, Plot (f) represents the intensity profiles of images (d) and (e)."
+  },
+  {
+    "objectID": "lec5.html#sharpening-filter",
+    "href": "lec5.html#sharpening-filter",
+    "title": "Filters and image derivatives",
+    "section": "Sharpening Filter",
+    "text": "Sharpening Filter\n\n\n\nDefinition\n\n\nSharpening can be achieved by amplifying the amplitude of the high-spatial frequency content of the image. We start with twice the original image (sharp plus blurred parts), then subtract away the blurred components of the image:\n\\[\n\\text{sharpening filter} =\n\\begin{bmatrix}\n  0 & 0 & 0 \\\\\n  0 & 2 & 0\\\\\n  0 & 0 & 0\n\\end{bmatrix}\n-\n\\frac{1}{16}\n\\begin{bmatrix}\n  1 & 2 & 1 \\\\\n  2 & 4 & 2\\\\\n  1 & 2 & 1\n\\end{bmatrix}\n\\qquad(13)\\]\nNote that the DC gain of this sharpening filter is 1."
+  },
+  {
+    "objectID": "lec5.html#sharpening-filter-1",
+    "href": "lec5.html#sharpening-filter-1",
+    "title": "Filters and image derivatives",
+    "section": "Sharpening Filter",
+    "text": "Sharpening Filter\n\n\n\n\n\n\n\n\n\n\n\n(a)\n\n\n\n\n\n\n\n\n\n\n\n(b)\n\n\n\n\n\n\n\n\n\n\n\n(c)\n\n\n\n\n\n\n\n\n\n\n\n\n\n(d)\n\n\n\n\n\n\n\n\n\n\n\n(e)\n\n\n\n\n\n\n\n\n\n\n\n(f)\n\n\n\n\n\n\n\nFigure 32: Sharpening achieved by subtraction of blurred components. (a) Original image. (b) Sharpened once by filtering with kernel from Equation 13. Each color channel is filtered independently. (c-f) The same filter is applied successively to the previous output. In the last image, the sharpening filter has been applied five times to the input image."
+  },
+  {
+    "objectID": "lec5.html#retinex",
+    "href": "lec5.html#retinex",
+    "title": "Filters and image derivatives",
+    "section": "Retinex",
+    "text": "Retinex\n\n\n\nRetinex\n\n\nHow do you tell gray from white? The amount of light that reaches the eye from a painted piece of paper is the result of two quantities:\n\nthe amount of light reaching the piece of paper\nthe reflectance of the surface\n\n\n\n\n\n\nFigure 33: Simultaneous contrast illusion. What happens if we see two patches of unknown reflectance, and each is illuminated with two different light sources of unknown identity?"
+  },
+  {
+    "objectID": "lec5.html#retinex-2",
+    "href": "lec5.html#retinex-2",
+    "title": "Filters and image derivatives",
+    "section": "Retinex",
+    "text": "Retinex\n\n\n\nImage formation\n\n\nLet’s think of the image formation process. The surface is made of patches of different reflectances \\(r(x,y) \\in (0,1)\\). Each location receives an illumination \\(l(x,y)\\). The observed brightness is the product:\n\\[\n\\ell(x,y) = r(x,y) \\times l(x,y)\n\\]\nDespite what reaches the eye is the signal \\(\\ell(x,y)\\), our perception is not the value of \\(\\ell(x,y)\\). In fact, the squares 1 and 2 in Figure 33 have the exact same values of intensity, but we see them differently, which is generally explained by saying that we discount (at least partially) the effects of the illumination, \\(l(x,y)\\)."
+  },
+  {
+    "objectID": "lec5.html#retinex-3",
+    "href": "lec5.html#retinex-3",
+    "title": "Filters and image derivatives",
+    "section": "Retinex",
+    "text": "Retinex\n\nThe Retinex algorithm, by Land and McCann [@Land1971], is based on modeling images as if they were part of a Mondrian world (images that look like the paintings of Piet Mondrian)."
+  },
+  {
+    "objectID": "lec5.html#retinex-4",
+    "href": "lec5.html#retinex-4",
+    "title": "Filters and image derivatives",
+    "section": "Retinex",
+    "text": "Retinex\n\n\n\nAlgorithm\n\n\nBut how can we estimate \\(r(x,y)\\) and \\(l(x,y)\\) by only observing \\(\\ell(x,y)\\)?\n\nThe Retinex algorithm works by first extracting \\(x\\) and \\(y\\) spatial derivatives of the image \\(\\ell(x,y)\\) and then thresholding the gradients.\n\nFirst, we transform the product into a sum using the \\(\\log\\):\n\n\\[\n\\log \\ell(x,y) = \\log r(x,y) + \\log l(x,y)\n\\]\n\nTaking derivatives along \\(x\\) and \\(y\\) is now simple:\n\n\\[\n\\frac{\\partial \\log \\ell(x,y)}{\\partial x} = \\frac{\\partial \\log r(x,y)}{\\partial x} + \\frac{\\partial \\log l(x,y)}{\\partial x}\n\\] And the same thing is done for the derivative along \\(y\\)."
+  },
+  {
+    "objectID": "lec5.html#retinex-5",
+    "href": "lec5.html#retinex-5",
+    "title": "Filters and image derivatives",
+    "section": "Retinex",
+    "text": "Retinex\n\n\n\nAlgorithm\n\n\n\nAny derivative larger than the threshold is assigned to the derivative of the reflectance image \\(r(x,y)\\), and the ones smaller than a threshold are assigned to the illumination image \\(l(x,y)\\):\n\n\\[\n\\frac{\\partial \\log r(x,y)}{\\partial x} =  \\begin{cases}\n\\frac{\\partial \\log \\ell(x,y)}{\\partial x} & \\text{if} ~  \\left| \\frac{\\partial \\log \\ell(x,y)}{\\partial x} \\right|&gt;T\\\\\n0 & \\text{otherwise}\n\\end{cases}\n\\]\n\nThen, the image \\(\\log r(x,y)\\) is obtained by integrating the gradients, and exponentiating the result. Finally, the illumination can be obtained as \\(l(x,y) = \\ell(x,y)/r(x,y)\\)."
+  },
+  {
+    "objectID": "lec5.html#retinex-6",
+    "href": "lec5.html#retinex-6",
+    "title": "Filters and image derivatives",
+    "section": "Retinex",
+    "text": "Retinex\n\n\nFigure 34: Derivatives classified into reflectance or luminance components."
+  },
+  {
+    "objectID": "lec5.html#retinex-7",
+    "href": "lec5.html#retinex-7",
+    "title": "Filters and image derivatives",
+    "section": "Retinex",
+    "text": "Retinex\n\n\nFigure 35: Recovered components. The estimated reflectance, \\(r(x,y)\\), is close to what we perceive. It seems that what we perceive contains part of \\(l(x,y)\\)."
+  },
+  {
+    "objectID": "lec5.html#retinex-8",
+    "href": "lec5.html#retinex-8",
+    "title": "Filters and image derivatives",
+    "section": "Retinex",
+    "text": "Retinex\n\n\n\nAssumptions\n\n\n\nthe illumination image, \\(l(x,y)\\), varies smoothly\nthe reflectance image, \\(r(x,y)\\), is composed of uniform regions separated by sharp boundaries\n\n\n\n\n\n\nDecomposing an image into different physical causes is known as intrinsic images decomposition. The intrinsic image decomposition, proposed by Barrow and Tenenbaum, aims to recover intrinsic scene characteristics from images, such as occlusions, depth, surface normals, shading, reflectance, reflections, and so on."
+  },
+  {
+    "objectID": "lec5.html#concluding-remarks-1",
+    "href": "lec5.html#concluding-remarks-1",
+    "title": "Filters and image derivatives",
+    "section": "Concluding Remarks",
+    "text": "Concluding Remarks\nIn this chapter we have covered a very powerful image representation: image derivatives (first order, second order, and the Laplacian) and their discrete approximations. Despite the simplicity of this representation, we have seen that it can be used in a number of applications such as image inpaining, separation of illumination and reflectance, and it can be used to explain simple visual illusions. It is not surprising that similar filters like the ones we have seen in this chapter emerge in convolutional neural networks when trained to solve visual tasks."
   },
   {
     "objectID": "lec4.html#introduction",
@@ -2140,6 +2749,13 @@
     "title": "Fourier Filtering",
     "section": "Concluding Remarks",
     "text": "Concluding Remarks\n\n\n\nFeatures\n\n\n\neasy to analyze images according to spatial frequency representation\nFT is too global! Every sinusoidal component covers the entire image.\nFT tells us a little about what is happening in the image (based on the spatial frequency content)\nFT tells us nothing about where it is happening."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Computer vision course"
   },
   {
     "objectID": "nb/pset2_2024/pset2_2024.html",
