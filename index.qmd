@@ -19,6 +19,8 @@ title: "Computer vision course"
 ### Lec 5: Filters and image derivatives
 [Slides](./lec5.qmd)
 
+### Lec 6: Intro to learning
+[Slides](./lec6.qmd)
 
 ## Labs
 
