@@ -36,14 +36,15 @@ format:
 
 ## Notation
 
-- The algorithms we will see apply to many kinds of signals, not just images. Therefore, in this part we will use $\mathbf{x}$ to represent model inputs rather than ${\boldsymbol\ell}$. A model's final output will usually be represented by $\mathbf{y}$.
-  
-- Neural networks consist of a sequence of layers that perform a sequence of transformations $\mathbf{x}_0 \rightarrow \mathbf{x}_1 \rightarrow \ldots \rightarrow \mathbf{y}$. When we consider a single layer in isolation, we will generically refer to its input as ${\mathbf{x}_{\texttt{in}}}$ and its output as ${\mathbf{x}_{\texttt{out}}}$. We will also use the variables $\mathbf{h}$ and $\mathbf{z}$ to represent certain kinds of intermediate representations in neural nets, which will be defined when they are first used.
-
+- $\mathbf{x}$: model inputs (instead f ${\boldsymbol\ell}$)
+- $\mathbf{y}$: a model's final output.
+- $\mathbf{x}_0 \rightarrow \mathbf{x}_1 \rightarrow \ldots \rightarrow \mathbf{y}$: neural network's sequence of transformations
+- for single layer: ${\mathbf{x}_{\texttt{in}}}$ as input and ${\mathbf{x}_{\texttt{out}}}$ as output
+- $\mathbf{h}$ and $\mathbf{z}$: intermediate representations in neural nets
 
 ## Introduction
 
-:::{.callout-tip icon=false}
+:::{.callout-tip}
 ## Goal
 The goal of learning is to extract lessons from past experience in order
 to solve future problems.
@@ -61,8 +62,7 @@ Past and future do not necessarily refer to the calendar date; instead they refe
 :::{.callout-tip icon=false}
 ## Algorithm
 Because learning is itself an algorithm, it can be understood as a
-meta-algorithm: an algorithm that outputs algorithms
-(@fig-learning_as_meta_algorithm).
+meta-algorithm: an algorithm that outputs algorithms:
 :::
 
 ![Learning is an algorithm that outputs algorithms.](./img/intro_to_learning/learning_as_meta_algorithm.png){#fig-learning_as_meta_algorithm width="75%"}
@@ -72,7 +72,7 @@ meta-algorithm: an algorithm that outputs algorithms
 ## Phases
 Learning usually consists of two phases:
 
-i the **training**  phase, where we search for
+- the **training**  phase, where we search for
 an algorithm that performs well on past instances of the problem
 (training data)
 - the **testing** phase, where we deploy our learned algorithm to
@@ -84,10 +84,7 @@ solve new instances of the problem.
 
 :::{.callout-tip icon=false}
 ## Example
-Imagine you find an ancient mathematics text, with marvelous looking
-proofs, but there is a symbol you do not recognize, "$\star$\". You see
-it being used here and there in equations, and you note down examples of
-its behavior: 
+Imagine you find an ancient mathematics text: 
 $$\begin{aligned}
     2 \star 3 &= 36\nonumber \\
     7 \star 1 &= 49\nonumber \\
@@ -107,7 +104,7 @@ What do you think $\star$ represents?
 
 
 ## Learning from Examples
-:::{.callout-note}
+:::{.callout-tip icon=false}
 This kind of learning, where you observe example input-output behavior and infer a functional mapping that explains this behavior, is called **supervised learning**.
 
 Another name for this kind of learning is **fitting a model** to data.
@@ -140,37 +137,27 @@ $$\begin{aligned}
 
 
 ## Learning from Examples
-![A complicated function that could be learned from examples. This example is from @hays2007scene. ](./img/intro_to_learning/inpainting_example.png){#fig-intro_to_learning-inpainting_example}
+![A complicated function that could be learned from examples.](./img/intro_to_learning/inpainting_example.png){#fig-intro_to_learning-inpainting_example}
 
-:::{.callout-note icon=false}
-## Answer
-$F$ fills in the missing pixels.
-
-But - how exactly does $F$ fill in the missing pixels?
-:::
-
-
-## Learning without Examples
+## Learning without Examples {.smaller}
 
 :::{.callout-tip icon=false}
 ## Unsupervised learning
 
-We are given examples of *input data*
-$\{x^{(i)}\}^N_{i=1}$ but we are not told the target outputs
-$\{y^{(i)}\}^N_{i=1}$. Instead the learner has to come up with a model
-or representation of the input data that has useful properties, as
+- **input data** $\{x^{(i)}\}^N_{i=1}$ - given
+- **target outputs** $\{y^{(i)}\}^N_{i=1}$ - unknown.
+
+Learner has to come up with a model or representation of the input data that has useful properties, as
 measured by some **objective function**. 
 :::
 
 
 :::{.callout-note icon=false}
 ## Reinforcement learning
-We suppose that we are given a **reward function** that
-explicitly measures the quality of the learned function's output. To be
-precise, a reward function is a mapping from outputs to scores:
+We suppose that we are given an **reward function**:
 $$
-r: \mathcal{Y} \rightarrow \mathbb{R}
-$$.
+r: \mathcal{Y} \rightarrow \mathbb{R}.
+$$
 
 The learner tries to come up with a function that **maximizes rewards**. 
 :::
@@ -184,20 +171,18 @@ Unsupervised learning has access to training data whereas reinforcement learning
 
 :::{.callout-tip icon=false}
 ## Ingredients
-A learning algorithm consists of three key ingredients:
-
 1.  What does it mean for the learner to succeed, or, at least, to
     perform well?
 
 2.  What is the set of possible mappings from inputs to outputs that
-    we will we search over?
+    we will search over?
 
 3.  *How*, exactly, do we search the hypothesis space for a specific
     mapping that maximizes the objective?
 :::
 
 ::: {.centered}
-![](./img/intro_to_learning/key_ingredients.png){}
+![](./img/intro_to_learning/key_ingredients.png){height=320 fig-align="center"}
 :::
 
 ## Key Ingredients
@@ -215,24 +200,25 @@ Commonly, $f$ is referred to as the **learned function**.
 Function that scores model outputs:
 $$
 \mathcal{L}: \mathcal{Y} \rightarrow \mathbb{R},
-$
+$$
 or function that compares model outputs to target answers:
 $$
-\mathcal{L}: \mathcal{Y} \times \mathcal{Y} \rightarrow \mathbb{R}.$$
+\mathcal{L}: \mathcal{Y} \times \mathcal{Y} \rightarrow \mathbb{R}.
+$$
 
 We will interchangeably call this $\mathcal{L}$ either the **objective function**, the **loss function**, or the **loss**.
 :::
 
-::: aside
-A loss almost always refers to an objective we seek to *minimize*, whereas an objective function can be used to describe objectives we seek to minimize as well as those we seek to maximize.
-:::
+<!-- ::: aside -->
+<!-- A loss almost always refers to an objective we seek to *minimize*, whereas an objective function can be used to describe objectives we seek to minimize as well as those we seek to maximize. -->
+<!-- ::: -->
 
 ## Hypothesis space
 
 :::{.callout-tip icon=false}
 ## Description
-The hypothesis space can be described by a set $\mathcal{F}$ of all the
-possible functions under consideration by the learner.
+The hypothesis space is a set $\mathcal{F}$ of all the
+possible functions considered by the learner.
 
 Examples:
 
@@ -250,15 +236,20 @@ y = \theta_1 x + \theta_0m
 $$
 where $\theta_0$ and $\theta_1$ are the parameters.
 
-This example corresponds to the space of affine functions from $\mathbb{R} \rightarrow \mathbb{R}$, but this is
-not the only way to parameterize that space.
-
-Another choice could be
-$y = \theta_2\theta_1 x + \theta_0$, with parameters $\theta_0$,
-$\theta_1$, and $\theta_2$: **same space**, but **different parameterizations**!
+This example corresponds to the space of affine functions from $\mathbb{R} \rightarrow \mathbb{R}$.
 :::
 
-:::{.column-margin}
+## Hypothesis space
+:::{.callout-note icon=false}
+## Parameterization: another way
+Another choice could be
+$$
+y = \theta_2\theta_1 x + \theta_0,
+$$
+with parameters $\theta_0$, $\theta_1$, and $\theta_2$: **same space**, but **different parameterizations**!
+:::
+
+::: aside
 **Overparameterized** models, where you use more parameters than the minimum necessary to fit the data, are especially important in modern computer vision; most neural networks are overparameterized.
 :::
 
@@ -267,9 +258,7 @@ $\theta_1$, and $\theta_2$: **same space**, but **different parameterizations**!
 
 :::{.callout-tip icon=false}
 ## ERM model
-Supervised setting:
-
-we are learning a function that predicts $\mathbf{y}$ from $\mathbf{x}$ given many training examples
+Learn a function predicting $\mathbf{y}$ from $\mathbf{x}$ given many training examples
 $\{\mathbf{x}^{(i)},\mathbf{y}^{(i)}\}^N_{i=1}$.
 
 The idea is to minimize the average error (i.e., risk) we incur over all the training data
@@ -290,7 +279,9 @@ Here, $\mathcal{F}$ is the hypothesis space, $\mathcal{L}$ is the loss function,
 ## Probabilistic inference
 We can interpret ERM as doing maximum likelihood probabilistic inference.
 
-In this interpretation, we are trying to infer the hypothesis $f$ that assigns the highest probability to the data. For a model that predicts $\mathbf{y}$ given $\mathbf{x}$, the max likelihood $f$ is:
+In this interpretation, we are trying to infer the hypothesis $f$ that assigns the highest probability to the data.
+
+For a model that predicts $\mathbf{y}$ given $\mathbf{x}$, the max likelihood $f$ is:
 
 $$\begin{aligned}
     \mathop{\mathrm{arg\,max}}_f p\big(\{\mathbf{y}^{(i)}\}_{i=1}^N \bigm | \{\mathbf{x}^{(i)}\}_{i=1}^N, f\big) \quad\quad \triangleleft \quad\text{Max likelihood learning}
@@ -308,15 +299,9 @@ $f$ and the observed $\mathbf{x}$ values, and maximizing this quantity
 is called **maximum likelihood learning**.
 :::
 
-:::{.column-margin}
-To fully specify this model, we have to define the form of this conditional distribution. One common choice is that the prediction errors, $(\mathbf{y} - f(\mathbf{x}))$, are Gaussian distributed, which leads to the least-squares objective.
-:::
-
-## Learning as Probabilistic Inference
-:::{.callout-tip icon=false}
+:::{.callout-note icon=false}
 ## MAP learning
-**Priors** $p(f)$ can also be used
-for inferring the most probable hypothesis. When a prior is used in
+When a prior $p(f)$ is used in
 conjunction with a likelihood function, we arrive at **maximum a
 posteriori learning** (**MAP learning**), which infers the most probable
 hypothesis given the training data: 
@@ -327,25 +312,7 @@ $$\begin{aligned}
 \end{aligned}$$
 :::
 
-## Linear Least-Squares Regression
-
-:::{.callout-tip icon=false}
-## Description
-One of the simplest learning problems is known as **linear least-squares
-regression**. In this setting, we aim to model the relationship between
-two variables, $x$ and $y$, with a line.
-:::
-
-:::{.callout-note icon=false}
-## Example
-As a concrete example, let's imagine $x$ represents the temperature
-outside, and $y$ represents the number people at the beach. As before,
-we train (i.e., fit) our model on many observed examples of
-{`temperature outside`, `number of people at the beach`} pairs, denoted
-as $\{x^{(i)},y^{(i)}\}_{i=1}^N$. At test time, this model can be
-applied to predict the $y$ value of a new query $x'$, as shown in
-@fig-intro_to_learning-ols_train_test.
-:::
+# Examples
 
 ## Linear Least-Squares Regression
 ![The goal of learning is to use the training data to predict the $y$ value of the test query. In our example we find that for every 1 degree increase in temperature, we can expect $\sim 10$ more people to go to the beach.](./img/intro_to_learning/ols_train_test.png){#fig-intro_to_learning-ols_train_test width="70%"}
@@ -358,21 +325,24 @@ The relationship between $x$ and our predictions $\hat{y}$ of $y$ has the form
 $\hat{y} = f_{\theta}(x) = \theta_1 x + \theta_0$.
 :::
 
-:::{.callout-tip icon=false}
+:::{.callout-note icon=false}
 ## Parameterization
 This hypothesis space
 is parameterized by a two scalars, $\theta_0, \theta_1 \in \mathbb{R}$,
 the intercept and slope of the line.
 
-We denote $\theta = [\theta_0, \theta_1]$. Learning consists of
+We denote $\theta = [\theta_0, \theta_1]$.
+:::
+
+:::{.callout-important}
+Learning consists of
 finding the value of these parameters that maximizes the objective.
 :::
 
 ## Linear Least-Squares Regression
 :::{.callout-tip icon=false}
 ## Objective
-Our *objective* is that predictions should be near ground truth targets
-in a least-squares sense, that is, $(\hat{y}^{(i)} - y^{(i)})^2$ should
+Our *objective* is that $(\hat{y}^{(i)} - y^{(i)})^2$ should
 be small for all training examples $\{x^{(i)}, y^{(i)}\}_{i=1}^N$. We
 call this objective the $L_2$ loss: 
 
@@ -383,7 +353,10 @@ $$\begin{aligned}
 :::
 
 :::{.callout-note}
-We will use $J(\theta)$ to denote the total objective, over all training datapoints, as a function of the parameters; we will use $\mathcal{L}$ to denote the loss per datapoint. That is, $J(\theta) = \sum_{i=1}^N \mathcal{L}(f_{\theta}(x^{(i)}), y^{(i)})$.
+$J(\theta)$ will denote the total objective;  $\mathcal{L}$ will denote the loss per datapoint. That is
+$$
+J(\theta) = \sum_{i=1}^N \mathcal{L}(f_{\theta}(x^{(i)}), y^{(i)}).
+$$
 :::
 
 
@@ -401,7 +374,7 @@ $$
 ## Random solution?
 A first idea might be "try a bunch of random values for $\theta$ and return the one that maximizes the objective." 
 
-Will be slow!
+**Will be slow!**
 :::
 
 ## Linear Least-Squares Regression
@@ -415,10 +388,9 @@ $$\begin{aligned}
 
 This function can be rewritten as 
 $$\begin{aligned}
-    J(\theta) = (\mathbf{y} - \mathbf{X}\theta)^\mathsf{T}(\mathbf{y} - \mathbf{X}\theta)
+    J(\theta) = (\mathbf{y} - \mathbf{X}\theta)^\mathsf{T}(\mathbf{y} - \mathbf{X}\theta),
 \end{aligned}
 $$ 
-with 
 $$\begin{aligned}
 \mathbf{X} = 
  \begin{bmatrix}
@@ -447,7 +419,7 @@ $$\begin{aligned}
 ## Linear Least-Squares Regression
 :::{.callout-tip icon=false}
 ## Calculus way
-The $J$ is a quadratic form, which has a single global minimum where the derivative is zero, and no other points where the derivative is zero. Therefore, we can solve for the $\theta^*$ that minimizes $J$ by finding the point where the derivative is zero. The derivative is:
+The $J$ is a quadratic form, which has a single global minimum where the derivative is zero, and no other points where the derivative is zero. The derivative is:
 $$\begin{aligned}
     \frac{\partial J(\theta)}{\partial \theta} =  2(\mathbf{X}^\mathsf{T}\mathbf{X} \theta - \mathbf{X}^\mathsf{T}\mathbf{y}).
 \end{aligned}
@@ -456,9 +428,9 @@ $$
 We set this derivative to zero and solve for $\theta^*$:
 $$
 \begin{aligned}
-    2(\mathbf{X}^\mathsf{T}\mathbf{X} \theta^* - \mathbf{X}^\mathsf{T}\mathbf{y}) &= 0\\
-\mathbf{X}^\mathsf{T}\mathbf{X} \theta^* &= \mathbf{X}^\mathsf{T}\mathbf{y}\\
-\theta^* &= (\mathbf{X}^\mathsf{T}\mathbf{X})^{-1}\mathbf{X}^\mathsf{T}\mathbf{y}.
+    &2(\mathbf{X}^\mathsf{T}\mathbf{X} \theta^* - \mathbf{X}^\mathsf{T}\mathbf{y}) = 0\\
+&\mathbf{X}^\mathsf{T}\mathbf{X} \theta^* = \mathbf{X}^\mathsf{T}\mathbf{y}\\
+&\theta^* = (\mathbf{X}^\mathsf{T}\mathbf{X})^{-1}\mathbf{X}^\mathsf{T}\mathbf{y}.
 \end{aligned}
 $$
 :::
@@ -470,11 +442,6 @@ $$
 ## Linear Least-Squares Regression
 
 ![Linear regression finds a line that predicts the training data's $y$-values from its $x$-values.](./img/intro_to_learning/ols_summary.png){#fig-ols_summary #fig-intro_to_learning-ols_system_diagram}
-
-::: aside
-In these diagrams, we will sometimes describe the objective just in terms of $\mathcal{L}$, in which case it should be understood that this implies $J(\theta) = \sum_{i=1}^N \mathcal{L}(f_{\theta}(x^{(i)}), y^{(i)})$.
-:::
-
 
 ## Program Induction
 
@@ -495,10 +462,9 @@ In this setting, our hypothesis space may be all Python programs.
 :::{.callout-tip icon=false}
 ## Definition
 A common problem in computer vision is to recognize objects. Our input is an image $\mathbf{x}$, and our target output is a
-class label $\mathbf{y}$ (@fig-intro_to_learning-image_classification).
-
-![Image classification.](./img/intro_to_learning/image_classification.png){#fig-intro_to_learning-image_classification width="70%"}
+class label $\mathbf{y}$
 :::
+![Image classification.](./img/intro_to_learning/image_classification.png){#fig-intro_to_learning-image_classification}
 
 ## Classification and Softmax Regression
 :::{.callout-tip icon=false}
@@ -511,9 +477,11 @@ where $H$ is image height and $W$ is image width.
 :::{.callout-note icon=false}
 ## Output
 Let $\mathbf{y}$ be a $K$-dimensional vector, for
-$K$ possible classes, with $y_k = 1$ if $\mathbf{y}$ represents class
-$k$, and $y_k = 0$ otherwise.
-
+$K$ possible classes, such that:
+$$
+y_k = \begin{cases}1, \; \text{if} \; \mathbf{y} \; \text{represents class}\; k, \\
+0, \; \text{otherwise}\end{cases}
+$$
 This representation is called a **one-hot code**.
 :::
 
@@ -545,6 +513,7 @@ Unfortunately, minimizing this loss is a discrete optimization problem,
 and it is **NP-hard**.
 :::
 
+## Classification and Softmax Regression
 :::{.callout-note icon=false}
 ## Loss function - version 2
 Instead, people commonly use the cross-entropy loss, which is
@@ -561,10 +530,12 @@ $$\begin{aligned}
 $\hat{y}_k$ should *represent the probability* we think the image is an image of class $k$.
 Under that interpretation, minimizing cross-entropy maximizes the log
 likelihood of the ground truth observation $\mathbf{y}$ under our
-model's prediction $\hat{\mathbf{y}}$.
+model's prediction $\hat{\mathbf{y}}$. $\hat{y}$ should represent a **pmf**.
+:::
 
-For that interpretation to be valid, we require that $\hat{\mathbf{y}}$
-represent a (**pmf**). A pmf $\mathbf{p}$, over $K$ classes, is defined
+:::{.callout-note icon=false}
+## Probability mass function (pmf)
+A pmf $\mathbf{p}$, over $K$ classes, is defined
 as a $K$-dimensional vector with elements in the range $[0,1]$ that sums
 to 1. In other words, $\mathbf{p}$ is a point on the
 $(K-1)$-**simplex**, which we denote as
@@ -582,12 +553,15 @@ The $(K-1)$-simplex, $\vartriangle^{K-1}$, is the set of all $K$-dimensional vec
 ## Procedure
 To ensure that the output of our learned function $f_{\theta}$ has this
 property, i.e., $f_{\theta} \in \vartriangle^{K-1}$, we can compose two
-steps: (1) first apply a function
-$z_{\theta}: \mathcal{X} \rightarrow \mathbb{R}^K$, (2) then squash the
-output into the range $[0,1]$ and normalize it to sum to 1. 
+steps:
+
+- first apply a function
+$z_{\theta}: \mathcal{X} \rightarrow \mathbb{R}^K$
+- then squash the output into the range $[0,1]$ and normalize it to sum to 1. 
 :::
 
 
+## Classification and Softmax Regression
 :::{.callout-note icon=false}
 ## Squashing
 A popular way to squash is via the **softmax** function:
@@ -598,30 +572,23 @@ $$\begin{aligned}
     &\quad \quad \hat{y}_j = \frac{e^{-z_j}}{\sum_{i=1}^K e^{-z_k}}.
 \end{aligned}$$ 
 
-The values in $\mathbf{z}$ are called the **logits** and
-can be interpreted as the unnormalized log probabilities of each class.
+The values in $\mathbf{z}$ are called the **logits**.
+
 :::
 
-
-Now we have, 
+:::{.callout-note}
+Now we have: 
 
 $$\begin{aligned}
     \hat{\mathbf{y}} = f_{\theta}(\mathbf{x}) = \texttt{softmax}(z_{\theta}(\mathbf{x}))
 \end{aligned}$$ 
+:::
 
 ## Classification and Softmax Regression
 
-![Softmax regression for image classification. The $\odot$ symbol represents an elementwise product. The cross-entropy loss is the negative of the sum over elementwise agreements between the prediction vector $\hat{\mathbf{y}}$ and the label vector $\mathbf{y}$, that is, if $\mathbf{s} = \mathbf{y} \odot \log \hat{\mathbf{y}}$ is the vector of scores for how well our prediction agrees with the label, then our cross-entropy loss is $H(\mathbf{y}, \hat{\mathbf{y}}) = - \sum_{k=1}^K s_k$.](./img/intro_to_learning/softmax_regression_diagram.png){#fig-softmax_regression_diagram}
-
-The prediction placed about 40 percent probability on the true class,
-"guitarfish," so we are 60 percent off from an ideal prediction
-(indicated by the red bar; an ideal prediction would place 100 percent
-probability on the true class). Our loss is $-\log 0.4$.
+![Softmax regression for image classification.](./img/intro_to_learning/softmax_regression_diagram.png){#fig-softmax_regression_diagram}
 
 ## Classification and Softmax Regression
-This learning problem, which is also called , can be summarized as
-follows:
-
 ![Learning is a meta-algorithm, an algorithm that outputs algorithms; metalearning is just learning applied to learning, and therefore it is a meta-meta-algorithm.](./img/intro_to_learning/softmax_regression_learning_problem.png){#fig-softmax_regression_learning_problem #fig-intro_to_learning-meta_learning_diagram}
 
 ## Learning to Learn
@@ -673,21 +640,6 @@ how to *learn* quickly on our own.
 ## Gradient-Based Learning Algorithms
 
 :::{.callout-tip icon=false}
-## Overview
-Once you have specified a learning problem (loss function, hypothesis space, parameterization), the next step is to find the parameters that minimize the loss.
-
-This is an optimization problem, and the most common optimization algorithm we will use is **gradient descent**. 
-
-There are many varieties of gradient descent, and we will call this whole family **gradient-based learning algorithms**. All share the same basic idea: at some operating point, calculate the direction of steepest descent, then use this direction to find a new operating point with lower loss.
-:::
-
-::: aside
-We use the term **operating point** to refer to a particular point (setting of the parameters) where we are currently evaluating the loss.
-:::
-
-## Gradient-Based Learning Algorithms
-
-:::{.callout-tip icon=false}
 ## Setting
 We consider the task of minimizing a cost function $J: \cdot \rightarrow \mathbb{R}$, which is a function that maps some arbitrary input to a scalar cost.
 
@@ -703,13 +655,13 @@ $$
 
 ## Gradient-Based Learning Algorithms
 :::{.callout-tip icon=false}
-## Zeroth-order optimization**
-The update function only gets to observe the value $J(\theta)$. The only way, then, to find $\theta$'s that minimize the loss is to sample different values for $\theta$ and move toward the values that are lower.
+## Zeroth-order optimization
+The update function only gets to observe the value $J(\theta)$. The only way, then, to find $\theta$'s that minimize the loss is to **sample** different values for $\theta$ and move toward the values that are lower.
 :::
 
 :::{.callout-note icon=false}
 ## First-order optimization
-Also called **gradient-based optimization**: the update function takes as input the gradient of the cost with respect to the parameters at the current operating point, $\nabla_{\theta}J(\theta)$. This reveals hugely useful information about the loss that directly tells us how to minimize it: just move in the direction of steepest descent, that is, the gradient direction.
+Also called **gradient-based optimization**: the update function takes as input the gradient of the cost with respect to the parameters at the current operating point, $\nabla_{\theta}J(\theta)$. This reveals the **direction**.
 :::
 
 ::: aside
@@ -727,7 +679,7 @@ Higher-order optimization methods observe higher-order derivatives of the loss, 
 - **learning rate** $\eta$, which controls the step size (learning rate times gradient magnitude)
 - the number of steps $K$.
 
-If the learning rate is sufficiently small and the initial parameter vector $\theta^0$ is random, then this algorithm will almost surely converge to a local minimum of $J$ as $K \rightarrow \infty$~\cite{lee2016gradient}. However, to descend more quickly, it can be useful to set the learning rate to a higher value. 
+If the learning rate is sufficiently small and the initial parameter vector $\theta^0$ is random, then this algorithm will almost surely converge to a local minimum of $J$ as $K \rightarrow \infty$. 
 :::
 
 
@@ -764,7 +716,7 @@ Momentum means that we set the parameter update to be a direction $\mathbf{v}^{k
 $$
 \mathbf{v}^{k+1} = \mu \mathbf{v}^{k} - \eta\nabla_{\theta} J(\theta^k)
 $$
-The weight $\mu$ in this combination is a new hyperparameter, sometimes simply called the momentum.
+The weight $\mu$ in this combination is a new hyperparameter, sometimes simply called the **momentum**.
 :::
 
 ## Gradient-Based Learning Algorithms
@@ -773,11 +725,10 @@ The weight $\mu$ in this combination is a new hyperparameter, sometimes simply c
 ## Gradient-Based Learning Algorithms
 ![(left) A simple loss function $J = \texttt{abs}(\theta)$. (right) Optimization trajectory for three different settings of momentum $\mu$. White line indicates value of the parameter at each iteration of optimization, starting at top and progressing to bottom. Color is value of the loss. Red dot is location where loss first reaches within $0.01$ of optimal value.](./img/gradient_descent/momentum_out1.png){#fig-gradient_descent-momentum_out1}
 
-## Gradient-Based Learning Algorithms {.scrollable}
+## Gradient-Based Learning Algorithms {.scrollable .smaller}
 
 ![](./img/gradient_descent/grad_descent.png){#fig-gradient_descent-grad_descent_simple_examples}
 
-<!-- ![How gradient descent behaves on various functions.** In each subplot, the left shows the function $J$, with the red point representing the solution found by gradient descent (GD) with $\eta=0.01$ and $\mu=0.9$. The right shows the trajectory of $x$ values over iterations of GD, plotted on top of $J$ at each iteration. (a) As $\eta$ goes to zero, GD converges for convex functions. (b) Discontinuities pose no essential problem, as long as the gradient is defined on either side. (c) A nearly flat function will exhibit very slow descent. (d) Piecewise constant functions are problematic because the gradient completely vanishes. (e) For the function $J=\texttt{sqrt}(\texttt{abs}(\theta))-0.25$, the gradient goes to infinity at the minimizer, causing instability. (f) When $J$ has multiple local minima, we may not find the global minimum.](./img/gradient_descent/grad_descent.png){#fig-gradient_descent-grad_descent_simple_examples} -->
 
 
 ## Gradient-Based Learning Algorithms
@@ -795,7 +746,7 @@ What are some other good choices for $\mathbf{v}$?
 
 
 ## Gradient-Based Learning Algorithms
-![Using @alg-gradient_descent_ES) to minimize a nondifferentiable (zero-gradient) loss, using $\sigma=1$, $M=10$, and $\eta=0.02$.](./img/gradient_descent/sampling_out1.png){#fig-gradient_descent-sampling_out1}
+![Using evolution strategies to minimize a nondifferentiable (zero-gradient) loss, using $\sigma=1$, $M=10$, and $\eta=0.02$.](./img/gradient_descent/sampling_out1.png){#fig-gradient_descent-sampling_out1}
 
 ## Gradient-Based Learning Algorithms
 :::{.callout-tip icon=false}
@@ -821,28 +772,24 @@ What are some other good choices for $\mathbf{v}$?
 
 :::{.callout-important icon=false}
 ## Expensive computation
-To make this clear, we will write out $J$ as an explicit function of the training data $\{\mathbf{x}^{(i)}, \mathbf{y}^{(i)}\}_{i=1}^N$. For typical learning problems, $\nabla_{\theta} J(\theta, \{\mathbf{x}^{(i)}, \mathbf{y}^{(i)}\}_{i=1}^N)$ decomposes as follows:
+For typical learning problems, $\nabla_{\theta} J(\theta, \{\mathbf{x}^{(i)}, \mathbf{y}^{(i)}\}_{i=1}^N)$ decomposes as follows:
 $$
 \begin{align}
     \nabla_{\theta} J(\theta, \{\mathbf{x}^{(i)}, \mathbf{y}^{(i)}\}_{i=1}^N) &= 
-    \nabla_{\theta} \frac{1}{N}\sum_{i=1}^N \mathcal{L}(f_{\theta}(\mathbf{x}^{(i)}), \mathbf{y}^{(i)})\\
-    &= \frac{1}{N}\sum_{i=1}^N \nabla_{\theta} \mathcal{L}(f_{\theta}(\mathbf{x}^{(i)}), \mathbf{y}^{(i)})
+    \nabla_{\theta} \frac{1}{N}\sum_{i=1}^N \mathcal{L}(f_{\theta}(\mathbf{x}^{(i)}), \mathbf{y}^{(i)}) = \frac{1}{N}\sum_{i=1}^N \nabla_{\theta} \mathcal{L}(f_{\theta}(\mathbf{x}^{(i)}), \mathbf{y}^{(i)})
 \end{align}
 $$
 :::
 
-## Stochastic Gradient Descent
 :::{.callout-tip icon=false}
 ## Batching
 
-Suppose instead we randomly subsample (without replacement) a *batch* of terms from this sum, $\{\mathbf{x}^{(b)}, \mathbf{y}^{(b)}\}_{b=1}^B$, where $B$ is the **batch size**. We then compute an *estimate* of the total gradient as the average gradient over this batch as follows:
+Suppose instead we randomly subsample a *batch* of terms from this sum, $\{\mathbf{x}^{(b)}, \mathbf{y}^{(b)}\}_{b=1}^B$, where $B$ is the **batch size**. We then compute an *estimate* of the total gradient as the average gradient over this batch as follows:
 $$
 \begin{align}
     \tilde{\mathbf{g}} = \frac{1}{N}\sum_{b=1}^B \nabla_{\theta} \mathcal{L}(f_{\theta}(\mathbf{x}^{(b)}), \mathbf{y}^{(b)})
 \end{align}
 $$
-
-If we sample a large batch, where $B$ is almost as large as $N$, then the average over the $B$ terms should be roughly the same as the average over all $N$ terms. If we sample a smaller batch, then our estimate of the gradient will be less accurate but faster to compute. Therefore we have a tradeoff between accuracy and speed, and we can navigate this tradeoff with the hyperparameter $B$. 
 :::
 
 ## Stochastic Gradient Descent
@@ -969,13 +916,13 @@ For $K=10$ there are many
 hypotheses (polynomial functions) that perfectly the data (true
 function + noise) -- there is insufficient data for the objective to
 uniquely identify one of the hypotheses to be the best. Because of this,
-the hypothesis output by the optimizer may be an arbitrary one
+the hypothesis output by the optimizer may be an arbitrary one.
 :::
 
 ## The Problem of Generalization
 :::{.callout-tip icon=false}
 ## Approximation error 
-The gap between the black line and the training data points. Let $\{x_{(\texttt{train})}^{(i)}, y_{(\texttt{train})}^{(i)}\}_{i=1}^N$ be
+ Let $\{x_{(\texttt{train})}^{(i)}, y_{(\texttt{train})}^{(i)}\}_{i=1}^N$ be
 our training data set (the black points). Then the approximation error
 $J_{\texttt{approx}}$ is defined as the total cost incurred on this
 training data: 
@@ -983,13 +930,17 @@ training data:
 $$\begin{aligned}
     J_{\texttt{approx}} = \frac{1}{N} \sum_{i=1}^N \mathcal{L}(f_{\theta}(x_{(\texttt{train})}^{(i)}), y_{(\texttt{train})}^{(i)})
 \end{aligned}$$ 
+It is the gap between the black line and the training data points.
+:::
 
+::: aside
 Notice that approximation error is the cost function we minimize in empirical risk minimization.
 :::
 
+## The Problem of Generalization
 :::{.callout-warning icon=false}
 ## Generalization error
-The gap between the black line and the green line, that is, the expected cost we would incur if we sampled a new test point at random
+The expected cost we would incur if we sampled a new test point at random
 from the true data generating process. Generalization error is often
 approximated by measuring performance on a heldout ,
 $\{x_{(\texttt{val})}^{(i)}, y_{(\texttt{val})}^{(i)}\}_{i=1}^N$, which
@@ -1000,6 +951,7 @@ $$\begin{aligned}
     J_{\texttt{gen}} &= \mathbb{E}_{x,y \sim p_{\texttt{data}}} [ \mathcal{L}(f_{\theta}(x), y)]\\
                         &\approx \frac{1}{N} \sum_{i=1}^N \mathcal{L}(f_{\theta}(x_{(\texttt{val})}^{(i)}), y_{(\texttt{val})}^{(i)})
 \end{aligned}$$
+It is the gap between the black line and the green line.
 :::
 
 ## The Problem of Generalization
@@ -1010,18 +962,18 @@ $$\begin{aligned}
 
 :::{.callout-tip icon=false}
 ## Goldilocks principle
-The previous example suggests a kind of "Goldilocks principle." We
-should prefer hypotheses (functions $f$) that are sufficiently
+We should prefer hypotheses (functions $f$) that are sufficiently
 expressive to fit the data, but not so flexible that they can overfit
 the data.
 :::
 
+![](img/goldilocks.png){fig-align="center"}
+
+## Regularization
 :::{.callout-important icon=false}
 ## Regularization
 Mechanisms that penalize function complexity so that we avoid
-learning too flexible a function that overfits. Typically, regularizers
-are terms we add to the objective that prefer simple functions in the
-hypothesis space, all else being equal. They therefore embody the
+learning too flexible a function that overfits. Regularizers embody the
 principle of **Occam's razor**. 
 
 The general form of a regularized objective is:
@@ -1030,6 +982,12 @@ $$\begin{aligned}
 \end{aligned}$${#eq-problem_of_generalization-regularized_objective} 
 where $\lambda$ is a hyperparameter that controls the strength of the regularization.
 :::
+
+::: aside
+**Bayesian Occam's razor**: more complex hypothesis spaces must cover more possible hypotheses, and therefore
+must assign less prior mass to any single hypothesis. 
+:::
+
 
 ## Regularization
 :::{.callout-tip icon=false}
@@ -1041,8 +999,6 @@ R(\theta) = \left\lVert\theta\right\rVert_{p}.
 $$ 
 
 The $L_p$-norm of $\mathbf{x}$ is $(\sum_i |x_i|^{p})^{\frac{1}{p}}$. The $L_2$-norm is the familiar least-squares objective.
-
-When $p=2$, the regularizer is called **Tikonov regression**. 
 :::
 
 
@@ -1069,8 +1025,6 @@ plus a constant.
 :::{.callout-tip icon=false}
 ## Revisiting the $\star$ Problem
 
-Remember the $\star$ problem:
-
 $$\begin{aligned}
     3 \star 2 &= 36\nonumber \\
     7 \star 1 &= 49\nonumber \\
@@ -1078,7 +1032,6 @@ $$\begin{aligned}
     2 \star 2 &= 16\nonumber
 \end{aligned}$$ 
 
-- $x \star y = (xy)^2$
 - maybe $x \star y =  94.5x - 9.5x^2 + 4y^2 - 151$?
 - or maybe
 ``` {.python xleftmargin="0.33" xrightmargin="0.33" fontsize="\\fontsize{8.5}{9}" frame="single" framesep="2.5pt" baselinestretch="1.05"}
@@ -1096,16 +1049,6 @@ def star(x,y):
 ```
 :::
 
-## Regularization
-:::{.callout-tip icon=false}
-## Bayesian Occam's razor** 
-More complex hypothesis spaces must cover more possible hypotheses, and therefore
-must assign less prior mass to any single hypothesis (the prior
-probability of all possible hypotheses in the hypothesis space must sum
-to 1) @jefferys1992ockham, @mackay2003information. This is why,
-probabilistically, simpler hypotheses are more likely to be true.
-:::
-
 ## Data, Priors, and Hypotheses
 
 :::{.callout-tip icon=false}
@@ -1116,7 +1059,7 @@ vision.
 
 2. **priors** (a.k.a. **regularizers**): prefer some solutions over others a priori.
 
-3 set of **hypotheses** under
+3. Set of **hypotheses** under
 consideration for what the true function may be. The hypothesis space
 constrains which solutions we can possibly find. 
 :::
@@ -1216,7 +1159,7 @@ $$
 
 ## Summary of the Experiments
 
-:::{.callout-tip icon=false}
+:::{.callout-important}
 ## General principle
 ::: center
 *What can be achieved with any one of our tools can also be achieved
