@@ -30,8 +30,8 @@ format:
     theme: default
     multiplex:
       url: 'https://mplex.vitv.ly'
-      secret: '45a3fc3fd7bd6e12fb2ee330f2a2bb5b'
-      id: '0eeddbfb642a8eb99f1980947a12ab30c31c6520ca4b825ef73a04eeaa411db9'
+      secret: '45b7e26aa04594184685a0101f142cdc'
+      id: 'afdce9ed87450356e2b7f64b99f2a5bddb6163c45d788acddff890700ca45bd5'
 ---
 
 ## Notation
