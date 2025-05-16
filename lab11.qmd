@@ -4,5 +4,5 @@ title: "Lab 11: CNN classifier"
 
 # CNN Classifier
 
-Please complete the tutorial: https://docs.pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html.
+Please complete the tutorial: <https://docs.pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html>.
 
