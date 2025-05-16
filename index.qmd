@@ -65,3 +65,6 @@ title: "Computer vision course"
 
 ### Lab10: Optimization methods
 [Lab10](./lab10.qmd)
+
+### Lab11: Optimization methods
+[Lab11](./lab11.qmd)
