@@ -1,0 +1,9 @@
+---
+title: "Lecture 10: Convolutional networks"
+---
+
+# Intro to PyTorch
+
+Here we go through deep learning lectures:
+
+- <https://dslnu.github.io/dl_nlp/dl_lec7.html>

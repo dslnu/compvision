@@ -22,6 +22,18 @@ title: "Computer vision course"
 ### Lec 6: Intro to learning
 [Slides](./lec6.qmd)
 
+### Lec 7: Intro to deep learning
+[Slides](./lec7.qmd)
+
+### Lec 8: Regularization and Optimization
+[Slides](./lec8.qmd)
+
+### Lec 9: Intro to PyTorch
+[Slides](./lec9.qmd)
+
+### Lec 10: Convolutional networks
+[Slides](./lec10.qmd)
+
 ## Labs
 
 ### Lab1: Getting started with images; basic manipulation
@@ -38,3 +50,18 @@ title: "Computer vision course"
 
 ### Lab5: Filters and image derivatives
 [Lab5](./lab5.qmd)
+
+### Lab6: Logistic Regression with a Neural Network
+[Lab6](./lab6.qmd)
+
+### Lab7: Intro to Deep Learning
+[Lab7](./lab7.qmd)
+
+### Lab8: Building a deep neural network step-by-step
+[Lab8](./lab8.qmd)
+
+### Lab9: Intro to Pytorch
+[Lab9](./lab9.qmd)
+
+### Lab10: Optimization methods
+[Lab10](./lab10.qmd)

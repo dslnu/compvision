@@ -1,0 +1,491 @@
+---
+title: "Lab 6: Fourier"
+---
+
+# Guide
+$$
+y = A \sin\left(\frac{2\pi x}{\lambda} + \phi\right)
+$$
+
+
+- $A$ - amplitude
+- $\lambda$ - wavelength
+- $\phi$ - phase
+
+## Sinus waves
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.arange(-500, 501, 1)
+wavelength = 200
+y = np.sin(2 * np.pi * x / wavelength)
+plt.plot(x, y)
+plt.show()
+```
+
+2D grating:
+
+```python
+# gratings.py
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-500, 501, 1)
+
+X, Y = np.meshgrid(x, x)
+
+wavelength = 200
+grating = np.sin(2 * np.pi * X / wavelength)
+
+plt.set_cmap("gray")
+plt.imshow(grating)
+plt.show()
+```
+
+Changing orientation:
+
+```python
+# gratings.py
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-500, 501, 1)
+
+X, Y = np.meshgrid(x, x)
+
+wavelength = 200
+angle = np.pi / 9
+grating = np.sin(
+    2*np.pi*(X*np.cos(angle) + Y*np.sin(angle)) / wavelength
+)
+
+plt.set_cmap("gray")
+plt.imshow(grating)
+plt.show()
+```
+
+## Fourier intro
+
+```python
+# gratings.py
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-500, 501, 1)
+
+X, Y = np.meshgrid(x, x)
+
+wavelength = 200
+angle = 0
+grating = np.sin(
+    2*np.pi*(X*np.cos(angle) + Y*np.sin(angle)) / wavelength
+)
+
+plt.set_cmap("gray")
+
+plt.subplot(121)
+plt.imshow(grating)
+
+# Calculate Fourier transform of grating
+ft = np.fft.ifftshift(grating)
+ft = np.fft.fft2(ft)
+ft = np.fft.fftshift(ft)
+
+plt.subplot(122)
+plt.imshow(abs(ft))
+plt.xlim([480, 520])
+plt.ylim([520, 480])  # Note, order is reversed for y
+plt.show()
+```
+Doubled frequency:
+
+```python
+# gratings.py
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-500, 501, 1)
+
+X, Y = np.meshgrid(x, x)
+
+wavelength = 100
+angle = 0
+grating = np.sin(
+    2*np.pi*(X*np.cos(angle) + Y*np.sin(angle)) / wavelength
+)
+
+plt.set_cmap("gray")
+
+plt.subplot(121)
+plt.imshow(grating)
+
+# Calculate Fourier transform of grating
+ft = np.fft.ifftshift(grating)
+ft = np.fft.fft2(ft)
+ft = np.fft.fftshift(ft)
+
+plt.subplot(122)
+plt.imshow(abs(ft))
+plt.xlim([480, 520])
+plt.ylim([520, 480])  # Note, order is reversed for y
+plt.show()
+```
+Rotated:
+```python
+# gratings.py
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-500, 501, 1)
+
+X, Y = np.meshgrid(x, x)
+
+wavelength = 100
+angle = np.pi/9
+grating = np.sin(
+    2*np.pi*(X*np.cos(angle) + Y*np.sin(angle)) / wavelength
+)
+
+plt.set_cmap("gray")
+
+plt.subplot(121)
+plt.imshow(grating)
+
+# Calculate Fourier transform of grating
+ft = np.fft.ifftshift(grating)
+ft = np.fft.fft2(ft)
+ft = np.fft.fftshift(ft)
+
+plt.subplot(122)
+plt.imshow(abs(ft))
+plt.xlim([480, 520])
+plt.ylim([520, 480])  # Note, order is reversed for y
+plt.show()
+```
+
+- distance between the dots is frequency
+- orientation is preserved
+- value of the pixels is the amplitude
+- phase not shown
+
+Add two waves:
+```python
+# gratings.py
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-500, 501, 1)
+
+X, Y = np.meshgrid(x, x)
+
+wavelength_1 = 200
+angle_1 = 0
+grating_1 = np.sin(
+    2*np.pi*(X*np.cos(angle_1) + Y*np.sin(angle_1)) / wavelength_1
+)
+wavelength_2 = 100
+angle_2 = np.pi/4
+grating_2 = np.sin(
+    2*np.pi*(X*np.cos(angle_2) + Y*np.sin(angle_2)) / wavelength_2
+)
+
+plt.set_cmap("gray")
+plt.subplot(121)
+plt.imshow(grating_1)
+plt.subplot(122)
+plt.imshow(grating_2)
+plt.show()
+
+gratings = grating_1 + grating_2
+
+# Calculate Fourier transform of the sum of the two gratings
+ft = np.fft.ifftshift(gratings)
+ft = np.fft.fft2(ft)
+ft = np.fft.fftshift(ft)
+
+plt.figure()
+plt.subplot(121)
+plt.imshow(gratings)
+
+plt.subplot(122)
+plt.imshow(abs(ft))
+plt.xlim([480, 520])
+plt.ylim([520, 480])  # Note, order is reversed for y
+#plt.show()
+```
+And more:
+```python
+# gratings.py
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-500, 501, 1)
+
+X, Y = np.meshgrid(x, x)
+
+amplitudes = 0.5, 0.25, 1, 0.75, 1
+wavelengths = 200, 100, 250, 300, 60
+angles = 0, np.pi / 4, np.pi / 9, np.pi / 2, np.pi / 12
+
+gratings = np.zeros(X.shape)
+for amp, w_len, angle in zip(amplitudes, wavelengths, angles):
+    gratings += amp * np.sin(
+        2*np.pi*(X*np.cos(angle) + Y*np.sin(angle)) / w_len
+    )
+
+# Calculate Fourier transform of the sum of the gratings
+ft = np.fft.ifftshift(gratings)
+ft = np.fft.fft2(ft)
+ft = np.fft.fftshift(ft)
+
+plt.set_cmap("gray")
+plt.subplot(121)
+plt.imshow(gratings)
+
+plt.subplot(122)
+plt.imshow(abs(ft))
+plt.xlim([480, 520])
+plt.ylim([520, 480])  # Note, order is reversed for y
+#plt.show()
+```
+Adding constant:
+```python
+# gratings.py
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-500, 501, 1)
+
+X, Y = np.meshgrid(x, x)
+
+amplitudes = 0.5, 0.25, 1, 0.75, 1
+wavelengths = 200, 100, 250, 300, 60
+angles = 0, np.pi / 4, np.pi / 9, np.pi / 2, np.pi / 12
+
+gratings = np.zeros(X.shape)
+for amp, w_len, angle in zip(amplitudes, wavelengths, angles):
+    gratings += amp * np.sin(
+        2*np.pi*(X*np.cos(angle) + Y*np.sin(angle)) / w_len
+    )
+
+# Add a constant term to represent the background of image
+gratings += 1.25
+
+# Calculate Fourier transform of the sum of the gratings
+ft = np.fft.ifftshift(gratings)
+ft = np.fft.fft2(ft)
+ft = np.fft.fftshift(ft)
+
+plt.set_cmap("gray")
+plt.subplot(121)
+plt.imshow(gratings)
+
+plt.subplot(122)
+plt.imshow(abs(ft))
+plt.xlim([480, 520])
+plt.ylim([520, 480])  # Note, order is reversed for y
+#plt.show()
+```
+
+## Using Fourier to reconstruct an image
+```python
+# fourier_synthesis.py
+
+import matplotlib.pyplot as plt
+
+image_filename = "img/cybertruck.png"
+
+# Read and process image
+image = plt.imread(image_filename)
+image = image[:, :, :3].mean(axis=2)  # Convert to grayscale
+print(image.shape)
+
+plt.set_cmap("gray")
+
+plt.imshow(image)
+plt.axis("off")
+plt.show()
+```
+
+Calculate FFT:
+
+```python
+# fourier_synthesis.py
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def calculate_2dft(input):
+    ft = np.fft.ifftshift(input)
+    ft = np.fft.fft2(ft)
+    return np.fft.fftshift(ft)
+
+# Read and process image
+image = plt.imread(image_filename)
+image = image[:, :, :3].mean(axis=2)  # Convert to grayscale
+
+plt.set_cmap("gray")
+
+ft = calculate_2dft(image)
+
+plt.subplot(121)
+plt.imshow(image)
+plt.axis("off")
+plt.subplot(122)
+plt.imshow(np.log(abs(ft)))
+plt.axis("off")
+plt.show()
+```
+
+:::{.callout-note}
+## Interpretation
+
+- Each pair of dots represents a sinusoidal grating with a specific frequency, amplitude, orientation, and phase
+- the higher the distance from the centre,  the higher the frequency
+- the brighter the dots, the higher amplitude
+- the orientation of each pair of dots in relation to the centre represents the orientation of the gratings
+:::
+
+## Inverse Fourier transform
+
+We can compute the inverse of the Fourier transform and go back to the original 
+sinusoidal grating:
+
+```python
+# gratings.py
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-500, 501, 1)
+
+X, Y = np.meshgrid(x, x)
+
+wavelength = 100
+angle = np.pi/9
+grating = np.sin(
+    2*np.pi*(X*np.cos(angle) + Y*np.sin(angle)) / wavelength
+)
+
+plt.set_cmap("gray")
+
+plt.subplot(131)
+plt.imshow(grating)
+plt.axis("off")
+
+# Calculate the Fourier transform of the grating
+ft = np.fft.ifftshift(grating)
+ft = np.fft.fft2(ft)
+ft = np.fft.fftshift(ft)
+
+plt.subplot(132)
+plt.imshow(abs(ft))
+plt.axis("off")
+plt.xlim([480, 520])
+plt.ylim([520, 480])
+
+# Calculate the inverse Fourier transform of 
+# the Fourier transform
+ift = np.fft.ifftshift(ft)
+ift = np.fft.ifft2(ift)
+ift = np.fft.fftshift(ift)
+ift = ift.real  # Take only the real part, as computations add some noise
+
+plt.subplot(133)
+plt.imshow(ift)
+plt.axis("off")
+plt.show()
+```
+
+Full code:
+
+## Edge detection
+
+### De-noising
+```python
+img = cv2.imread('img/cybertruck.png', 0)
+rows, cols = img.shape
+crow, ccol = int(rows / 2), int(cols / 2)  # center
+
+# Circular LPF mask, center circle is 1, remaining all zeros
+rows, cols = img.shape
+crow, ccol = int(rows / 2), int(cols / 2)
+
+mask = np.zeros((rows, cols, 2), np.uint8)
+r = 70
+center = [crow, ccol]
+x, y = np.ogrid[:rows, :cols]
+mask_area = (x - center[0]) ** 2 + (y - center[1]) ** 2 <= r*r
+mask[mask_area] = 1
+
+# apply mask and inverse DFT
+fshift = dft_shift * mask
+
+fshift_mask_mag = 2000 * np.log(cv2.magnitude(fshift[:, :, 0], fshift[:, :, 1]))
+
+f_ishift = np.fft.ifftshift(fshift)
+img_back = cv2.idft(f_ishift)
+img_back = cv2.magnitude(img_back[:, :, 0], img_back[:, :, 1])
+
+plt.subplot(2, 2, 1), plt.imshow(img, cmap='gray')
+plt.title('Input Image'), plt.xticks([]), plt.yticks([])
+plt.subplot(2, 2, 2), plt.imshow(magnitude_spectrum, cmap='gray')
+plt.title('After FFT'), plt.xticks([]), plt.yticks([])
+plt.subplot(2, 2, 3), plt.imshow(fshift_mask_mag, cmap='gray')
+plt.title('FFT + Mask'), plt.xticks([]), plt.yticks([])
+plt.subplot(2, 2, 4), plt.imshow(img_back, cmap='gray')
+plt.title('After FFT Inverse'), plt.xticks([]), plt.yticks([])
+plt.show()
+```
+
+### Band pass
+```python
+img = cv2.imread('img/cybertruck.png', 0)
+rows, cols = img.shape
+crow, ccol = int(rows / 2), int(cols / 2)  # center
+
+# Concentric BPF mask,with are between the two cerciles as one's, rest all zero's.
+rows, cols = img.shape
+crow, ccol = int(rows / 2), int(cols / 2)
+
+mask = np.zeros((rows, cols, 2), np.uint8)
+r_out = 80
+r_in = 5
+center = [crow, ccol]
+x, y = np.ogrid[:rows, :cols]
+
+mask_area = np.logical_and(((x - center[0]) ** 2 + (y - center[1]) ** 2 >= r_in ** 2),
+                           ((x - center[0]) ** 2 + (y - center[1]) ** 2 <= r_out ** 2))
+mask[mask_area] = 1
+
+# apply mask and inverse DFT
+fshift = dft_shift * mask
+
+fshift_mask_mag = 2000 * np.log(cv2.magnitude(fshift[:, :, 0], fshift[:, :, 1]))
+
+f_ishift = np.fft.ifftshift(fshift)
+img_back = cv2.idft(f_ishift)
+img_back = cv2.magnitude(img_back[:, :, 0], img_back[:, :, 1])
+
+plt.subplot(2, 2, 1), plt.imshow(img, cmap='gray')
+plt.title('Input Image'), plt.xticks([]), plt.yticks([])
+plt.subplot(2, 2, 2), plt.imshow(magnitude_spectrum, cmap='gray')
+plt.title('After FFT'), plt.xticks([]), plt.yticks([])
+plt.subplot(2, 2, 3), plt.imshow(fshift_mask_mag, cmap='gray')
+plt.title('FFT + Mask'), plt.xticks([]), plt.yticks([])
+plt.subplot(2, 2, 4), plt.imshow(img_back, cmap='gray')
+plt.title('After FFT Inverse'), plt.xticks([]), plt.yticks([])
+plt.show()
+```
+# Exercises
+
+
+# Recommended reading

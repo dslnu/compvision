@@ -1,0 +1,9 @@
+---
+title: "Lecture 9: Intro to Pytorch"
+---
+
+# Intro to PyTorch
+
+Here we go through deep learning lectures:
+
+- <https://dslnu.github.io/dl_nlp/dl_lec5.html>

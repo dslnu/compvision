@@ -1,0 +1,8 @@
+---
+title: "Lab 6: Intro to Learning"
+---
+
+# Intro to learning
+
+Please complete the attached notebook (Logistic Regression with a Neural Network).
+

@@ -1,0 +1,7 @@
+---
+title: "Lab 7: Intro to Deep Learning"
+---
+
+# Intro to deep learning
+This was done as part of related lecture [](lec7.qmd).
+

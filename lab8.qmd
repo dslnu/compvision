@@ -1,0 +1,8 @@
+---
+title: "Lab 8: Building a deep neural network step-by-step"
+---
+
+# Deep neural networks
+
+Please complete the attached notebook (Building a deep neural network step-by-step).
+

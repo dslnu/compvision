@@ -1,0 +1,12 @@
+---
+title: "Lecture 7: Intro to Deep Learning"
+---
+
+# Intro to deep learning
+
+Here we go through deep learning lectures:
+
+- <https://dslnu.github.io/dl_nlp/dl_lec1.html>
+- <https://dslnu.github.io/dl_nlp/dl_lec2.html>
+- <https://dslnu.github.io/dl_nlp/dl_lec3.html>
+

@@ -1,0 +1,8 @@
+---
+title: "Lab 10: Optimization methods"
+---
+
+# Intro to learning
+
+Please complete the attached notebook (Optimization Methods).
+

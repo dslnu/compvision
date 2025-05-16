@@ -1,0 +1,9 @@
+---
+title: "Lecture 8: Regularization and Optimization"
+---
+
+# Regularization and Optimization
+
+Here we go through deep learning lectures:
+
+- <https://dslnu.github.io/dl_nlp/dl_lec4.html>
