@@ -3462,7 +3462,7 @@
     "href": "index.html#labs",
     "title": "Computer vision course",
     "section": "Labs",
-    "text": "Labs\n\nLab1: Getting started with images; basic manipulation\nLab1\n\n\nLab2: Image annotation/enhancement\nLab2\n\n\nLab3: Filtering with convolutions\nLab3\n\n\nLab4: hybrid images\nLab4\n\n\nLab5: Filters and image derivatives\nLab5\n\n\nLab6: Logistic Regression with a Neural Network\nLab6\n\n\nLab7: Intro to Deep Learning\nLab7\n\n\nLab8: Building a deep neural network step-by-step\nLab8\n\n\nLab9: Intro to Pytorch\nLab9\n\n\nLab10: Optimization methods\nLab10\n\n\nLab11: Optimization methods\nLab11"
+    "text": "Labs\n\nLab1: Getting started with images; basic manipulation\nLab1\n\n\nLab2: Image annotation/enhancement\nLab2\n\n\nLab3: Filtering with convolutions\nLab3\n\n\nLab4: hybrid images\nLab4\n\n\nLab5: Filters and image derivatives\nLab5\n\n\nLab6: Logistic Regression with a Neural Network\nLab6\n\n\nLab7: Intro to Deep Learning\nLab7\n\n\nLab8: Building a deep neural network step-by-step\nLab8\n\n\nLab9: Intro to Pytorch\nLab9\n\n\nLab10: Optimization methods\nLab10\n\n\nLab11: Classification using CNNs\nLab11"
   },
   {
     "objectID": "lab4.html",

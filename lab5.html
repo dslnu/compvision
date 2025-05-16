@@ -230,7 +230,7 @@ window.Quarto = {
 </ul>
 <section id="normalized-box-filter" class="level3">
 <h3 class="anchored" data-anchor-id="normalized-box-filter">Normalized box filter</h3>
-<div id="c89b656a" class="cell" data-execution_count="1">
+<div id="347a7e84" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2 <span class="im">as</span> cv</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
@@ -269,7 +269,7 @@ Important
 <p>Both width and height of the kernel should be odd</p>
 </div>
 </div>
-<div id="59bbf1ec" class="cell" data-execution_count="2">
+<div id="82571e0c" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gblur <span class="op">=</span> cv.GaussianBlur(img,(<span class="dv">15</span>,<span class="dv">15</span>),<span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">121</span>),plt.imshow(img),plt.title(<span class="st">'Original'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>plt.xticks([]), plt.yticks([])</span>
@@ -288,7 +288,7 @@ Important
 <section id="median-blur" class="level3">
 <h3 class="anchored" data-anchor-id="median-blur">Median blur</h3>
 <p>Used for noise reduction.</p>
-<div id="7c169376" class="cell" data-execution_count="3">
+<div id="30416675" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>noisy_img <span class="op">=</span> cv.imread(<span class="st">'img/noisy_image.png'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>median <span class="op">=</span> cv.medianBlur(noisy_img,<span class="dv">15</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -316,7 +316,7 @@ Important
 <li><code>sigmaSpace</code> is used to Filter sigma in the coordinate space</li>
 </ul>
 <p>More info <a href="https://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html">here</a> and <a href="https://people.csail.mit.edu/sparis/bf_course/">here</a>.</p>
-<div id="cbc1cc3b" class="cell" data-execution_count="4">
+<div id="f03097b1" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bilateral_blur <span class="op">=</span> cv.bilateralFilter(img,<span class="dv">90</span>,<span class="dv">75</span>,<span class="dv">75</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">121</span>),plt.imshow(img),plt.title(<span class="st">'Original'</span>)</span>
@@ -408,7 +408,7 @@ Kernel for Laplacian (2D-approximation)
 </section>
 <section id="example-code" class="level3">
 <h3 class="anchored" data-anchor-id="example-code">Example code</h3>
-<div id="f48f69e9" class="cell" data-execution_count="5">
+<div id="466c9ffc" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
