@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Computer vision course – Computer Vision</title>
+<title>Lab 11: CNN classifier – Computer Vision</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -90,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -113,33 +113,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#lectures" id="toc-lectures" class="nav-link active" data-scroll-target="#lectures">Lectures</a>
-  <ul class="collapse">
-  <li><a href="#lec-1-intro" id="toc-lec-1-intro" class="nav-link" data-scroll-target="#lec-1-intro">Lec 1: intro</a></li>
-  <li><a href="#lec-2-basic-concepts" id="toc-lec-2-basic-concepts" class="nav-link" data-scroll-target="#lec-2-basic-concepts">Lec 2: basic concepts</a></li>
-  <li><a href="#lec-3-image-filtering" id="toc-lec-3-image-filtering" class="nav-link" data-scroll-target="#lec-3-image-filtering">Lec 3: image filtering</a></li>
-  <li><a href="#lec-4-fourier-filtering" id="toc-lec-4-fourier-filtering" class="nav-link" data-scroll-target="#lec-4-fourier-filtering">Lec 4: Fourier filtering</a></li>
-  <li><a href="#lec-5-filters-and-image-derivatives" id="toc-lec-5-filters-and-image-derivatives" class="nav-link" data-scroll-target="#lec-5-filters-and-image-derivatives">Lec 5: Filters and image derivatives</a></li>
-  <li><a href="#lec-6-intro-to-learning" id="toc-lec-6-intro-to-learning" class="nav-link" data-scroll-target="#lec-6-intro-to-learning">Lec 6: Intro to learning</a></li>
-  <li><a href="#lec-7-intro-to-deep-learning" id="toc-lec-7-intro-to-deep-learning" class="nav-link" data-scroll-target="#lec-7-intro-to-deep-learning">Lec 7: Intro to deep learning</a></li>
-  <li><a href="#lec-8-regularization-and-optimization" id="toc-lec-8-regularization-and-optimization" class="nav-link" data-scroll-target="#lec-8-regularization-and-optimization">Lec 8: Regularization and Optimization</a></li>
-  <li><a href="#lec-9-intro-to-pytorch" id="toc-lec-9-intro-to-pytorch" class="nav-link" data-scroll-target="#lec-9-intro-to-pytorch">Lec 9: Intro to PyTorch</a></li>
-  <li><a href="#lec-10-convolutional-networks" id="toc-lec-10-convolutional-networks" class="nav-link" data-scroll-target="#lec-10-convolutional-networks">Lec 10: Convolutional networks</a></li>
-  </ul></li>
-  <li><a href="#labs" id="toc-labs" class="nav-link" data-scroll-target="#labs">Labs</a>
-  <ul class="collapse">
-  <li><a href="#lab1-getting-started-with-images-basic-manipulation" id="toc-lab1-getting-started-with-images-basic-manipulation" class="nav-link" data-scroll-target="#lab1-getting-started-with-images-basic-manipulation">Lab1: Getting started with images; basic manipulation</a></li>
-  <li><a href="#lab2-image-annotationenhancement" id="toc-lab2-image-annotationenhancement" class="nav-link" data-scroll-target="#lab2-image-annotationenhancement">Lab2: Image annotation/enhancement</a></li>
-  <li><a href="#lab3-filtering-with-convolutions" id="toc-lab3-filtering-with-convolutions" class="nav-link" data-scroll-target="#lab3-filtering-with-convolutions">Lab3: Filtering with convolutions</a></li>
-  <li><a href="#lab4-hybrid-images" id="toc-lab4-hybrid-images" class="nav-link" data-scroll-target="#lab4-hybrid-images">Lab4: hybrid images</a></li>
-  <li><a href="#lab5-filters-and-image-derivatives" id="toc-lab5-filters-and-image-derivatives" class="nav-link" data-scroll-target="#lab5-filters-and-image-derivatives">Lab5: Filters and image derivatives</a></li>
-  <li><a href="#lab6-logistic-regression-with-a-neural-network" id="toc-lab6-logistic-regression-with-a-neural-network" class="nav-link" data-scroll-target="#lab6-logistic-regression-with-a-neural-network">Lab6: Logistic Regression with a Neural Network</a></li>
-  <li><a href="#lab7-intro-to-deep-learning" id="toc-lab7-intro-to-deep-learning" class="nav-link" data-scroll-target="#lab7-intro-to-deep-learning">Lab7: Intro to Deep Learning</a></li>
-  <li><a href="#lab8-building-a-deep-neural-network-step-by-step" id="toc-lab8-building-a-deep-neural-network-step-by-step" class="nav-link" data-scroll-target="#lab8-building-a-deep-neural-network-step-by-step">Lab8: Building a deep neural network step-by-step</a></li>
-  <li><a href="#lab9-intro-to-pytorch" id="toc-lab9-intro-to-pytorch" class="nav-link" data-scroll-target="#lab9-intro-to-pytorch">Lab9: Intro to Pytorch</a></li>
-  <li><a href="#lab10-optimization-methods" id="toc-lab10-optimization-methods" class="nav-link" data-scroll-target="#lab10-optimization-methods">Lab10: Optimization methods</a></li>
-  <li><a href="#lab11-optimization-methods" id="toc-lab11-optimization-methods" class="nav-link" data-scroll-target="#lab11-optimization-methods">Lab11: Optimization methods</a></li>
-  </ul></li>
+  <li><a href="#cnn-classifier" id="toc-cnn-classifier" class="nav-link active" data-scroll-target="#cnn-classifier">CNN Classifier</a></li>
   </ul>
 </nav>
     </div>
@@ -148,7 +122,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Computer vision course</h1>
+<h1 class="title">Lab 11: CNN classifier</h1>
 </div>
 
 
@@ -165,97 +139,11 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="lectures" class="level2">
-<h2 class="anchored" data-anchor-id="lectures">Lectures</h2>
-<section id="lec-1-intro" class="level3">
-<h3 class="anchored" data-anchor-id="lec-1-intro">Lec 1: intro</h3>
-<p><a href="./lec1.html">Slides</a></p>
-</section>
-<section id="lec-2-basic-concepts" class="level3">
-<h3 class="anchored" data-anchor-id="lec-2-basic-concepts">Lec 2: basic concepts</h3>
-<p><a href="./lec2.html">Slides</a></p>
-</section>
-<section id="lec-3-image-filtering" class="level3">
-<h3 class="anchored" data-anchor-id="lec-3-image-filtering">Lec 3: image filtering</h3>
-<p><a href="./lec3.html">Slides</a></p>
-</section>
-<section id="lec-4-fourier-filtering" class="level3">
-<h3 class="anchored" data-anchor-id="lec-4-fourier-filtering">Lec 4: Fourier filtering</h3>
-<p><a href="./lec4.html">Slides</a></p>
-</section>
-<section id="lec-5-filters-and-image-derivatives" class="level3">
-<h3 class="anchored" data-anchor-id="lec-5-filters-and-image-derivatives">Lec 5: Filters and image derivatives</h3>
-<p><a href="./lec5.html">Slides</a></p>
-</section>
-<section id="lec-6-intro-to-learning" class="level3">
-<h3 class="anchored" data-anchor-id="lec-6-intro-to-learning">Lec 6: Intro to learning</h3>
-<p><a href="./lec6.html">Slides</a></p>
-</section>
-<section id="lec-7-intro-to-deep-learning" class="level3">
-<h3 class="anchored" data-anchor-id="lec-7-intro-to-deep-learning">Lec 7: Intro to deep learning</h3>
-<p><a href="./lec7.html">Slides</a></p>
-</section>
-<section id="lec-8-regularization-and-optimization" class="level3">
-<h3 class="anchored" data-anchor-id="lec-8-regularization-and-optimization">Lec 8: Regularization and Optimization</h3>
-<p><a href="./lec8.html">Slides</a></p>
-</section>
-<section id="lec-9-intro-to-pytorch" class="level3">
-<h3 class="anchored" data-anchor-id="lec-9-intro-to-pytorch">Lec 9: Intro to PyTorch</h3>
-<p><a href="./lec9.html">Slides</a></p>
-</section>
-<section id="lec-10-convolutional-networks" class="level3">
-<h3 class="anchored" data-anchor-id="lec-10-convolutional-networks">Lec 10: Convolutional networks</h3>
-<p><a href="./lec10.html">Slides</a></p>
-</section>
-</section>
-<section id="labs" class="level2">
-<h2 class="anchored" data-anchor-id="labs">Labs</h2>
-<section id="lab1-getting-started-with-images-basic-manipulation" class="level3">
-<h3 class="anchored" data-anchor-id="lab1-getting-started-with-images-basic-manipulation">Lab1: Getting started with images; basic manipulation</h3>
-<p><a href="./lab1.html">Lab1</a></p>
-</section>
-<section id="lab2-image-annotationenhancement" class="level3">
-<h3 class="anchored" data-anchor-id="lab2-image-annotationenhancement">Lab2: Image annotation/enhancement</h3>
-<p><a href="./lab2.html">Lab2</a></p>
-</section>
-<section id="lab3-filtering-with-convolutions" class="level3">
-<h3 class="anchored" data-anchor-id="lab3-filtering-with-convolutions">Lab3: Filtering with convolutions</h3>
-<p><a href="./lab3.html">Lab3</a></p>
-</section>
-<section id="lab4-hybrid-images" class="level3">
-<h3 class="anchored" data-anchor-id="lab4-hybrid-images">Lab4: hybrid images</h3>
-<p><a href="./lab4.html">Lab4</a></p>
-</section>
-<section id="lab5-filters-and-image-derivatives" class="level3">
-<h3 class="anchored" data-anchor-id="lab5-filters-and-image-derivatives">Lab5: Filters and image derivatives</h3>
-<p><a href="./lab5.html">Lab5</a></p>
-</section>
-<section id="lab6-logistic-regression-with-a-neural-network" class="level3">
-<h3 class="anchored" data-anchor-id="lab6-logistic-regression-with-a-neural-network">Lab6: Logistic Regression with a Neural Network</h3>
-<p><a href="./lab6.html">Lab6</a></p>
-</section>
-<section id="lab7-intro-to-deep-learning" class="level3">
-<h3 class="anchored" data-anchor-id="lab7-intro-to-deep-learning">Lab7: Intro to Deep Learning</h3>
-<p><a href="./lab7.html">Lab7</a></p>
-</section>
-<section id="lab8-building-a-deep-neural-network-step-by-step" class="level3">
-<h3 class="anchored" data-anchor-id="lab8-building-a-deep-neural-network-step-by-step">Lab8: Building a deep neural network step-by-step</h3>
-<p><a href="./lab8.html">Lab8</a></p>
-</section>
-<section id="lab9-intro-to-pytorch" class="level3">
-<h3 class="anchored" data-anchor-id="lab9-intro-to-pytorch">Lab9: Intro to Pytorch</h3>
-<p><a href="./lab9.html">Lab9</a></p>
-</section>
-<section id="lab10-optimization-methods" class="level3">
-<h3 class="anchored" data-anchor-id="lab10-optimization-methods">Lab10: Optimization methods</h3>
-<p><a href="./lab10.html">Lab10</a></p>
-</section>
-<section id="lab11-optimization-methods" class="level3">
-<h3 class="anchored" data-anchor-id="lab11-optimization-methods">Lab11: Optimization methods</h3>
-<p><a href="./lab11.html">Lab11</a></p>
+<section id="cnn-classifier" class="level1">
+<h1>CNN Classifier</h1>
+<p>Please complete the tutorial: https://docs.pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
