@@ -7,3 +7,5 @@
 /.DS_Store/
 *-speaker.html
 
+
+**/*.quarto_ipynb
