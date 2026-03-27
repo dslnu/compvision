@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.31">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
 
   <title>Computer Vision – Filters and image derivatives</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -28,7 +31,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -430,11 +433,11 @@ Figure&nbsp;5: Fourier transform of Box Filter.
 <p>The Gaussian distribution is defined in continuous variables. In one dimension:</p>
 <p><span id="eq-gauss1dcont"><span class="math display">\[
 g(x; \sigma) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp{ \left( -\frac{x^2}{2 \sigma^2} \right) }
-\qquad(1)\]</span></span></p>
+\tag{1}\]</span></span></p>
 <p>and in two dimensions:</p>
 <p><span id="eq-gauss2dcont"><span class="math display">\[
 g(x,y; \sigma) = \frac{1}{2 \pi \sigma^2} \exp{ \left(-\frac{x^2 + y^2}{2 \sigma^2} \right) }
-\qquad(2)\]</span></span></p>
+\tag{2}\]</span></span></p>
 <p>The parameter <span class="math inline">\(\sigma\)</span> adjusts the spatial extent of the Gaussian. The normalization constant is set so that the function integrates to 1. The Gaussian kernel is positive and symmetric (a zero-phase filter).</p>
 </div>
 </div>
@@ -452,7 +455,7 @@ g(x,y; \sigma) = \frac{1}{2 \pi \sigma^2} \exp{ \left(-\frac{x^2 + y^2}{2 \sigma
 <p>For a given <span class="math inline">\(\sigma\)</span>:</p>
 <p><span id="eq-gauss2d"><span class="math display">\[
 g \left[ n,m; \sigma \right] = \exp{ \left( -\frac{n^2 + m^2}{2 \sigma^2} \right) }
-\qquad(3)\]</span></span></p>
+\tag{3}\]</span></span></p>
 </div>
 </div>
 </div>
@@ -519,7 +522,7 @@ Figure&nbsp;6
 <div class="callout-content">
 <p>Recall: <span id="eq-2dconv"><span class="math display">\[
 \ell_{\texttt{out}}\left[n,m\right] = h \left[n,m\right] \circ \ell_{\texttt{in}}\left[n,m\right] =  \sum_{k,l}h \left[n-k,m-l \right] \ell_{\texttt{in}}\left[k,l \right]
-\qquad(4)\]</span></span> <!-- The $n$-dimensional Gaussian filter has the additional computational advantage that it can be applied as a concatenation of $n$ 1D Gaussian filters (follows from @eq-gauss2dcont and @eq-2dconv). --></p>
+\tag{4}\]</span></span> <!-- The $n$-dimensional Gaussian filter has the additional computational advantage that it can be applied as a concatenation of $n$ 1D Gaussian filters (follows from @eq-gauss2dcont and @eq-2dconv). --></p>
 <p>Letting <span class="math inline">\(g^x [n]=g[n,0]\)</span>, and <span class="math inline">\(g^y[m]=g[0,m]\)</span>), we have:</p>
 <p><span class="math display">\[
 g \left[n,m \right] \circ \ell \left[n,m\right]
@@ -530,7 +533,7 @@ g \left[n,m \right] \circ \ell \left[n,m\right]
 = \sum_{k} \exp{ \left( -\frac{(n-k)^2}{2 \sigma^2} \right) }
 \left( \sum_{l} \exp{ \left( -\frac{(m-l)^2}{2 \sigma^2} \right) } \ell \left[k,l \right] \right)
 = g^x \circ (g^y \circ \ell \left[n,m \right])
-\qquad(5)\]</span></span></p>
+\tag{5}\]</span></span></p>
 </div>
 </div>
 </div>
@@ -601,7 +604,7 @@ G (w; \sigma) = \exp{ \left( -\frac{w^2 \sigma^2} {2} \right) }
 <p>and in 2D the Fourier transform is:</p>
 <p><span id="eq-FTgauss2d"><span class="math display">\[
 G (w_x, w_y; \sigma) = \exp{ \left(- \frac{(w_x^2+w_y^2) \sigma^2} {2} \right) }
-\qquad(6)\]</span></span></p>
+\tag{6}\]</span></span></p>
 <p>Note that this function is monotonically decreasing in magnitude for increasing frequencies, and it is also radially symmetric.</p>
 </div>
 </div>
@@ -1323,7 +1326,7 @@ g_x(x,y; \sigma) &amp; = \frac {\partial g(x,y; \sigma)}{\partial x} \\
    y^2}{2 \sigma^2}} \\
 &amp; = \frac{-x}{\sigma^2} g(x,y; \sigma)
 \end{split}
-\qquad(7)\]</span></span></p>
+\tag{7}\]</span></span></p>
 </div>
 </div>
 </div>
@@ -1502,7 +1505,7 @@ H_n\left( \frac{x}{\sigma \sqrt {2}} \right)
 H_m\left( \frac{y}{\sigma \sqrt {2}} \right)
 g(x,y; \sigma)
 \end{split}
-\qquad(8)\]</span></span></p>
+\tag{8}\]</span></span></p>
 </div>
 </div>
 </div>
@@ -1576,7 +1579,7 @@ Sobel_y =  \begin{bmatrix}
   0 &amp; 0 &amp; 0 \\
   1 &amp; 2 &amp; 1
 \end{bmatrix}
-\qquad(9)\]</span></span></p>
+\tag{9}\]</span></span></p>
 <p>This particular filter is called the <strong>Sobel-Feldman operator</strong>.<br>
 The goal of this operator was to be compact and as isotropic as possible. The Sobel-Feldman operator can be implemented very efficiently as it can be written as the convolution with four small kernels, <span class="math display">\[Sobel_x = b_1 \circ d_0 \circ b_1^T \circ b_1^T.\]</span></p>
 </div>
@@ -1645,7 +1648,7 @@ Figure&nbsp;24: Derivatives of a circle along the directions <span class="math i
 &amp; = \left( \nabla g  \cdot {\bf t} \right) \circ \ell \\
 &amp; = g_{\theta} (x,y)  \circ \ell(x,y)
 \end{split}
-\qquad(10)\]</span></span></p>
+\tag{10}\]</span></span></p>
 <p>with <span class="math inline">\(g_{\theta} (x,y) = \cos(\theta) g_x(x,y) + \sin(\theta) g_y(x,y)\)</span>.</p>
 <p>However, to compute the derivative along any arbitrary angle <span class="math inline">\(\theta\)</span> does not require doing new convolutions. Instead, we can compute any derivative as a linear combination of the output of convolving the image with <span class="math inline">\(g_x(x,y)\)</span> and <span class="math inline">\(g_y(x,y)\)</span>: <span class="math display">\[
 \frac{\partial \ell}{\partial {\bf t}} \circ g =  \cos(\theta) g_x(x,y) \circ \ell + \sin(\theta) g_y(x,y) \circ \ell(x,y)
@@ -1746,7 +1749,7 @@ Figure&nbsp;25: The Gaussian Laplacian (<span class="math inline">\(\sigma = 1\)
   1 &amp; -4 &amp; 1\\
   0 &amp; 1 &amp; 0
 \end{bmatrix}
-\qquad(11)\]</span></span></p>
+\tag{11}\]</span></span></p>
 <!-- It involves the central pixel and its four nearest neighbors. This is a sum-separable kernel: it corresponds to approximating the second-order derivative for each coordinate and summing the result (i.e., convolve the image with $[1,-2,1]$ and also with its transpose and summing the two outputs). -->
 <p>The Laplacian of the image, using the five-point formula, is: <span class="math display">\[
 \begin{split}
@@ -1864,7 +1867,7 @@ Figure&nbsp;28: Comparison between the output of a first-order derivative and th
 <p>We can better approximate Campbell and Robson chart with</p>
 <p><span id="eq-humanmodel"><span class="math display">\[
 h = -\nabla^2 g  + \lambda g
-\qquad(12)\]</span></span></p>
+\tag{12}\]</span></span></p>
 <p>The kernel <span class="math inline">\(h\)</span> is the approximate impulse response of the human visual system, <span class="math inline">\(\lambda\)</span> is a small constant that is equal to the DC gain of the visual filter (here <span class="math inline">\(\lambda = 2\)</span> and <span class="math inline">\(\sigma=5\)</span>).</p>
 <div id="fig-EVS_sigma5_lambda2" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
@@ -2020,7 +2023,7 @@ Figure&nbsp;31: Vasarely visual illusion. Images (a) and (d), formed by nested-s
   2 &amp; 4 &amp; 2\\
   1 &amp; 2 &amp; 1
 \end{bmatrix}
-\qquad(13)\]</span></span></p>
+\tag{13}\]</span></span></p>
 <p>Note that the DC gain of this sharpening filter is 1.</p>
 </div>
 </div>
@@ -2435,7 +2438,7 @@ Figure&nbsp;35: Recovered components. The estimated reflectance, <span class="ma
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -2509,13 +2512,14 @@ Figure&nbsp;35: Recovered components. The estimated reflectance, <span class="ma
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

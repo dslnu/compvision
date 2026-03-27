@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.42">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.27">
 
   <meta name="author" content="Vitaly Vlasov">
   <title>Computer Vision – Computer vision: intro</title>
@@ -29,8 +29,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -41,7 +42,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -94,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-2f366650f320edcfcf53d73c80250a32.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -281,14 +282,12 @@ Vitaly Vlasov
 <h2>Summer Vision project</h2>
 <p>What was the plan? <strong>Divide and conquer</strong></p>
 <h4 id="split-teams-doing-different-tasks">Split teams doing different tasks:</h4>
-<div>
 <ol type="1">
 <li class="fragment">writing a program to detect edges, corners, and other pixel-level information</li>
 <li class="fragment">forming continous shapes out of these low-level features</li>
 <li class="fragment">arranging the shapes in three-dimensional space</li>
 <li class="fragment">etc.</li>
 </ol>
-</div>
 </section>
 <section id="perceptron" class="slide level2">
 <h2>Perceptron</h2>
@@ -630,19 +629,19 @@ Vitaly Vlasov
 <div class="tab-content">
 <div id="tabset-1-1">
 <div id="9754186a" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>retval <span class="op">=</span> cv2.imread( filename[, flags] )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>retval <span class="op">=</span> cv2.imread( filename[, flags] )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-1-2">
 <div id="cell-fig-reading" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2" data-code-line-numbers="5,"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> cv2</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-code-line-numbers="5,"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> cv2</span>
 <span id="cb2-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-3"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-4"><a></a></span>
 <span id="cb2-5"><a></a>img<span class="op">=</span>cv2.imread(<span class="st">"img/yolo_detection_system.png"</span>, cv2.IMREAD_GRAYSCALE)</span>
 <span id="cb2-6"><a></a></span>
 <span id="cb2-7"><a></a><span class="co">#Displaying image using plt.imshow() method</span></span>
-<span id="cb2-8"><a></a>plt.imshow(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-8"><a></a>plt.imshow(img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="fig-reading" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
@@ -665,12 +664,12 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-2-1">
 <div id="c9c81bd2" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>cv2.imwrite( filename, img[, params] )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>cv2.imwrite( filename, img[, params] )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-2-2">
 <div id="bee32f7e" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>cv2.imwrite(<span class="st">"new_file.jpg"</span>, img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>cv2.imwrite(<span class="st">"new_file.jpg"</span>, img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>True</code></pre>
 </div>
@@ -681,7 +680,7 @@ Figure&nbsp;1: Image reading example
 <h3 id="dimensions">Dimensions</h3>
 <div class="r-stack center">
 <div id="706f6e11" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="bu">print</span>(<span class="st">"Image size (H, W, C) is:"</span>, img.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="bu">print</span>(<span class="st">"Image size (H, W, C) is:"</span>, img.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Image size (H, W, C) is: (466, 2140)</code></pre>
 </div>
@@ -691,8 +690,8 @@ Figure&nbsp;1: Image reading example
 <section id="image-cropping" class="slide level2">
 <h2>Image cropping</h2>
 <div id="8016ed3c" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>cropped <span class="op">=</span> img[<span class="dv">100</span>:<span class="dv">300</span>, <span class="dv">500</span>:<span class="dv">800</span>]</span>
-<span id="cb8-2"><a></a>plt.imshow(cropped)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>cropped <span class="op">=</span> img[<span class="dv">100</span>:<span class="dv">300</span>, <span class="dv">500</span>:<span class="dv">800</span>]</span>
+<span id="cb8-2"><a></a>plt.imshow(cropped)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -710,13 +709,13 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-3-1">
 <div id="fdabc496" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>dst <span class="op">=</span> resize( src, dsize[, dst[, fx[, fy[, interpolation]]]] )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>dst <span class="op">=</span> resize( src, dsize[, dst[, fx[, fy[, interpolation]]]] )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-3-2">
 <div id="bc9bcd15" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>resized <span class="op">=</span> cv2.resize(img, <span class="va">None</span>, fx<span class="op">=</span><span class="fl">0.1</span>, fy<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb10-2"><a></a>plt.imshow(resized)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>resized <span class="op">=</span> cv2.resize(img, <span class="va">None</span>, fx<span class="op">=</span><span class="fl">0.1</span>, fy<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb10-2"><a></a>plt.imshow(resized)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -734,13 +733,13 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-4-1">
 <div id="b4eb5f3a" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>dst <span class="op">=</span> cv.flip( src, flipCode )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>dst <span class="op">=</span> cv.flip( src, flipCode )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-4-2">
 <div id="c6d1aa3f" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>rotated <span class="op">=</span> cv2.flip(img, <span class="dv">0</span>)</span>
-<span id="cb12-2"><a></a>plt.imshow(rotated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>rotated <span class="op">=</span> cv2.flip(img, <span class="dv">0</span>)</span>
+<span id="cb12-2"><a></a>plt.imshow(rotated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -750,8 +749,8 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 <div id="ea33416d" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>rotated <span class="op">=</span> cv2.flip(img, <span class="dv">1</span>)</span>
-<span id="cb13-2"><a></a>plt.imshow(rotated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>rotated <span class="op">=</span> cv2.flip(img, <span class="dv">1</span>)</span>
+<span id="cb13-2"><a></a>plt.imshow(rotated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -761,8 +760,8 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 <div id="9b7f7b01" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>rotated <span class="op">=</span> cv2.flip(img, <span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb14-2"><a></a>plt.imshow(rotated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>rotated <span class="op">=</span> cv2.flip(img, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb14-2"><a></a>plt.imshow(rotated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -782,16 +781,16 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-5-1">
 <div id="6900ef69" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>img <span class="op">=</span> cv2.line(img, pt1, pt2, color[, thickness[, lineType[, shift]]])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>img <span class="op">=</span> cv2.line(img, pt1, pt2, color[, thickness[, lineType[, shift]]])</span>
 <span id="cb15-2"><a></a>img <span class="op">=</span> cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]])</span>
-<span id="cb15-3"><a></a>img <span class="op">=</span> cv2.rectangle(img, pt1, pt2, color[, thickness[, lineType[, shift]]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a></a>img <span class="op">=</span> cv2.rectangle(img, pt1, pt2, color[, thickness[, lineType[, shift]]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-5-2">
 <div id="a9e66ff4" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>annotated <span class="op">=</span> cv2.line(img, (<span class="dv">200</span>, <span class="dv">100</span>), (<span class="dv">800</span>, <span class="dv">100</span>), (<span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">255</span>), thickness<span class="op">=</span><span class="dv">50</span>, lineType<span class="op">=</span>cv2.LINE_AA)<span class="op">;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>annotated <span class="op">=</span> cv2.line(img, (<span class="dv">200</span>, <span class="dv">100</span>), (<span class="dv">800</span>, <span class="dv">100</span>), (<span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">255</span>), thickness<span class="op">=</span><span class="dv">50</span>, lineType<span class="op">=</span>cv2.LINE_AA)<span class="op">;</span></span>
 <span id="cb16-2"><a></a></span>
-<span id="cb16-3"><a></a>plt.imshow(annotated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-3"><a></a>plt.imshow(annotated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -801,8 +800,8 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 <div id="1894f866" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>annotated2 <span class="op">=</span> cv2.circle(annotated, (<span class="dv">200</span>,<span class="dv">200</span>), <span class="dv">100</span>, (<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>), thickness<span class="op">=</span><span class="dv">20</span>, lineType<span class="op">=</span>cv2.LINE_AA)<span class="op">;</span></span>
-<span id="cb17-2"><a></a>plt.imshow(annotated2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>annotated2 <span class="op">=</span> cv2.circle(annotated, (<span class="dv">200</span>,<span class="dv">200</span>), <span class="dv">100</span>, (<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>), thickness<span class="op">=</span><span class="dv">20</span>, lineType<span class="op">=</span>cv2.LINE_AA)<span class="op">;</span></span>
+<span id="cb17-2"><a></a>plt.imshow(annotated2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -822,12 +821,12 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-6-1">
 <div id="de03ad5a" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a>img <span class="op">=</span> cv2.putText(img, text, org, fontFace, fontScale, color[, thickness[, lineType[, bottomLeftOrigin]]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a>img <span class="op">=</span> cv2.putText(img, text, org, fontFace, fontScale, color[, thickness[, lineType[, bottomLeftOrigin]]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-6-2">
 <div id="8bcf7354" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="8,"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>imageText <span class="op">=</span> img.copy()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" data-code-line-numbers="8,"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>imageText <span class="op">=</span> img.copy()</span>
 <span id="cb19-2"><a></a>text <span class="op">=</span> <span class="st">"Random text"</span></span>
 <span id="cb19-3"><a></a>fontScale <span class="op">=</span> <span class="fl">5.3</span></span>
 <span id="cb19-4"><a></a>fontFace <span class="op">=</span> cv2.FONT_HERSHEY_PLAIN</span>
@@ -837,7 +836,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb19-8"><a></a>cv2.putText(imageText, text, (<span class="dv">100</span>, <span class="dv">300</span>), fontFace, fontScale, fontColor, fontThickness, cv2.LINE_AA)<span class="op">;</span></span>
 <span id="cb19-9"><a></a></span>
 <span id="cb19-10"><a></a><span class="co"># Display the image</span></span>
-<span id="cb19-11"><a></a>plt.imshow(imageText)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-11"><a></a>plt.imshow(imageText)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -857,12 +856,12 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-7-1">
 <div id="13e56b87" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>retval, dst <span class="op">=</span> cv2.threshold( src, thresh, maxval, <span class="bu">type</span>[, dst] )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>retval, dst <span class="op">=</span> cv2.threshold( src, thresh, maxval, <span class="bu">type</span>[, dst] )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-7-2">
 <div id="96aeb991" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb21" data-code-line-numbers="1,"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>retval, img_thresh <span class="op">=</span> cv2.threshold(img, <span class="dv">100</span>, <span class="dv">255</span>, cv2.THRESH_BINARY)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" data-code-line-numbers="1,"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>retval, img_thresh <span class="op">=</span> cv2.threshold(img, <span class="dv">100</span>, <span class="dv">255</span>, cv2.THRESH_BINARY)</span>
 <span id="cb21-2"><a></a></span>
 <span id="cb21-3"><a></a><span class="co"># Show the images</span></span>
 <span id="cb21-4"><a></a>plt.figure(figsize<span class="op">=</span>[<span class="dv">18</span>, <span class="dv">5</span>])</span>
@@ -870,7 +869,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb21-6"><a></a>plt.subplot(<span class="dv">121</span>)<span class="op">;</span>plt.imshow(img, cmap<span class="op">=</span><span class="st">"gray"</span>)<span class="op">;</span>  plt.title(<span class="st">"Original"</span>)</span>
 <span id="cb21-7"><a></a>plt.subplot(<span class="dv">122</span>)<span class="op">;</span>plt.imshow(img_thresh, cmap<span class="op">=</span><span class="st">"gray"</span>)<span class="op">;</span>plt.title(<span class="st">"Thresholded"</span>)</span>
 <span id="cb21-8"><a></a></span>
-<span id="cb21-9"><a></a><span class="bu">print</span>(img_thresh.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-9"><a></a><span class="bu">print</span>(img_thresh.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(466, 2140)</code></pre>
 </div>
@@ -897,12 +896,12 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-8-1">
 <div id="e68c9fce" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a><span class="co"># Load the Haar Cascade Classifier</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a><span class="co"># Load the Haar Cascade Classifier</span></span>
 <span id="cb23-2"><a></a>face_cascade <span class="op">=</span> cv2.CascadeClassifier(<span class="st">'haarcascade_frontalface_default.xml'</span>)</span>
 <span id="cb23-3"><a></a></span>
 <span id="cb23-4"><a></a><span class="co"># Read the image</span></span>
 <span id="cb23-5"><a></a>img <span class="op">=</span> cv2.imread(<span class="st">'diverse_faces.jpg'</span>)</span>
-<span id="cb23-6"><a></a>plt.imshow(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-6"><a></a>plt.imshow(img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -914,7 +913,7 @@ Figure&nbsp;1: Image reading example
 </div>
 <div id="tabset-8-2">
 <div id="b0034dcb" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>gray <span class="op">=</span> cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>gray <span class="op">=</span> cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</span>
 <span id="cb24-2"><a></a></span>
 <span id="cb24-3"><a></a><span class="co"># Detect faces</span></span>
 <span id="cb24-4"><a></a>faces <span class="op">=</span> face_cascade.detectMultiScale(gray, scaleFactor<span class="op">=</span><span class="fl">1.1</span>, minNeighbors<span class="op">=</span><span class="dv">5</span>)</span>
@@ -922,7 +921,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb24-6"><a></a><span class="co"># Draw rectangles around faces</span></span>
 <span id="cb24-7"><a></a><span class="cf">for</span> (x, y, w, h) <span class="kw">in</span> faces:</span>
 <span id="cb24-8"><a></a>    cv2.rectangle(img, (x, y), (x<span class="op">+</span>w, y<span class="op">+</span>h), (<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dv">2</span>)</span>
-<span id="cb24-9"><a></a>plt.imshow(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-9"><a></a>plt.imshow(img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -943,7 +942,7 @@ Figure&nbsp;1: Image reading example
 <section id="pose-estimation-1" class="slide level2 scrollable">
 <h2>Pose estimation</h2>
 <div id="9d4f7e4a" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a><span class="im">import</span> os</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a><span class="im">import</span> os</span>
 <span id="cb25-2"><a></a><span class="im">from</span> IPython.display <span class="im">import</span> YouTubeVideo, display, Image</span>
 <span id="cb25-3"><a></a></span>
 <span id="cb25-4"><a></a>protoFile   <span class="op">=</span> <span class="st">"pose_deploy_linevec_faster_4_stages.prototxt"</span></span>
@@ -988,7 +987,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb25-43"><a></a></span>
 <span id="cb25-44"><a></a>    plt.subplot(<span class="dv">2</span>, <span class="dv">8</span>, i <span class="op">+</span> <span class="dv">1</span>)</span>
 <span id="cb25-45"><a></a>    plt.axis(<span class="st">"off"</span>)</span>
-<span id="cb25-46"><a></a>    plt.imshow(displayMap, cmap<span class="op">=</span><span class="st">"jet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-46"><a></a>    plt.imshow(displayMap, cmap<span class="op">=</span><span class="st">"jet"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1001,7 +1000,7 @@ Figure&nbsp;1: Image reading example
 <section id="pose-estimation-2" class="slide level2 scrollable">
 <h2>Pose estimation</h2>
 <div id="31b29ec1" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a><span class="co"># X and Y Scale</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a><span class="co"># X and Y Scale</span></span>
 <span id="cb26-2"><a></a>scaleX <span class="op">=</span> inWidth  <span class="op">/</span> output.shape[<span class="dv">3</span>]</span>
 <span id="cb26-3"><a></a>scaleY <span class="op">=</span> inHeight <span class="op">/</span> output.shape[<span class="dv">2</span>]</span>
 <span id="cb26-4"><a></a></span>
@@ -1053,7 +1052,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb26-50"><a></a></span>
 <span id="cb26-51"><a></a>plt.subplot(<span class="dv">122</span>)</span>
 <span id="cb26-52"><a></a>plt.axis(<span class="st">"off"</span>)</span>
-<span id="cb26-53"><a></a>plt.imshow(imSkeleton)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-53"><a></a>plt.imshow(imSkeleton)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1080,7 +1079,7 @@ Figure&nbsp;1: Image reading example
 <section id="east-2" class="slide level2">
 <h2>EAST</h2>
 <div id="433ff2da" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a><span class="co"># load the input image and grab the image dimensions</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a><span class="co"># load the input image and grab the image dimensions</span></span>
 <span id="cb27-2"><a></a>image <span class="op">=</span> cv2.imread(<span class="st">"img/chocolate.png"</span>)</span>
 <span id="cb27-3"><a></a>orig <span class="op">=</span> image.copy()</span>
 <span id="cb27-4"><a></a>(H, W) <span class="op">=</span> image.shape[:<span class="dv">2</span>]</span>
@@ -1095,13 +1094,13 @@ Figure&nbsp;1: Image reading example
 <span id="cb27-13"><a></a></span>
 <span id="cb27-14"><a></a><span class="co"># resize the image and grab the new image dimensions</span></span>
 <span id="cb27-15"><a></a>image <span class="op">=</span> cv2.resize(image, (newW, newH))</span>
-<span id="cb27-16"><a></a>(H, W) <span class="op">=</span> image.shape[:<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-16"><a></a>(H, W) <span class="op">=</span> image.shape[:<span class="dv">2</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="east-3" class="slide level2">
 <h2>EAST</h2>
 <div id="1958dbb2" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a></a><span class="co"># define the two output layer names for the EAST detector model that</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a></a><span class="co"># define the two output layer names for the EAST detector model that</span></span>
 <span id="cb28-2"><a></a><span class="co"># we are interested -- the first is the output probabilities and the</span></span>
 <span id="cb28-3"><a></a><span class="co"># second can be used to derive the bounding box coordinates of text</span></span>
 <span id="cb28-4"><a></a>layerNames <span class="op">=</span> [</span>
@@ -1115,7 +1114,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb28-12"><a></a><span class="co"># construct a blob from the image and then perform a forward pass of</span></span>
 <span id="cb28-13"><a></a><span class="co"># the model to obtain the two output layer sets</span></span>
 <span id="cb28-14"><a></a>blob <span class="op">=</span> cv2.dnn.blobFromImage(image, <span class="fl">1.0</span>, (W, H),</span>
-<span id="cb28-15"><a></a>                             (<span class="fl">123.68</span>, <span class="fl">116.78</span>, <span class="fl">103.94</span>), swapRB<span class="op">=</span><span class="va">True</span>, crop<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-15"><a></a>                             (<span class="fl">123.68</span>, <span class="fl">116.78</span>, <span class="fl">103.94</span>), swapRB<span class="op">=</span><span class="va">True</span>, crop<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] loading EAST text detector...</code></pre>
 </div>
@@ -1124,7 +1123,7 @@ Figure&nbsp;1: Image reading example
 <section id="east-4" class="slide level2">
 <h2>EAST</h2>
 <div id="b8da6e8f" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a><span class="im">import</span> time</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a><span class="im">import</span> time</span>
 <span id="cb30-2"><a></a><span class="im">from</span> imutils.object_detection <span class="im">import</span> non_max_suppression</span>
 <span id="cb30-3"><a></a></span>
 <span id="cb30-4"><a></a></span>
@@ -1143,7 +1142,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb30-17"><a></a><span class="co"># confidence scores</span></span>
 <span id="cb30-18"><a></a>(numRows, numCols) <span class="op">=</span> scores.shape[<span class="dv">2</span>:<span class="dv">4</span>]</span>
 <span id="cb30-19"><a></a>rects <span class="op">=</span> []</span>
-<span id="cb30-20"><a></a>confidences <span class="op">=</span> []</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-20"><a></a>confidences <span class="op">=</span> []</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] text detection took 0.099429 seconds</code></pre>
 </div>
@@ -1152,7 +1151,7 @@ Figure&nbsp;1: Image reading example
 <section id="east-5" class="slide level2">
 <h2>EAST</h2>
 <div id="5f3323b5" class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a><span class="co"># loop over the number of rows</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a><span class="co"># loop over the number of rows</span></span>
 <span id="cb32-2"><a></a><span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, numRows):</span>
 <span id="cb32-3"><a></a>    <span class="co"># extract the scores (probabilities), followed by the geometrical</span></span>
 <span id="cb32-4"><a></a>    <span class="co"># data used to derive potential bounding box coordinates that</span></span>
@@ -1195,14 +1194,14 @@ Figure&nbsp;1: Image reading example
 <span id="cb32-41"><a></a>        <span class="co"># add the bounding box coordinates and probability score to</span></span>
 <span id="cb32-42"><a></a>        <span class="co"># our respective lists</span></span>
 <span id="cb32-43"><a></a>        rects.append((startX, startY, endX, endY))</span>
-<span id="cb32-44"><a></a>        confidences.append(scoresData[x])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-44"><a></a>        confidences.append(scoresData[x])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="east-6" class="slide level2 scrollable">
 <h2>EAST</h2>
 <div class="r-stack center">
 <div id="17a6cb09" class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a></a><span class="co"># apply non-maxima suppression to suppress weak, overlapping bounding</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a></a><span class="co"># apply non-maxima suppression to suppress weak, overlapping bounding</span></span>
 <span id="cb33-2"><a></a><span class="co"># boxes</span></span>
 <span id="cb33-3"><a></a>boxes <span class="op">=</span> non_max_suppression(np.array(rects), probs<span class="op">=</span>confidences)</span>
 <span id="cb33-4"><a></a></span>
@@ -1219,7 +1218,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb33-15"><a></a>    cv2.rectangle(orig, (startX, startY), (endX, endY), (<span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">0</span>), <span class="dv">2</span>)</span>
 <span id="cb33-16"><a></a></span>
 <span id="cb33-17"><a></a><span class="co"># show the output image</span></span>
-<span id="cb33-18"><a></a>plt.imshow(orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-18"><a></a>plt.imshow(orig)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1238,7 +1237,7 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-9-1">
 <div id="3ad06831" class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a><span class="im">import</span> cv2</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a><span class="im">import</span> cv2</span>
 <span id="cb34-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb34-3"><a></a><span class="im">from</span> IPython.display <span class="im">import</span> Image, display</span>
 <span id="cb34-4"><a></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
@@ -1254,7 +1253,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb34-14"><a></a><span class="co">#Image loading</span></span>
 <span id="cb34-15"><a></a>img <span class="op">=</span> cv2.imread(<span class="st">"img/coins.png"</span>)</span>
 <span id="cb34-16"><a></a><span class="co"># Show image</span></span>
-<span id="cb34-17"><a></a>imshow(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-17"><a></a>imshow(img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1266,9 +1265,9 @@ Figure&nbsp;1: Image reading example
 </div>
 <div id="tabset-9-2">
 <div id="751999c2" class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a></a><span class="co">#image grayscale conversion</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a></a><span class="co">#image grayscale conversion</span></span>
 <span id="cb35-2"><a></a>gray <span class="op">=</span> cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</span>
-<span id="cb35-3"><a></a>imshow(gray)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-3"><a></a>imshow(gray)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1280,11 +1279,11 @@ Figure&nbsp;1: Image reading example
 </div>
 <div id="tabset-9-3">
 <div id="fc0f85bb" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a><span class="co">#Threshold Processing</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a><span class="co">#Threshold Processing</span></span>
 <span id="cb36-2"><a></a>ret, bin_img <span class="op">=</span> cv2.threshold(gray,</span>
 <span id="cb36-3"><a></a>                            <span class="dv">0</span>, <span class="dv">255</span>, </span>
 <span id="cb36-4"><a></a>                            cv2.THRESH_BINARY_INV <span class="op">+</span> cv2.THRESH_OTSU)</span>
-<span id="cb36-5"><a></a>imshow(bin_img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-5"><a></a>imshow(bin_img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1296,12 +1295,12 @@ Figure&nbsp;1: Image reading example
 </div>
 <div id="tabset-9-4">
 <div id="26020dd7" class="cell" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a></a>kernel <span class="op">=</span> cv2.getStructuringElement(cv2.MORPH_RECT, (<span class="dv">3</span>, <span class="dv">3</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a></a>kernel <span class="op">=</span> cv2.getStructuringElement(cv2.MORPH_RECT, (<span class="dv">3</span>, <span class="dv">3</span>))</span>
 <span id="cb37-2"><a></a>bin_img <span class="op">=</span> cv2.morphologyEx(bin_img, </span>
 <span id="cb37-3"><a></a>                        cv2.MORPH_OPEN,</span>
 <span id="cb37-4"><a></a>                        kernel,</span>
 <span id="cb37-5"><a></a>                        iterations<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb37-6"><a></a>imshow(bin_img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-6"><a></a>imshow(bin_img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1321,7 +1320,7 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-10-1">
 <div id="c7d36c60" class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a></a><span class="co"># Create subplots with 1 row and 2 columns</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a></a><span class="co"># Create subplots with 1 row and 2 columns</span></span>
 <span id="cb38-2"><a></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
 <span id="cb38-3"><a></a><span class="co"># sure background area</span></span>
 <span id="cb38-4"><a></a>sure_bg <span class="op">=</span> cv2.dilate(bin_img, kernel, iterations<span class="op">=</span><span class="dv">3</span>)</span>
@@ -1344,7 +1343,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb38-21"><a></a>imshow(unknown, axes[<span class="dv">1</span>,<span class="dv">1</span>])</span>
 <span id="cb38-22"><a></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].set_title(<span class="st">'Unknown'</span>)</span>
 <span id="cb38-23"><a></a></span>
-<span id="cb38-24"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-24"><a></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1356,7 +1355,7 @@ Figure&nbsp;1: Image reading example
 </div>
 <div id="tabset-10-2">
 <div id="83a26cf9" class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a></a><span class="co"># Marker labelling</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a></a><span class="co"># Marker labelling</span></span>
 <span id="cb39-2"><a></a><span class="co"># sure foreground </span></span>
 <span id="cb39-3"><a></a>ret, markers <span class="op">=</span> cv2.connectedComponents(sure_fg)</span>
 <span id="cb39-4"><a></a></span>
@@ -1368,7 +1367,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb39-10"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb39-11"><a></a>ax.imshow(markers, cmap<span class="op">=</span><span class="st">"tab20b"</span>)</span>
 <span id="cb39-12"><a></a>ax.axis(<span class="st">'off'</span>)</span>
-<span id="cb39-13"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-13"><a></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1380,7 +1379,7 @@ Figure&nbsp;1: Image reading example
 </div>
 <div id="tabset-10-3">
 <div id="8351bdb0" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a></a><span class="co"># watershed Algorithm</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a></a><span class="co"># watershed Algorithm</span></span>
 <span id="cb40-2"><a></a>markers <span class="op">=</span> cv2.watershed(img, markers)</span>
 <span id="cb40-3"><a></a></span>
 <span id="cb40-4"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
@@ -1406,7 +1405,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb40-24"><a></a></span>
 <span id="cb40-25"><a></a><span class="co"># Draw the outline</span></span>
 <span id="cb40-26"><a></a>img <span class="op">=</span> cv2.drawContours(img, coins, <span class="op">-</span><span class="dv">1</span>, color<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">23</span>, <span class="dv">223</span>), thickness<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb40-27"><a></a>imshow(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-27"><a></a>imshow(img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1435,7 +1434,7 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-11-1">
 <div id="1d5ec1e7" class="cell" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a></a><span class="im">import</span> cv2</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a></a><span class="im">import</span> cv2</span>
 <span id="cb41-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb41-3"><a></a></span>
 <span id="cb41-4"><a></a><span class="co"># Load the Haar Cascade XML file for face detection</span></span>
@@ -1490,7 +1489,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb41-53"><a></a>video_capture.release()</span>
 <span id="cb41-54"><a></a></span>
 <span id="cb41-55"><a></a><span class="co"># Close all OpenCV windows</span></span>
-<span id="cb41-56"><a></a>cv2.destroyAllWindows()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-56"><a></a>cv2.destroyAllWindows()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-11-2">
@@ -1510,7 +1509,7 @@ Figure&nbsp;1: Image reading example
 <div class="tab-content">
 <div id="tabset-12-1">
 <div id="9d8886a2" class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb42-2"><a></a></span>
 <span id="cb42-3"><a></a><span class="im">import</span> datetime</span>
 <span id="cb42-4"><a></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
@@ -1522,12 +1521,12 @@ Figure&nbsp;1: Image reading example
 <span id="cb42-10"><a></a>GREEN <span class="op">=</span> (<span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">0</span>)</span>
 <span id="cb42-11"><a></a></span>
 <span id="cb42-12"><a></a><span class="co"># load the pre-trained YOLOv8n model</span></span>
-<span id="cb42-13"><a></a>model <span class="op">=</span> YOLO(<span class="st">"yolov8n.pt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-13"><a></a>model <span class="op">=</span> YOLO(<span class="st">"yolov8n.pt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-12-2">
 <div id="2f2450f1" class="cell" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a></a>frame <span class="op">=</span> cv2.imread(<span class="st">'./img/yolo_test.png'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a></a>frame <span class="op">=</span> cv2.imread(<span class="st">'./img/yolo_test.png'</span>)</span>
 <span id="cb43-2"><a></a>detections <span class="op">=</span> model(frame)[<span class="dv">0</span>]</span>
 <span id="cb43-3"><a></a><span class="cf">for</span> box <span class="kw">in</span> detections.boxes:</span>
 <span id="cb43-4"><a></a>    <span class="co">#extract the label name</span></span>
@@ -1549,7 +1548,7 @@ Figure&nbsp;1: Image reading example
 <span id="cb43-20"><a></a></span>
 <span id="cb43-21"><a></a>    <span class="co">#draw confidence and label</span></span>
 <span id="cb43-22"><a></a>    y <span class="op">=</span> ymin <span class="op">-</span> <span class="dv">15</span> <span class="cf">if</span> ymin <span class="op">-</span> <span class="dv">15</span> <span class="op">&gt;</span> <span class="dv">15</span> <span class="cf">else</span> ymin <span class="op">+</span> <span class="dv">15</span></span>
-<span id="cb43-23"><a></a>    cv2.putText(frame, <span class="st">"</span><span class="sc">{}</span><span class="st"> </span><span class="sc">{:.1f}</span><span class="st">%"</span>.<span class="bu">format</span>(label,<span class="bu">float</span>(confidence<span class="op">*</span><span class="dv">100</span>)), (xmin, y), cv2.FONT_HERSHEY_SIMPLEX, <span class="fl">0.5</span>, GREEN, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-23"><a></a>    cv2.putText(frame, <span class="st">"</span><span class="sc">{}</span><span class="st"> </span><span class="sc">{:.1f}</span><span class="st">%"</span>.<span class="bu">format</span>(label,<span class="bu">float</span>(confidence<span class="op">*</span><span class="dv">100</span>)), (xmin, y), cv2.FONT_HERSHEY_SIMPLEX, <span class="fl">0.5</span>, GREEN, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 0: 576x640 4 persons, 12 cars, 41.2ms
@@ -1559,7 +1558,7 @@ Speed: 2.0ms preprocess, 41.2ms inference, 1.0ms postprocess per image at shape 
 </div>
 <div id="tabset-12-3">
 <div id="17b3968d" class="cell" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a></a>plt.imshow(frame)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a></a>plt.imshow(frame)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1770,7 +1769,7 @@ Speed: 2.0ms preprocess, 41.2ms inference, 1.0ms postprocess per image at shape 
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1797,190 +1796,173 @@ Speed: 2.0ms preprocess, 41.2ms inference, 1.0ms postprocess per image at shape 
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>

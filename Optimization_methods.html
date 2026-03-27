@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Optimization Methods – Computer Vision</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -71,10 +74,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c1fac2584b48ed01fb6e278e36375074.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -117,7 +120,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -268,10 +271,10 @@ At each step of the training, you update your parameters following a certain dir
 </ul>
 <p><a name="1"></a> ## 1- Packages</p>
 <div id="cell-4" class="cell" data-editable="false">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">### v1.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">### v1.1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-5" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.io</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -290,7 +293,7 @@ At each step of the training, you update your parameters following a certain dir
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'image.cmap'</span>] <span class="op">=</span> <span class="st">'gray'</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a name="2"></a> ## 2 - Gradient Descent</p>
 <p>A simple optimization method in machine learning is gradient descent (GD). When you take gradient steps with respect to all <span class="math inline">\(m\)</span> examples on each step, it is also called Batch Gradient Descent.</p>
@@ -298,7 +301,7 @@ At each step of the training, you update your parameters following a certain dir
 <p>Implement the gradient descent update rule. The gradient descent rule is, for <span class="math inline">\(l = 1, ..., L\)</span>: <span class="math display">\[ W^{[l]} = W^{[l]} - \alpha \text{ } dW^{[l]} \tag{1}\]</span> <span class="math display">\[ b^{[l]} = b^{[l]} - \alpha \text{ } db^{[l]} \tag{2}\]</span></p>
 <p>where L is the number of layers and <span class="math inline">\(\alpha\)</span> is the learning rate. All parameters should be stored in the <code>parameters</code> dictionary. Note that the iterator <code>l</code> starts at 1 in the <code>for</code> loop as the first parameters are <span class="math inline">\(W^{[1]}\)</span> and <span class="math inline">\(b^{[1]}\)</span>.</p>
 <div id="cell-7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;3e464eca4306181b7b2d7908c2543cb4&quot;,&quot;grade&quot;:false,&quot;grade_id&quot;:&quot;cell-7ed1efcf9ec96292&quot;,&quot;locked&quot;:false,&quot;schema_version&quot;:3,&quot;solution&quot;:true,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_parameters_with_gd(parameters, grads, learning_rate):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_parameters_with_gd(parameters, grads, learning_rate):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Update parameters using one step of gradient descent</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
@@ -324,10 +327,10 @@ At each step of the training, you update your parameters following a certain dir
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># CODE_START  </span></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># CODE_END</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-8" class="cell" data-editable="false" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;98daeabded9dffaa6da2915192be14c3&quot;,&quot;grade&quot;:true,&quot;grade_id&quot;:&quot;cell-01dafb2c412914df&quot;,&quot;locked&quot;:true,&quot;points&quot;:10,&quot;schema_version&quot;:3,&quot;solution&quot;:false,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>parameters, grads, learning_rate <span class="op">=</span> update_parameters_with_gd_test_case()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>parameters, grads, learning_rate <span class="op">=</span> update_parameters_with_gd_test_case()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.01</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> update_parameters_with_gd(parameters, grads, learning_rate)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -336,13 +339,13 @@ At each step of the training, you update your parameters following a certain dir
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"W2 =</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="bu">str</span>(parameters[<span class="st">"W2"</span>]))</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"b2 =</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="bu">str</span>(parameters[<span class="st">"b2"</span>]))</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>update_parameters_with_gd_test(update_parameters_with_gd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>update_parameters_with_gd_test(update_parameters_with_gd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>A variant of this is Stochastic Gradient Descent (SGD), which is equivalent to mini-batch gradient descent, where each mini-batch has just 1 example. The update rule that you have just implemented does not change. What changes is that you would be computing gradients on just one training example at a time, rather than on the whole training set. The code examples below illustrate the difference between stochastic gradient descent and (batch) gradient descent.</p>
 <ul>
 <li><strong>(Batch) Gradient Descent</strong>:</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data_input</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data_input</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> labels</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> X.shape[<span class="dv">1</span>]  <span class="co"># Number of training examples</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> initialize_parameters(layers_dims)</span>
@@ -357,11 +360,11 @@ At each step of the training, you update your parameters following a certain dir
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    parameters <span class="op">=</span> update_parameters(parameters, grads)</span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute average cost</span></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    cost_avg <span class="op">=</span> cost_total <span class="op">/</span> m</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><strong>Stochastic Gradient Descent</strong>:</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data_input</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data_input</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> labels</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> X.shape[<span class="dv">1</span>]  <span class="co"># Number of training examples</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> initialize_parameters(layers_dims)</span>
@@ -377,7 +380,7 @@ At each step of the training, you update your parameters following a certain dir
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update parameters</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        parameters <span class="op">=</span> update_parameters(parameters, grads)</span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute average cost</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    cost_avg <span class="op">=</span> cost_total <span class="op">/</span> m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    cost_avg <span class="op">=</span> cost_total <span class="op">/</span> m</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In Stochastic Gradient Descent, you use only 1 training example before updating the gradients. When the training set is large, SGD can be faster. But the parameters will “oscillate” toward the minimum rather than converge smoothly. Here’s what that looks like:</p>
 <img src="images/kiank_sgd.png" style="width:750px;height:250px;">
 
@@ -403,19 +406,19 @@ At each step of the training, you update your parameters following a certain dir
 <p><img src="images/kiank_partition.png" style="width:550px;height:300px;"></p>
 <p><a name="ex-2"></a> ### Exercise 2 - random_mini_batches</p>
 <p>Implement <code>random_mini_batches</code>. The shuffling part has already been coded for you! To help with the partitioning step, you’ve been provided the following code that selects the indexes for the <span class="math inline">\(1^{st}\)</span> and <span class="math inline">\(2^{nd}\)</span> mini-batches:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>first_mini_batch_X <span class="op">=</span> shuffled_X[:, <span class="dv">0</span> : mini_batch_size]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>first_mini_batch_X <span class="op">=</span> shuffled_X[:, <span class="dv">0</span> : mini_batch_size]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>second_mini_batch_X <span class="op">=</span> shuffled_X[:, mini_batch_size : <span class="dv">2</span> <span class="op">*</span> mini_batch_size]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Note that the last mini-batch might end up smaller than <code>mini_batch_size=64</code>. Let <span class="math inline">\(\lfloor s \rfloor\)</span> represents <span class="math inline">\(s\)</span> rounded down to the nearest integer (this is <code>math.floor(s)</code> in Python). If the total number of examples is not a multiple of <code>mini_batch_size=64</code> then there will be <span class="math inline">\(\left\lfloor \frac{m}{mini\_batch\_size}\right\rfloor\)</span> mini-batches with a full 64 examples, and the number of examples in the final mini-batch will be <span class="math inline">\(\left(m-mini_\_batch_\_size \times \left\lfloor \frac{m}{mini\_batch\_size}\right\rfloor\right)\)</span>.</p>
 <p><strong>Hint:</strong></p>
 <p><span class="math display">\[mini\_batch\_X = shuffled\_X[:, i : j]\]</span></p>
 <p>Think of a way in which you can use the for loop variable <code>k</code> help you increment <code>i</code> and <code>j</code> in multiples of mini_batch_size.</p>
 <p>As an example, if you want to increment in multiples of 3, you could the following:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">3</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">3</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> (<span class="dv">0</span> , <span class="dv">5</span>):</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(k <span class="op">*</span> n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(k <span class="op">*</span> n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="cell-12" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;e276742d3477f18007b3d340b0039271&quot;,&quot;grade&quot;:false,&quot;grade_id&quot;:&quot;cell-a693afffedab4203&quot;,&quot;locked&quot;:false,&quot;schema_version&quot;:3,&quot;solution&quot;:true,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> random_mini_batches(X, Y, mini_batch_size <span class="op">=</span> <span class="dv">64</span>, seed <span class="op">=</span> <span class="dv">0</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> random_mini_batches(X, Y, mini_batch_size <span class="op">=</span> <span class="dv">64</span>, seed <span class="op">=</span> <span class="dv">0</span>):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Creates a list of random minibatches from (X, Y)</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
@@ -463,10 +466,10 @@ At each step of the training, you update your parameters following a certain dir
 <span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        mini_batch <span class="op">=</span> (mini_batch_X, mini_batch_Y)</span>
 <span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        mini_batches.append(mini_batch)</span>
 <span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mini_batches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mini_batches</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-13" class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">1</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">1</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mini_batch_size <span class="op">=</span> <span class="dv">64</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>nx <span class="op">=</span> <span class="dv">12288</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="dv">148</span></span>
@@ -487,10 +490,10 @@ At each step of the training, you update your parameters following a certain dir
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.allclose(mini_batches[<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">0</span>:<span class="dv">3</span>], [<span class="dv">294912</span>,  <span class="dv">86016</span>, <span class="dv">454656</span>]), <span class="st">"Wrong values. Check the indexes used to form the mini batches"</span></span>
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.allclose(mini_batches[<span class="op">-</span><span class="dv">1</span>][<span class="dv">0</span>][<span class="op">-</span><span class="dv">1</span>][<span class="dv">0</span>:<span class="dv">3</span>], [<span class="dv">1425407</span>, <span class="dv">1769471</span>, <span class="dv">897023</span>]), <span class="st">"Wrong values. Check the indexes used to form the mini batches"</span></span>
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\033</span><span class="st">[92mAll tests passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\033</span><span class="st">[92mAll tests passed!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-14" class="cell" data-editable="false" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;c9a50964c5ab5622435c64a4f7d9e44a&quot;,&quot;grade&quot;:true,&quot;grade_id&quot;:&quot;cell-9bd796497095573b&quot;,&quot;locked&quot;:true,&quot;points&quot;:10,&quot;schema_version&quot;:3,&quot;solution&quot;:false,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>t_X, t_Y, mini_batch_size <span class="op">=</span> random_mini_batches_test_case()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>t_X, t_Y, mini_batch_size <span class="op">=</span> random_mini_batches_test_case()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mini_batches <span class="op">=</span> random_mini_batches(t_X, t_Y, mini_batch_size)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"shape of the 1st mini_batch_X: "</span> <span class="op">+</span> <span class="bu">str</span>(mini_batches[<span class="dv">0</span>][<span class="dv">0</span>].shape))</span>
@@ -501,7 +504,7 @@ At each step of the training, you update your parameters following a certain dir
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"shape of the 3rd mini_batch_Y: "</span> <span class="op">+</span> <span class="bu">str</span>(mini_batches[<span class="dv">2</span>][<span class="dv">1</span>].shape))</span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"mini batch sanity check: "</span> <span class="op">+</span> <span class="bu">str</span>(mini_batches[<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">0</span>:<span class="dv">3</span>]))</span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>random_mini_batches_test(random_mini_batches)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>random_mini_batches_test(random_mini_batches)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><font color="blue"></font></p><font color="blue">
 <p><strong>What you should remember</strong>: - Shuffling and Partitioning are the two steps required to build mini-batches - Powers of two are often chosen to be the mini-batch size, e.g., 16, 32, 64, 128.</p>
@@ -515,11 +518,11 @@ At each step of the training, you update your parameters following a certain dir
 </font></font></font></center><font color="purple"><font color="purple"><font color="black">
 <p><a name="ex-3"></a><br>
 ### Exercise 3 - initialize_velocity Initialize the velocity. The velocity, <span class="math inline">\(v\)</span>, is a python dictionary that needs to be initialized with arrays of zeros. Its keys are the same as those in the <code>grads</code> dictionary, that is: for <span class="math inline">\(l =1,...,L\)</span>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>v[<span class="st">"dW"</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> ... <span class="co">#(numpy array of zeros with the same shape as parameters["W" + str(l)])</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>v[<span class="st">"db"</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> ... <span class="co">#(numpy array of zeros with the same shape as parameters["b" + str(l)])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>v[<span class="st">"dW"</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> ... <span class="co">#(numpy array of zeros with the same shape as parameters["W" + str(l)])</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>v[<span class="st">"db"</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> ... <span class="co">#(numpy array of zeros with the same shape as parameters["b" + str(l)])</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Note</strong> that the iterator l starts at 1 in the for loop as the first parameters are v[“dW1”] and v[“db1”] (that’s a “one” on the superscript).</p>
 <div id="cell-18" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;73f98ff4232b1eb6ddd045f4a052d495&quot;,&quot;grade&quot;:false,&quot;grade_id&quot;:&quot;cell-667cf6695880506a&quot;,&quot;locked&quot;:false,&quot;schema_version&quot;:3,&quot;solution&quot;:true,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> initialize_velocity(parameters):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> initialize_velocity(parameters):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Initializes the velocity as a python dictionary with:</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">                - keys: "dW1", "db1", ..., "dWL", "dbL" </span></span>
@@ -547,10 +550,10 @@ At each step of the training, you update your parameters following a certain dir
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># CODE_END</span></span>
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-19" class="cell" data-editable="false" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;09a811f004e96833a7e6cc47a55de653&quot;,&quot;grade&quot;:true,&quot;grade_id&quot;:&quot;cell-c129a0130218c80f&quot;,&quot;locked&quot;:true,&quot;points&quot;:10,&quot;schema_version&quot;:3,&quot;solution&quot;:false,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> initialize_velocity_test_case()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> initialize_velocity_test_case()</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> initialize_velocity(parameters)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"v[</span><span class="ch">\"</span><span class="st">dW1</span><span class="ch">\"</span><span class="st">] =</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="bu">str</span>(v[<span class="st">"dW1"</span>]))</span>
@@ -558,7 +561,7 @@ At each step of the training, you update your parameters following a certain dir
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"v[</span><span class="ch">\"</span><span class="st">dW2</span><span class="ch">\"</span><span class="st">] =</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="bu">str</span>(v[<span class="st">"dW2"</span>]))</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"v[</span><span class="ch">\"</span><span class="st">db2</span><span class="ch">\"</span><span class="st">] =</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="bu">str</span>(v[<span class="st">"db2"</span>]))</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>initialize_velocity_test(initialize_velocity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>initialize_velocity_test(initialize_velocity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a name="ex-4"></a><br>
 ### Exercise 4 - update_parameters_with_momentum</p>
@@ -573,7 +576,7 @@ b^{[l]} = b^{[l]} - \alpha v_{db^{[l]}}
 \end{cases}\tag{4}\]</span></p>
 <p>where L is the number of layers, <span class="math inline">\(\beta\)</span> is the momentum and <span class="math inline">\(\alpha\)</span> is the learning rate. All parameters should be stored in the <code>parameters</code> dictionary. Note that the iterator <code>l</code> starts at 1 in the <code>for</code> loop as the first parameters are <span class="math inline">\(W^{[1]}\)</span> and <span class="math inline">\(b^{[1]}\)</span> (that’s a “one” on the superscript).</p>
 <div id="cell-21" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;09ff6600367fba5cb96155b80a2b3688&quot;,&quot;grade&quot;:false,&quot;grade_id&quot;:&quot;cell-a5f80aecc1d4e020&quot;,&quot;locked&quot;:false,&quot;schema_version&quot;:3,&quot;solution&quot;:true,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_parameters_with_momentum(parameters, grads, v, beta, learning_rate):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_parameters_with_momentum(parameters, grads, v, beta, learning_rate):</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Update parameters using Momentum</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
@@ -611,10 +614,10 @@ b^{[l]} = b^{[l]} - \alpha v_{db^{[l]}}
 <span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>      </span>
 <span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># CODE_END</span></span>
 <span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters, v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters, v</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-22" class="cell" data-editable="false" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;01b9bf272f5f4d7ed4e26ca3fb956b9b&quot;,&quot;grade&quot;:true,&quot;grade_id&quot;:&quot;cell-4c7cb001c56beb5d&quot;,&quot;locked&quot;:true,&quot;points&quot;:10,&quot;schema_version&quot;:3,&quot;solution&quot;:false,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>parameters, grads, v <span class="op">=</span> update_parameters_with_momentum_test_case()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>parameters, grads, v <span class="op">=</span> update_parameters_with_momentum_test_case()</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>parameters, v <span class="op">=</span> update_parameters_with_momentum(parameters, grads, v, beta <span class="op">=</span> <span class="fl">0.9</span>, learning_rate <span class="op">=</span> <span class="fl">0.01</span>)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"W1 = </span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="bu">str</span>(parameters[<span class="st">"W1"</span>]))</span>
@@ -626,7 +629,7 @@ b^{[l]} = b^{[l]} - \alpha v_{db^{[l]}}
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"v[</span><span class="ch">\"</span><span class="st">dW2</span><span class="ch">\"</span><span class="st">] = </span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="bu">str</span>(v[<span class="st">"dW2"</span>]))</span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"v[</span><span class="ch">\"</span><span class="st">db2</span><span class="ch">\"</span><span class="st">] = v"</span> <span class="op">+</span> <span class="bu">str</span>(v[<span class="st">"db2"</span>]))</span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>update_parameters_with_momentum_test(update_parameters_with_momentum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>update_parameters_with_momentum_test(update_parameters_with_momentum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Note that</strong>: - The velocity is initialized with zeros. So the algorithm will take a few iterations to “build up” velocity and start to take bigger steps. - If <span class="math inline">\(\beta = 0\)</span>, then this just becomes standard gradient descent without momentum.</p>
 <p><strong>How do you choose <span class="math inline">\(\beta\)</span>?</strong></p>
@@ -654,12 +657,12 @@ W^{[l]} = W^{[l]} - \alpha \frac{v^{corrected}_{dW^{[l]}}}{\sqrt{s^{corrected}_{
 ### Exercise 5 - initialize_adam</p>
 <p>Initialize the Adam variables <span class="math inline">\(v, s\)</span> which keep track of the past information.</p>
 <p><strong>Instruction</strong>: The variables <span class="math inline">\(v, s\)</span> are python dictionaries that need to be initialized with arrays of zeros. Their keys are the same as for <code>grads</code>, that is: for <span class="math inline">\(l = 1, ..., L\)</span>:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>v[<span class="st">"dW"</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> ... <span class="co">#(numpy array of zeros with the same shape as parameters["W" + str(l)])</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>v[<span class="st">"dW"</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> ... <span class="co">#(numpy array of zeros with the same shape as parameters["W" + str(l)])</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>v[<span class="st">"db"</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> ... <span class="co">#(numpy array of zeros with the same shape as parameters["b" + str(l)])</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>s[<span class="st">"dW"</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> ... <span class="co">#(numpy array of zeros with the same shape as parameters["W" + str(l)])</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>s[<span class="st">"db"</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> ... <span class="co">#(numpy array of zeros with the same shape as parameters["b" + str(l)])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>s[<span class="st">"db"</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> ... <span class="co">#(numpy array of zeros with the same shape as parameters["b" + str(l)])</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="cell-27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;8eb19ce4b30a9c2af428853c24d8b80a&quot;,&quot;grade&quot;:false,&quot;grade_id&quot;:&quot;cell-f985b4ecf2e3b4b1&quot;,&quot;locked&quot;:false,&quot;schema_version&quot;:3,&quot;solution&quot;:true,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> initialize_adam(parameters) :</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> initialize_adam(parameters) :</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Initializes v and s as two python dictionaries with:</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">                - keys: "dW1", "db1", ..., "dWL", "dbL" </span></span>
@@ -695,10 +698,10 @@ W^{[l]} = W^{[l]} - \alpha \frac{v^{corrected}_{dW^{[l]}}}{\sqrt{s^{corrected}_{
 <span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CODE_END</span></span>
 <span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v, s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v, s</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-28" class="cell" data-editable="false" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;63c23c13e1cfb6e1c04b62541ea07cae&quot;,&quot;grade&quot;:true,&quot;grade_id&quot;:&quot;cell-66f5f68aa23508d7&quot;,&quot;locked&quot;:true,&quot;points&quot;:10,&quot;schema_version&quot;:3,&quot;solution&quot;:false,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> initialize_adam_test_case()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> initialize_adam_test_case()</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>v, s <span class="op">=</span> initialize_adam(parameters)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"v[</span><span class="ch">\"</span><span class="st">dW1</span><span class="ch">\"</span><span class="st">] = </span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="bu">str</span>(v[<span class="st">"dW1"</span>]))</span>
@@ -710,7 +713,7 @@ W^{[l]} = W^{[l]} - \alpha \frac{v^{corrected}_{dW^{[l]}}}{\sqrt{s^{corrected}_{
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"s[</span><span class="ch">\"</span><span class="st">dW2</span><span class="ch">\"</span><span class="st">] = </span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="bu">str</span>(s[<span class="st">"dW2"</span>]))</span>
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"s[</span><span class="ch">\"</span><span class="st">db2</span><span class="ch">\"</span><span class="st">] = </span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="bu">str</span>(s[<span class="st">"db2"</span>]))</span>
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>initialize_adam_test(initialize_adam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>initialize_adam_test(initialize_adam)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a name="ex-6"></a><br>
 ### Exercise 6 - update_parameters_with_adam</p>
@@ -724,7 +727,7 @@ W^{[l]} = W^{[l]} - \alpha \frac{v^{corrected}_{dW^{[l]}}}{\sqrt{s^{corrected}_{
 \end{cases}\]</span></p>
 <p><strong>Note</strong> that the iterator <code>l</code> starts at 1 in the <code>for</code> loop as the first parameters are <span class="math inline">\(W^{[1]}\)</span> and <span class="math inline">\(b^{[1]}\)</span>.</p>
 <div id="cell-30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;db9c45f6bfd6b1395c2662f6f127d12b&quot;,&quot;grade&quot;:false,&quot;grade_id&quot;:&quot;cell-d72b0d5fd3ac5c42&quot;,&quot;locked&quot;:false,&quot;schema_version&quot;:3,&quot;solution&quot;:true,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_parameters_with_adam(parameters, grads, v, s, t, learning_rate <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_parameters_with_adam(parameters, grads, v, s, t, learning_rate <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                                beta1 <span class="op">=</span> <span class="fl">0.9</span>, beta2 <span class="op">=</span> <span class="fl">0.999</span>,  epsilon <span class="op">=</span> <span class="fl">1e-8</span>):</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Update parameters using Adam</span></span>
@@ -796,10 +799,10 @@ W^{[l]} = W^{[l]} - \alpha \frac{v^{corrected}_{dW^{[l]}}}{\sqrt{s^{corrected}_{
 <span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a>        <span class="co"># CODE_END</span></span>
 <span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters, v, s, v_corrected, s_corrected</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters, v, s, v_corrected, s_corrected</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-31" class="cell" data-editable="false" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;6215a82c8aab82f59509d8ce8b10e7ed&quot;,&quot;grade&quot;:true,&quot;grade_id&quot;:&quot;cell-c2a35a4cdbfa242c&quot;,&quot;locked&quot;:true,&quot;points&quot;:10,&quot;schema_version&quot;:3,&quot;solution&quot;:false,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>parametersi, grads, vi, si, t, learning_rate, beta1, beta2, epsilon <span class="op">=</span> update_parameters_with_adam_test_case()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>parametersi, grads, vi, si, t, learning_rate, beta1, beta2, epsilon <span class="op">=</span> update_parameters_with_adam_test_case()</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>parameters, v, s, vc, sc  <span class="op">=</span> update_parameters_with_adam(parametersi, grads, vi, si, t, learning_rate, beta1, beta2, epsilon)</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"W1 = </span><span class="ch">\n</span><span class="sc">{</span>parameters[<span class="st">'W1'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -807,7 +810,7 @@ W^{[l]} = W^{[l]} - \alpha \frac{v^{corrected}_{dW^{[l]}}}{\sqrt{s^{corrected}_{
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"b1 = </span><span class="ch">\n</span><span class="sc">{</span>parameters[<span class="st">'b1'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"b2 = </span><span class="ch">\n</span><span class="sc">{</span>parameters[<span class="st">'b2'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>update_parameters_with_adam_test(update_parameters_with_adam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>update_parameters_with_adam_test(update_parameters_with_adam)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Expected values:</strong></p>
 <pre><code>W1 = 
@@ -829,11 +832,11 @@ b2 =
 ## 6 - Model with different Optimization algorithms</p>
 <p>Below, you’ll use the following “moons” dataset to test the different optimization methods. (The dataset is named “moons” because the data from each of the two classes looks a bit like a crescent-shaped moon.)</p>
 <div id="cell-35" class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>train_X, train_Y <span class="op">=</span> load_dataset()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>train_X, train_Y <span class="op">=</span> load_dataset()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>A 3-layer neural network has already been implemented for you! You’ll train it with: - Mini-batch <strong>Gradient Descent</strong>: it will call your function: - <code>update_parameters_with_gd()</code> - Mini-batch <strong>Momentum</strong>: it will call your functions: - <code>initialize_velocity()</code> and <code>update_parameters_with_momentum()</code> - Mini-batch <strong>Adam</strong>: it will call your functions: - <code>initialize_adam()</code> and <code>update_parameters_with_adam()</code></p>
 <div id="cell-37" class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(X, Y, layers_dims, optimizer, learning_rate <span class="op">=</span> <span class="fl">0.0007</span>, mini_batch_size <span class="op">=</span> <span class="dv">64</span>, beta <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(X, Y, layers_dims, optimizer, learning_rate <span class="op">=</span> <span class="fl">0.0007</span>, mini_batch_size <span class="op">=</span> <span class="dv">64</span>, beta <span class="op">=</span> <span class="fl">0.9</span>,</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>          beta1 <span class="op">=</span> <span class="fl">0.9</span>, beta2 <span class="op">=</span> <span class="fl">0.999</span>,  epsilon <span class="op">=</span> <span class="fl">1e-8</span>, num_epochs <span class="op">=</span> <span class="dv">5000</span>, print_cost <span class="op">=</span> <span class="va">True</span>):</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">    3-layer neural network model which can be run in different optimizer modes.</span></span>
@@ -919,14 +922,14 @@ b2 =
 <span id="cb24-84"><a href="#cb24-84" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">"Learning rate = "</span> <span class="op">+</span> <span class="bu">str</span>(learning_rate))</span>
 <span id="cb24-85"><a href="#cb24-85" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
 <span id="cb24-86"><a href="#cb24-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now, run this 3 layer neural network with each of the 3 optimization methods.</p>
 <p><a name="6-1"></a><br>
 ### 6.1 - Mini-Batch Gradient Descent</p>
 <p>Run the following code to see how the model does with mini-batch gradient descent.</p>
 <div id="cell-39" class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>layers_dims <span class="op">=</span> [train_X.shape[<span class="dv">0</span>], <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, layers_dims, optimizer <span class="op">=</span> <span class="st">"gd"</span>)</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -938,13 +941,13 @@ b2 =
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">2.5</span>])</span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="fl">1.5</span>])</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a name="6-2"></a><br>
 ### 6.2 - Mini-Batch Gradient Descent with Momentum</p>
 <p>Next, run the following code to see how the model does with momentum. Because this example is relatively simple, the gains from using momemtum are small - but for more complex problems you might see bigger gains.</p>
 <div id="cell-41" class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>layers_dims <span class="op">=</span> [train_X.shape[<span class="dv">0</span>], <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, layers_dims, beta <span class="op">=</span> <span class="fl">0.9</span>, optimizer <span class="op">=</span> <span class="st">"momentum"</span>)</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -956,13 +959,13 @@ b2 =
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">2.5</span>])</span>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="fl">1.5</span>])</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a name="6-3"></a><br>
 ### 6.3 - Mini-Batch with Adam</p>
 <p>Finally, run the following code to see how the model does with Adam.</p>
 <div id="cell-43" class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>layers_dims <span class="op">=</span> [train_X.shape[<span class="dv">0</span>], <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, layers_dims, optimizer <span class="op">=</span> <span class="st">"adam"</span>)</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -974,7 +977,7 @@ b2 =
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">2.5</span>])</span>
 <span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="fl">1.5</span>])</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a name="6-4"></a><br>
 ### 6.4 - Summary</p>
@@ -1041,7 +1044,7 @@ b2 =
 <p>Now, you’ll apply scheduled learning rate decay to a 3-layer neural network in three different optimizer modes and see how each one differs, as well as the effect of scheduling at different epochs.</p>
 <p>This model is essentially the same as the one you used before, except in this one you’ll be able to include learning rate decay. It includes two new parameters, decay and decay_rate.</p>
 <div id="cell-47" class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(X, Y, layers_dims, optimizer, learning_rate <span class="op">=</span> <span class="fl">0.0007</span>, mini_batch_size <span class="op">=</span> <span class="dv">64</span>, beta <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(X, Y, layers_dims, optimizer, learning_rate <span class="op">=</span> <span class="fl">0.0007</span>, mini_batch_size <span class="op">=</span> <span class="dv">64</span>, beta <span class="op">=</span> <span class="fl">0.9</span>,</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>          beta1 <span class="op">=</span> <span class="fl">0.9</span>, beta2 <span class="op">=</span> <span class="fl">0.999</span>,  epsilon <span class="op">=</span> <span class="fl">1e-8</span>, num_epochs <span class="op">=</span> <span class="dv">5000</span>, print_cost <span class="op">=</span> <span class="va">True</span>, decay<span class="op">=</span><span class="va">None</span>, decay_rate<span class="op">=</span><span class="dv">1</span>):</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">    3-layer neural network model which can be run in different optimizer modes.</span></span>
@@ -1131,7 +1134,7 @@ b2 =
 <span id="cb29-88"><a href="#cb29-88" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">"Learning rate = "</span> <span class="op">+</span> <span class="bu">str</span>(learning_rate))</span>
 <span id="cb29-89"><a href="#cb29-89" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
 <span id="cb29-90"><a href="#cb29-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-91"><a href="#cb29-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-91"><a href="#cb29-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a name="7-1"></a><br>
 ### 7.1 - Decay on every iteration</p>
@@ -1141,7 +1144,7 @@ b2 =
 ### Exercise 7 - update_lr</p>
 <p>Calculate the new learning rate using exponential weight decay.</p>
 <div id="cell-49" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;68d0f6e5b2a1a462ee981bf6c4ac6414&quot;,&quot;grade&quot;:false,&quot;grade_id&quot;:&quot;cell-1f75dd71cfae785a&quot;,&quot;locked&quot;:false,&quot;schema_version&quot;:3,&quot;solution&quot;:true,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_lr(learning_rate0, epoch_num, decay_rate):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_lr(learning_rate0, epoch_num, decay_rate):</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculates updated the learning rate using exponential weight decay.</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
@@ -1158,10 +1161,10 @@ b2 =
 <span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CODE_START</span></span>
 <span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CODE_END</span></span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> learning_rate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> learning_rate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-50" class="cell" data-editable="false" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;e94cc1e45ead743ed2c013bea09a2170&quot;,&quot;grade&quot;:true,&quot;grade_id&quot;:&quot;cell-84c8bdb20bc64216&quot;,&quot;locked&quot;:true,&quot;points&quot;:10,&quot;schema_version&quot;:3,&quot;solution&quot;:false,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.5</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.5</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Original learning rate: "</span>, learning_rate)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>epoch_num <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>decay_rate <span class="op">=</span> <span class="dv">1</span></span>
@@ -1169,10 +1172,10 @@ b2 =
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Updated learning rate: "</span>, learning_rate_2)</span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>update_lr_test(update_lr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>update_lr_test(update_lr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-51" class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>layers_dims <span class="op">=</span> [train_X.shape[<span class="dv">0</span>], <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, layers_dims, optimizer <span class="op">=</span> <span class="st">"gd"</span>, learning_rate <span class="op">=</span> <span class="fl">0.1</span>, num_epochs<span class="op">=</span><span class="dv">5000</span>, decay<span class="op">=</span>update_lr)</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1184,7 +1187,7 @@ b2 =
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">2.5</span>])</span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="fl">1.5</span>])</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 Notice that if you set the decay to occur at every iteration, the learning rate goes to zero too quickly - even if you start with a higher learning rate.
 <table>
@@ -1277,7 +1280,7 @@ Notice that if you set the decay to occur at every iteration, the learning rate 
 <p><span class="math display">\[\alpha = \frac{1}{1 + decayRate \times \lfloor\frac{epochNum}{timeInterval}\rfloor} \alpha_{0}\]</span></p>
 <p><strong>Hint:</strong> <a href="https://numpy.org/doc/stable/reference/generated/numpy.floor.html">numpy.floor</a></p>
 <div id="cell-55" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;6684151ebcddc6e4aaad1040b9e3d80a&quot;,&quot;grade&quot;:false,&quot;grade_id&quot;:&quot;cell-e5b733253d9006fc&quot;,&quot;locked&quot;:false,&quot;schema_version&quot;:3,&quot;solution&quot;:true,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> schedule_lr_decay(learning_rate0, epoch_num, decay_rate, time_interval<span class="op">=</span><span class="dv">1000</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> schedule_lr_decay(learning_rate0, epoch_num, decay_rate, time_interval<span class="op">=</span><span class="dv">1000</span>):</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculates updated the learning rate using exponential weight decay.</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
@@ -1295,10 +1298,10 @@ Notice that if you set the decay to occur at every iteration, the learning rate 
 <span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CODE_START</span></span>
 <span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CODE_END</span></span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> learning_rate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> learning_rate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-56" class="cell" data-editable="false" data-quarto-private-1="{&quot;key&quot;:&quot;nbgrader&quot;,&quot;value&quot;:{&quot;cell_type&quot;:&quot;code&quot;,&quot;checksum&quot;:&quot;221cccee108f8b2db6ff3c6c76ee3db9&quot;,&quot;grade&quot;:true,&quot;grade_id&quot;:&quot;cell-03cd771ef9f3be85&quot;,&quot;locked&quot;:true,&quot;points&quot;:10,&quot;schema_version&quot;:3,&quot;solution&quot;:false,&quot;task&quot;:false}}">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.5</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.5</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Original learning rate: "</span>, learning_rate)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>epoch_num_1 <span class="op">=</span> <span class="dv">10</span></span>
@@ -1310,7 +1313,7 @@ Notice that if you set the decay to occur at every iteration, the learning rate 
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Updated learning rate after </span><span class="sc">{}</span><span class="st"> epochs: "</span>.<span class="bu">format</span>(epoch_num_1), learning_rate_1)</span>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Updated learning rate after </span><span class="sc">{}</span><span class="st"> epochs: "</span>.<span class="bu">format</span>(epoch_num_2), learning_rate_2)</span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>schedule_lr_decay_test(schedule_lr_decay)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>schedule_lr_decay_test(schedule_lr_decay)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Expected output</strong></p>
 <pre><code>Original learning rate:  0.5
@@ -1321,7 +1324,7 @@ Updated learning rate after 100 epochs:  0.3846153846153846</code></pre>
 <p><a name="7-3-1"></a> #### 7.3.1 - Gradient Descent with Learning Rate Decay</p>
 <p>Run the following code to see how the model does gradient descent and weight decay.</p>
 <div id="cell-60" class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>layers_dims <span class="op">=</span> [train_X.shape[<span class="dv">0</span>], <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, layers_dims, optimizer <span class="op">=</span> <span class="st">"gd"</span>, learning_rate <span class="op">=</span> <span class="fl">0.1</span>, num_epochs<span class="op">=</span><span class="dv">5000</span>, decay<span class="op">=</span>schedule_lr_decay)</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1333,12 +1336,12 @@ Updated learning rate after 100 epochs:  0.3846153846153846</code></pre>
 <span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
 <span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">2.5</span>])</span>
 <span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="fl">1.5</span>])</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a name="7-3-2"></a> #### 7.3.2 - Gradient Descent with Momentum and Learning Rate Decay</p>
 <p>Run the following code to see how the model does gradient descent with momentum and weight decay.</p>
 <div id="cell-62" class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>layers_dims <span class="op">=</span> [train_X.shape[<span class="dv">0</span>], <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, layers_dims, optimizer <span class="op">=</span> <span class="st">"momentum"</span>, learning_rate <span class="op">=</span> <span class="fl">0.1</span>, num_epochs<span class="op">=</span><span class="dv">5000</span>, decay<span class="op">=</span>schedule_lr_decay)</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1350,12 +1353,12 @@ Updated learning rate after 100 epochs:  0.3846153846153846</code></pre>
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">2.5</span>])</span>
 <span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="fl">1.5</span>])</span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a name="7-3-3"></a> #### 7.3.3 - Adam with Learning Rate Decay</p>
 <p>Run the following code to see how the model does Adam and weight decay.</p>
 <div id="cell-64" class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train 3-layer model</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>layers_dims <span class="op">=</span> [train_X.shape[<span class="dv">0</span>], <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, layers_dims, optimizer <span class="op">=</span> <span class="st">"adam"</span>, learning_rate <span class="op">=</span> <span class="fl">0.01</span>, num_epochs<span class="op">=</span><span class="dv">5000</span>, decay<span class="op">=</span>schedule_lr_decay)</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1367,7 +1370,7 @@ Updated learning rate after 100 epochs:  0.3846153846153846</code></pre>
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">2.5</span>])</span>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="fl">1.5</span>])</span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a name="7-4"></a> ### 7.4 - Achieving similar performance with different methods</p>
 <p>With Mini-batch GD or Mini-batch GD with Momentum, the accuracy is significantly lower than Adam, but when learning rate decay is added on top, either can achieve performance at a speed and accuracy score that’s similar to Adam.</p>
@@ -1467,13 +1470,14 @@ Updated learning rate after 100 epochs:  0.3846153846153846</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

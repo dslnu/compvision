@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.31">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
 
   <meta name="author" content="Vitaly Vlasov">
   <title>Computer Vision – Filtering</title>
@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -29,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -624,7 +627,7 @@ Figure&nbsp;3
 <div class="callout-content">
 <p>A linear system, in its most general form, can be written as follows:</p>
 <p><span id="eq-general_lin_filter"><span class="math display">\[\ell_{\texttt{out}}\left[n \right] = \sum_{k=0}^{N-1} h \left[n,k\right] \ell_{\texttt{in}}\left[k \right] ~~~ for ~~~ n \in \left[0, M-1 \right]
-\qquad(1)\]</span></span></p>
+\tag{1}\]</span></span></p>
 </div>
 </div>
 </div>
@@ -729,7 +732,7 @@ Figure&nbsp;4: A linear function drawn as a <strong>fully connected layer</stron
 <p>In two dimensions the equations are analogous. Each pixel of the output image, <span class="math inline">\(\ell_{\texttt{out}}\left[n,m\right]\)</span>, is computed as a linear combination of pixels of the input image, <span class="math inline">\(\ell_{\texttt{in}}\left[n, m\right]\)</span>:</p>
 <p><span id="eq-lin"><span class="math display">\[
 \ell_{\texttt{out}}\left[n,m \right] = \sum_{k=0}^{M-1} \sum_{l=0}^{N-1} h \left[n,m,k,l \right] \ell_{\texttt{in}}\left[k,l \right]
-\qquad(2)\]</span></span></p>
+\tag{2}\]</span></span></p>
 <p>By writing the images as column vectors, concatenating all the image columns into a long vector, we can also write the previous equation using matrices and vectors: <span class="math inline">\(\boldsymbol\ell_{\texttt{out}}=  \mathbf{H} \boldsymbol\ell_{\texttt{in}}\)</span>.</p>
 </div>
 </div>
@@ -806,7 +809,7 @@ Figure&nbsp;4: A linear function drawn as a <strong>fully connected layer</stron
 <div class="callout-content">
 <p>The convolution, denoted <span class="math inline">\(\circ\)</span>, between a signal <span class="math inline">\(\ell_{\texttt{in}}\left[n \right]\)</span> and the <strong>convolutional kernel</strong> <span class="math inline">\(h\left[n \right]\)</span> is defined as follows: <span id="eq-1dconv"><span class="math display">\[
 \ell_{\texttt{out}}\left[n\right] = h \left[n\right] \circ \ell_{\texttt{in}}\left[n\right] =  \sum_{k=-\infty}^{\infty} h \left[n-k \right] \ell_{\texttt{in}}\left[k \right]
-\qquad(3)\]</span></span></p>
+\tag{3}\]</span></span></p>
 <p>If the signal <span class="math inline">\(\ell_{\texttt{in}}\left[n \right]\)</span> has a finite length, <span class="math inline">\(N\)</span>, then the sum is only done in the interval <span class="math inline">\(k \in \left[0,N-1\right]\)</span>.</p>
 </div>
 </div>
@@ -945,7 +948,7 @@ Figure&nbsp;5: convolution represented as a layer in a neural network. Each outp
 </ul>
 <p><span id="eq-2dconv"><span class="math display">\[
 \ell_{\texttt{out}}\left[n,m\right] = h \left[n,m\right] \circ \ell_{\texttt{in}}\left[n,m\right] =  \sum_{k,l}h \left[n-k,m-l \right] \ell_{\texttt{in}}\left[k,l \right]
-\qquad(4)\]</span></span></p>
+\tag{4}\]</span></span></p>
 </div>
 </div>
 </div>
@@ -985,7 +988,7 @@ Figure&nbsp;7: Fig (a) Defocusing an image can be written as a convolution. (b) 
 <div class="callout-content">
 <ul>
 <li><p><strong>Commutative</strong>. As we have already discussed before the convolution is commutative, <span class="math display">\[h\left[n\right] \circ \ell\left[n\right] = \ell\left[n\right] \circ h\left[n\right]\]</span> which means that the order of convolutions is irrelevant. This is not true for the correlation.</p></li>
-<li><p><strong>Associative</strong>. Convolutions can be applied in any order: <span id="eq-linear_image_filtering-conv_associative_property"><span class="math display">\[\ell_1 \left[n\right] \circ \ell_2 \left[n\right] \circ \ell_3 \left[n\right] = \ell_1\left[n\right] \circ (\ell_2\left[n\right] \circ \ell_3\left[n\right]) = (\ell_1\left[n\right] \circ \ell_2\left[n\right]) \circ \ell_3\left[n\right] \qquad(5)\]</span></span> In practice, for finite length signals, the associative property might be affected by how boundary conditions are implemented.</p></li>
+<li><p><strong>Associative</strong>. Convolutions can be applied in any order: <span id="eq-linear_image_filtering-conv_associative_property"><span class="math display">\[\ell_1 \left[n\right] \circ \ell_2 \left[n\right] \circ \ell_3 \left[n\right] = \ell_1\left[n\right] \circ (\ell_2\left[n\right] \circ \ell_3\left[n\right]) = (\ell_1\left[n\right] \circ \ell_2\left[n\right]) \circ \ell_3\left[n\right] \tag{5}\]</span></span> In practice, for finite length signals, the associative property might be affected by how boundary conditions are implemented.</p></li>
 </ul>
 </div>
 </div>
@@ -1524,7 +1527,7 @@ Figure&nbsp;11: Fig (a) Template. (b) Input image. (c) Correlation between input
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1598,13 +1601,14 @@ Figure&nbsp;11: Fig (a) Template. (b) Input image. (c) Correlation between input
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

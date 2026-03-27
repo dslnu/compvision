@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.31">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
 
   <meta name="author" content="Vitaly Vlasov">
   <title>Computer Vision – Basic concepts</title>
@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -29,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -361,7 +364,7 @@ Figure&nbsp;3
 <p><span id="eq-projection"><span class="math display">\[\begin{aligned}
 x &amp;=&amp; X \\
 y &amp;=&amp;  \cos(\theta) Y - \sin(\theta) Z
-\end{aligned} \qquad(1)\]</span></span></p>
+\end{aligned} \tag{1}\]</span></span></p>
 </div>
 </div>
 </div>
@@ -665,7 +668,7 @@ Figure&nbsp;5
 <p><span id="eq-image_partial_derivatives_aprox"><span class="math display">\[\begin{aligned}
 \frac{\partial \ell}{\partial x} &amp;\simeq \ell(x,y) - \ell(x-1,y) \\
 \frac{\partial \ell}{\partial y} &amp;\simeq \ell(x,y) - \ell(x,y-1)
-\end{aligned} \qquad(2)\]</span></span></p>
+\end{aligned} \tag{2}\]</span></span></p>
 </div>
 </div>
 </div>
@@ -1117,7 +1120,7 @@ Figure&nbsp;9
 <p>In a 3D vertical edge, using the projection equations, the derivative of <span class="math inline">\(Y\)</span> along the edge will be</p>
 <p><span id="eq-derivative_Y_along_edge"><span class="math display">\[\begin{aligned}
 \partial Y / \partial y &amp;= 1/ \cos(\theta)\end{aligned}
-\qquad(3)\]</span></span></p>
+\tag{3}\]</span></span></p>
 </div>
 </div>
 </div>
@@ -1135,7 +1138,7 @@ Figure&nbsp;9
 <p><span id="eq-derivative_Y_along_edge_hor"><span class="math display">\[\begin{aligned}
 \partial Y / \partial {\bf t} &amp;= 0
 \end{aligned}
-\qquad(4)\]</span></span></p>
+\tag{4}\]</span></span></p>
 <p>where the vector <span class="math inline">\(\bf t\)</span> denotes direction tangent to the edge, <span class="math inline">\({\bf t}=(-n_y, n_x)\)</span>.</p>
 </div>
 </div>
@@ -1157,7 +1160,7 @@ Figure&nbsp;9
 <div class="callout-content">
 <p>We can write this derivative as a function of derivatives along the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> image coordinates: <span id="eq-derivative_Y_along_edge_tan"><span class="math display">\[\begin{aligned}
 \partial Y / \partial {\bf t} =  \nabla Y \cdot {\bf t} = -n_y \partial Y / \partial x + n_x \partial Y / \partial y
-\end{aligned} \qquad(5)\]</span></span></p>
+\end{aligned} \tag{5}\]</span></span></p>
 <p>When the edges coincide with occlusion edges, special care should be taken so that these constraints are only applied to the surface that owns the boundary.</p>
 </div>
 </div>
@@ -1746,7 +1749,7 @@ Figure&nbsp;13: Impossible steps
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1820,13 +1823,14 @@ Figure&nbsp;13: Impossible steps
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
