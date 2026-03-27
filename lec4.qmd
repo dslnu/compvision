@@ -31,6 +31,9 @@ format:
     preview-links: auto
     slide-number: true
     theme: default
+    html-math-method:
+      method: mathjax
+      url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
     multiplex:
       url: 'https://mplex.vitv.ly'
       secret: '701983790cb49f0305d621abfd1c06bf'
