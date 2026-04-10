@@ -251,7 +251,7 @@ window.Quarto = {
 <section id="kernel-examples" class="level1">
 <h1>Kernel examples</h1>
 <p>Below is the list of common kernels for linear filters. A set of helper functions for kernel visualization:</p>
-<div id="b2957fad" class="cell" data-execution_count="1">
+<div id="59f560c2" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> Normalize</span>
@@ -376,7 +376,7 @@ window.Quarto = {
 <p><span class="math display">\[
 G(x, y) = \frac{1}{2\pi\sigma^2} \exp\!\Bigl(-\frac{x^2 + y^2}{2\sigma^2}\Bigr)
 \]</span></p>
-<div id="5ff92f2f" class="cell" data-execution_count="3">
+<div id="e0b7d8a5" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_gaussian_kernel(size, sigma):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create a normalised 2D Gaussian kernel."""</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> size <span class="op">//</span> <span class="dv">2</span></span>

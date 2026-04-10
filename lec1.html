@@ -631,12 +631,12 @@ Vitaly Vlasov
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Python code</a></li><li><a href="#tabset-1-2">Example</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
-<div id="23b5af87" class="cell" data-execution_count="1">
+<div id="23b5af87" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>retval <span class="op">=</span> cv2.imread( filename[, flags] )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-1-2">
-<div id="cell-fig-reading" class="cell" data-execution_count="2">
+<div id="cell-fig-reading" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-code-line-numbers="5,"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> cv2</span>
 <span id="cb2-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-3"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -666,12 +666,12 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Python code</a></li><li><a href="#tabset-2-2">Example</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
-<div id="53d65f1b" class="cell" data-execution_count="3">
+<div id="53d65f1b" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>cv2.imwrite( filename, img[, params] )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-2-2">
-<div id="f4684dff" class="cell" data-execution_count="4">
+<div id="f4684dff" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>cv2.imwrite(<span class="st">"new_file.jpg"</span>, img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>True</code></pre>
@@ -682,7 +682,7 @@ Figure&nbsp;1: Image reading example
 </div>
 <h3 id="dimensions">Dimensions</h3>
 <div class="r-stack center">
-<div id="fa2708b3" class="cell" data-execution_count="5">
+<div id="fa2708b3" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="bu">print</span>(<span class="st">"Image size (H, W, C) is:"</span>, img.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Image size (H, W, C) is: (466, 2140)</code></pre>
@@ -692,7 +692,7 @@ Figure&nbsp;1: Image reading example
 </section>
 <section id="image-cropping" class="slide level2">
 <h2>Image cropping</h2>
-<div id="d85db2ec" class="cell" data-execution_count="6">
+<div id="d85db2ec" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>cropped <span class="op">=</span> img[<span class="dv">100</span>:<span class="dv">300</span>, <span class="dv">500</span>:<span class="dv">800</span>]</span>
 <span id="cb8-2"><a></a>plt.imshow(cropped)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -711,12 +711,12 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Python code</a></li><li><a href="#tabset-3-2">Example</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1">
-<div id="3e3ba721" class="cell" data-execution_count="7">
+<div id="3e3ba721" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>dst <span class="op">=</span> resize( src, dsize[, dst[, fx[, fy[, interpolation]]]] )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-3-2">
-<div id="ce2a81f0" class="cell" data-execution_count="8">
+<div id="ce2a81f0" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>resized <span class="op">=</span> cv2.resize(img, <span class="va">None</span>, fx<span class="op">=</span><span class="fl">0.1</span>, fy<span class="op">=</span><span class="fl">0.1</span>)</span>
 <span id="cb10-2"><a></a>plt.imshow(resized)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -735,12 +735,12 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Python code</a></li><li><a href="#tabset-4-2">Example</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1">
-<div id="8067b010" class="cell" data-execution_count="9">
+<div id="8067b010" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>dst <span class="op">=</span> cv.flip( src, flipCode )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-4-2">
-<div id="7e19b0f2" class="cell" data-execution_count="10">
+<div id="7e19b0f2" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>rotated <span class="op">=</span> cv2.flip(img, <span class="dv">0</span>)</span>
 <span id="cb12-2"><a></a>plt.imshow(rotated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -751,7 +751,7 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 </div>
-<div id="a0aab0de" class="cell" data-execution_count="11">
+<div id="a0aab0de" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>rotated <span class="op">=</span> cv2.flip(img, <span class="dv">1</span>)</span>
 <span id="cb13-2"><a></a>plt.imshow(rotated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -762,7 +762,7 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 </div>
-<div id="aa3c6a33" class="cell" data-execution_count="12">
+<div id="aa3c6a33" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>rotated <span class="op">=</span> cv2.flip(img, <span class="op">-</span><span class="dv">1</span>)</span>
 <span id="cb14-2"><a></a>plt.imshow(rotated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -783,14 +783,14 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Python code</a></li><li><a href="#tabset-5-2">Example</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1">
-<div id="699a149d" class="cell" data-execution_count="13">
+<div id="699a149d" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>img <span class="op">=</span> cv2.line(img, pt1, pt2, color[, thickness[, lineType[, shift]]])</span>
 <span id="cb15-2"><a></a>img <span class="op">=</span> cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]])</span>
 <span id="cb15-3"><a></a>img <span class="op">=</span> cv2.rectangle(img, pt1, pt2, color[, thickness[, lineType[, shift]]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-5-2">
-<div id="6f99a508" class="cell" data-execution_count="14">
+<div id="6f99a508" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>annotated <span class="op">=</span> cv2.line(img, (<span class="dv">200</span>, <span class="dv">100</span>), (<span class="dv">800</span>, <span class="dv">100</span>), (<span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">255</span>), thickness<span class="op">=</span><span class="dv">50</span>, lineType<span class="op">=</span>cv2.LINE_AA)<span class="op">;</span></span>
 <span id="cb16-2"><a></a></span>
 <span id="cb16-3"><a></a>plt.imshow(annotated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -802,7 +802,7 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 </div>
-<div id="cb9a7299" class="cell" data-execution_count="15">
+<div id="cb9a7299" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>annotated2 <span class="op">=</span> cv2.circle(annotated, (<span class="dv">200</span>,<span class="dv">200</span>), <span class="dv">100</span>, (<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>), thickness<span class="op">=</span><span class="dv">20</span>, lineType<span class="op">=</span>cv2.LINE_AA)<span class="op">;</span></span>
 <span id="cb17-2"><a></a>plt.imshow(annotated2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -823,12 +823,12 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Python code</a></li><li><a href="#tabset-6-2">Example</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1">
-<div id="d636dc4a" class="cell" data-execution_count="16">
+<div id="d636dc4a" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a>img <span class="op">=</span> cv2.putText(img, text, org, fontFace, fontScale, color[, thickness[, lineType[, bottomLeftOrigin]]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-6-2">
-<div id="7ccae4ad" class="cell" data-execution_count="17">
+<div id="7ccae4ad" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" data-code-line-numbers="8,"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>imageText <span class="op">=</span> img.copy()</span>
 <span id="cb19-2"><a></a>text <span class="op">=</span> <span class="st">"Random text"</span></span>
 <span id="cb19-3"><a></a>fontScale <span class="op">=</span> <span class="fl">5.3</span></span>
@@ -858,12 +858,12 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">Python code</a></li><li><a href="#tabset-7-2">Example</a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1">
-<div id="6da303e0" class="cell" data-execution_count="18">
+<div id="6da303e0" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>retval, dst <span class="op">=</span> cv2.threshold( src, thresh, maxval, <span class="bu">type</span>[, dst] )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-7-2">
-<div id="0f0abce2" class="cell" data-execution_count="19">
+<div id="0f0abce2" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" data-code-line-numbers="1,"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>retval, img_thresh <span class="op">=</span> cv2.threshold(img, <span class="dv">100</span>, <span class="dv">255</span>, cv2.THRESH_BINARY)</span>
 <span id="cb21-2"><a></a></span>
 <span id="cb21-3"><a></a><span class="co"># Show the images</span></span>
@@ -898,7 +898,7 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">Preparation</a></li><li><a href="#tabset-8-2">Execution</a></li></ul>
 <div class="tab-content">
 <div id="tabset-8-1">
-<div id="0c78941a" class="cell" data-execution_count="20">
+<div id="0c78941a" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a><span class="co"># Load the Haar Cascade Classifier</span></span>
 <span id="cb23-2"><a></a>face_cascade <span class="op">=</span> cv2.CascadeClassifier(<span class="st">'haarcascade_frontalface_default.xml'</span>)</span>
 <span id="cb23-3"><a></a></span>
@@ -915,7 +915,7 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 <div id="tabset-8-2">
-<div id="e63eeb1b" class="cell" data-execution_count="21">
+<div id="e63eeb1b" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>gray <span class="op">=</span> cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</span>
 <span id="cb24-2"><a></a></span>
 <span id="cb24-3"><a></a><span class="co"># Detect faces</span></span>
@@ -944,7 +944,7 @@ Figure&nbsp;1: Image reading example
 <img data-src="img/pose_estimation.png" class="r-stretch"></section>
 <section id="pose-estimation-1" class="slide level2 scrollable">
 <h2>Pose estimation</h2>
-<div id="417554a1" class="cell" data-execution_count="22">
+<div id="417554a1" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a><span class="im">import</span> os</span>
 <span id="cb25-2"><a></a><span class="im">from</span> IPython.display <span class="im">import</span> YouTubeVideo, display, Image</span>
 <span id="cb25-3"><a></a></span>
@@ -1002,7 +1002,7 @@ Figure&nbsp;1: Image reading example
 </section>
 <section id="pose-estimation-2" class="slide level2 scrollable">
 <h2>Pose estimation</h2>
-<div id="4527c77d" class="cell" data-execution_count="23">
+<div id="4527c77d" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a><span class="co"># X and Y Scale</span></span>
 <span id="cb26-2"><a></a>scaleX <span class="op">=</span> inWidth  <span class="op">/</span> output.shape[<span class="dv">3</span>]</span>
 <span id="cb26-3"><a></a>scaleY <span class="op">=</span> inHeight <span class="op">/</span> output.shape[<span class="dv">2</span>]</span>
@@ -1081,7 +1081,7 @@ Figure&nbsp;1: Image reading example
 </section>
 <section id="east-2" class="slide level2">
 <h2>EAST</h2>
-<div id="ccbc9827" class="cell" data-execution_count="24">
+<div id="ccbc9827" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a><span class="co"># load the input image and grab the image dimensions</span></span>
 <span id="cb27-2"><a></a>image <span class="op">=</span> cv2.imread(<span class="st">"img/chocolate.png"</span>)</span>
 <span id="cb27-3"><a></a>orig <span class="op">=</span> image.copy()</span>
@@ -1102,7 +1102,7 @@ Figure&nbsp;1: Image reading example
 </section>
 <section id="east-3" class="slide level2">
 <h2>EAST</h2>
-<div id="153dc40d" class="cell" data-execution_count="25">
+<div id="153dc40d" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a></a><span class="co"># define the two output layer names for the EAST detector model that</span></span>
 <span id="cb28-2"><a></a><span class="co"># we are interested -- the first is the output probabilities and the</span></span>
 <span id="cb28-3"><a></a><span class="co"># second can be used to derive the bounding box coordinates of text</span></span>
@@ -1125,7 +1125,7 @@ Figure&nbsp;1: Image reading example
 </section>
 <section id="east-4" class="slide level2">
 <h2>EAST</h2>
-<div id="6e7ee864" class="cell" data-execution_count="26">
+<div id="6e7ee864" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a><span class="im">import</span> time</span>
 <span id="cb30-2"><a></a><span class="im">from</span> imutils.object_detection <span class="im">import</span> non_max_suppression</span>
 <span id="cb30-3"><a></a></span>
@@ -1153,7 +1153,7 @@ Figure&nbsp;1: Image reading example
 </section>
 <section id="east-5" class="slide level2">
 <h2>EAST</h2>
-<div id="b012bb8b" class="cell" data-execution_count="27">
+<div id="b012bb8b" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a><span class="co"># loop over the number of rows</span></span>
 <span id="cb32-2"><a></a><span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, numRows):</span>
 <span id="cb32-3"><a></a>    <span class="co"># extract the scores (probabilities), followed by the geometrical</span></span>
@@ -1203,7 +1203,7 @@ Figure&nbsp;1: Image reading example
 <section id="east-6" class="slide level2 scrollable">
 <h2>EAST</h2>
 <div class="r-stack center">
-<div id="33a918eb" class="cell" data-execution_count="28">
+<div id="33a918eb" class="cell" data-execution_count="29">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a></a><span class="co"># apply non-maxima suppression to suppress weak, overlapping bounding</span></span>
 <span id="cb33-2"><a></a><span class="co"># boxes</span></span>
 <span id="cb33-3"><a></a>boxes <span class="op">=</span> non_max_suppression(np.array(rects), probs<span class="op">=</span>confidences)</span>
@@ -1239,7 +1239,7 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-9" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-9-1">Preparation</a></li><li><a href="#tabset-9-2">Grayscale</a></li><li><a href="#tabset-9-3">Otsu</a></li><li><a href="#tabset-9-4">Noise removal</a></li></ul>
 <div class="tab-content">
 <div id="tabset-9-1">
-<div id="f43acb3c" class="cell" data-execution_count="29">
+<div id="f43acb3c" class="cell" data-execution_count="30">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a><span class="im">import</span> cv2</span>
 <span id="cb34-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb34-3"><a></a><span class="im">from</span> IPython.display <span class="im">import</span> Image, display</span>
@@ -1267,7 +1267,7 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 <div id="tabset-9-2">
-<div id="642d02f9" class="cell" data-execution_count="30">
+<div id="642d02f9" class="cell" data-execution_count="31">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a></a><span class="co">#image grayscale conversion</span></span>
 <span id="cb35-2"><a></a>gray <span class="op">=</span> cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</span>
 <span id="cb35-3"><a></a>imshow(gray)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1281,7 +1281,7 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 <div id="tabset-9-3">
-<div id="82ff263c" class="cell" data-execution_count="31">
+<div id="82ff263c" class="cell" data-execution_count="32">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a><span class="co">#Threshold Processing</span></span>
 <span id="cb36-2"><a></a>ret, bin_img <span class="op">=</span> cv2.threshold(gray,</span>
 <span id="cb36-3"><a></a>                            <span class="dv">0</span>, <span class="dv">255</span>, </span>
@@ -1297,7 +1297,7 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 <div id="tabset-9-4">
-<div id="130ad624" class="cell" data-execution_count="32">
+<div id="130ad624" class="cell" data-execution_count="33">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a></a>kernel <span class="op">=</span> cv2.getStructuringElement(cv2.MORPH_RECT, (<span class="dv">3</span>, <span class="dv">3</span>))</span>
 <span id="cb37-2"><a></a>bin_img <span class="op">=</span> cv2.morphologyEx(bin_img, </span>
 <span id="cb37-3"><a></a>                        cv2.MORPH_OPEN,</span>
@@ -1322,7 +1322,7 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-10" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-10-1">Bg/fg/unknown</a></li><li><a href="#tabset-10-2">Markers</a></li><li><a href="#tabset-10-3">Final</a></li></ul>
 <div class="tab-content">
 <div id="tabset-10-1">
-<div id="2f948ace" class="cell" data-execution_count="33">
+<div id="2f948ace" class="cell" data-execution_count="34">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a></a><span class="co"># Create subplots with 1 row and 2 columns</span></span>
 <span id="cb38-2"><a></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
 <span id="cb38-3"><a></a><span class="co"># sure background area</span></span>
@@ -1357,7 +1357,7 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 <div id="tabset-10-2">
-<div id="cfdf86db" class="cell" data-execution_count="34">
+<div id="cfdf86db" class="cell" data-execution_count="35">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a></a><span class="co"># Marker labelling</span></span>
 <span id="cb39-2"><a></a><span class="co"># sure foreground </span></span>
 <span id="cb39-3"><a></a>ret, markers <span class="op">=</span> cv2.connectedComponents(sure_fg)</span>
@@ -1381,7 +1381,7 @@ Figure&nbsp;1: Image reading example
 </div>
 </div>
 <div id="tabset-10-3">
-<div id="a0e6765a" class="cell" data-execution_count="35">
+<div id="a0e6765a" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a></a><span class="co"># watershed Algorithm</span></span>
 <span id="cb40-2"><a></a>markers <span class="op">=</span> cv2.watershed(img, markers)</span>
 <span id="cb40-3"><a></a></span>
@@ -1436,7 +1436,7 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-11" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-11-1">Python code</a></li><li><a href="#tabset-11-2">Output</a></li><li><a href="#tabset-11-3">Output 2</a></li></ul>
 <div class="tab-content">
 <div id="tabset-11-1">
-<div id="2a7c87ef" class="cell" data-execution_count="36">
+<div id="2a7c87ef" class="cell" data-execution_count="37">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a></a><span class="im">import</span> cv2</span>
 <span id="cb41-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb41-3"><a></a></span>
@@ -1511,7 +1511,7 @@ Figure&nbsp;1: Image reading example
 <ul id="tabset-12" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-12-1">Initialization</a></li><li><a href="#tabset-12-2">Detection</a></li><li><a href="#tabset-12-3">Result</a></li></ul>
 <div class="tab-content">
 <div id="tabset-12-1">
-<div id="f41d396c" class="cell" data-execution_count="37">
+<div id="f41d396c" class="cell" data-execution_count="38">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb42-2"><a></a></span>
 <span id="cb42-3"><a></a><span class="im">import</span> datetime</span>
@@ -1533,7 +1533,7 @@ Update Settings with 'yolo settings key=value', i.e. 'yolo settings runs_dir=pat
 </div>
 </div>
 <div id="tabset-12-2">
-<div id="8fe42111" class="cell" data-execution_count="38">
+<div id="8fe42111" class="cell" data-execution_count="39">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a></a>frame <span class="op">=</span> cv2.imread(<span class="st">'./img/yolo_test.png'</span>)</span>
 <span id="cb44-2"><a></a>detections <span class="op">=</span> model(frame)[<span class="dv">0</span>]</span>
 <span id="cb44-3"><a></a><span class="cf">for</span> box <span class="kw">in</span> detections.boxes:</span>
@@ -1565,7 +1565,7 @@ Speed: 2.7ms preprocess, 31.9ms inference, 1.0ms postprocess per image at shape 
 </div>
 </div>
 <div id="tabset-12-3">
-<div id="216f849d" class="cell" data-execution_count="39">
+<div id="216f849d" class="cell" data-execution_count="40">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a></a>plt.imshow(frame)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
