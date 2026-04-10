@@ -5,9 +5,13 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "imutils>=0.5.4",
     "jupyter>=1.1.1",
+    "jupyter-cache>=1.0.1",
     "matplotlib>=3.10.8",
     "notebook>=7.5.5",
     "numpy>=2.4.3",
+    "opencv-python>=4.13.0.92",
     "scipy>=1.17.1",
+    "ultralytics>=8.4.30",
 ]
